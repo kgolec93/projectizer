@@ -1,0 +1,73 @@
+.blackout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    background-color: rgba(22, 22, 22, 0.5);
+}
+
+.signupWindow {
+    width: 300px;
+    background-color: rgb(243, 243, 243);
+    border: 1px solid rgb(197, 197, 197);
+    padding: 10px;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.signupWindow p {
+    font-size: 0.8rem;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginForm * {
+    margin: 8px;
+}
+
+.loginForm input {
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid rgb(197, 197, 197);
+    text-align: center;
+}
+
+.loginForm input::placeholder {
+    font-style: italic;
+}
+
+.loginForm *:focus {
+    outline: none;
+    box-shadow: 0px 0px 3px 0px #869fce;
+}
+
+.loginForm button {
+    border-radius: 5px;
+    border: none;
+    background: #be8872;
+    color: white;
+    padding: 4px;
+    width: 70%;
+    margin: 16px auto;
+}
+
+.loginForm button:hover {
+    cursor: pointer;
+}
+
+.loginError {
+    font-size: 0.8rem !important;
+    color: #be8872;
+    margin: 4 auto;
+    line-height: 10%;
+    font-style: italic;
+}
+

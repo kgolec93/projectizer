@@ -1,33 +1,72 @@
-.App {
+header, footer {
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  z-index: 99;
+}
+
+header ul {
+  display: flex;
+  list-style: none;
+}
+
+header li, p {
+  padding: 4px;
+}
+
+main {
+  width: 70vw;
+  background-color: rgb(241, 241, 241);
+  margin: 0px auto;
+  height: 100%;
+  flex: auto;
+  box-shadow: 0px 0px 4px 0px rgb(177, 177, 177);
+}
+
+footer p {
+  margin: auto;
+}
+
+.landingPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh
+}
+
+.projectButton {
+  background-color: rgb(253, 253, 253);
+  box-shadow: 0px 0px 2px 0px rgb(177, 177, 177);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin: 10px;
+  color: rgb(124, 124, 124);
+  padding: 8px;
+}
+
+.addProjectButton {
+  min-height: 100px;
+  width: 70%;
+  margin: auto;
+}
+
+.projectBasicData {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.projectButton:hover {
+  cursor: pointer;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.borderLeft {
+  border-left: 1px solid #333;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.link {
+  text-decoration: none;
 }
