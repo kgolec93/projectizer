@@ -7,14 +7,21 @@ import { connect } from 'react-redux'
 const mapStateToProps = state => {
   return {username: state.loggedUser}
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeUser: () => dispatch({type: 'CHANGE_USERNAME', payload: this.refs.email.value})
+  }
+}
 ///////////////////////////////////
 
 class index extends Component {
 
   onSubmit = event => {
-    this.props.doSignIn(this.refs.email.value, this.refs.password.value);
-    this.refs.email.value = '';
-    this.refs.password.value = '';
+    // this.props.doSignIn(this.refs.email.value, this.refs.password.value);
+    // this.refs.email.value = '';
+    // this.refs.password.value = '';
+    // this.props.changeUser;
     event.preventDefault();
   }
 
@@ -24,16 +31,16 @@ class index extends Component {
         <div className="signupWindow">
             <h4>Sign in</h4>
             <p>test: {this.props.username}</p>
-            <form onSubmit={this.onSubmit} className="loginForm">
-                <input type="email" placeholder="Email" ref="email"/>
-                <input type="password" placeholder="Password" ref="password"/>
+            <div  className="loginForm">
+                <input type="text" placeholder="Email" ref="email"/>
+                {/* <input type="password" placeholder="Password" ref="password"/> */}
                 {/* <p className="loginError">{this.props.errorMessage}</p> */}
                 <button 
-                type="submit" 
+                onClick={this.props.changeUser}
                 >
                 Login
                 </button>
-            </form>
+            </div>
             <p>Already have an account? Sign in!</p>
         </div>
     </div>
@@ -44,7 +51,7 @@ class index extends Component {
 
 ///// AND THIS IS IMPORTANT ////////
 
-export const SignIn = connect(mapStateToProps)(index)
+export const SignIn = connect(mapStateToProps, mapDispatchToProps)(index)
 export default SignIn
 
 ////////////////////////////////////

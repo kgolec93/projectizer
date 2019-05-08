@@ -22,8 +22,14 @@ import ProjectPage from './components/ProjectPage'
 const reducer = (state, action) => {
   switch (action.type) {
       case 'LOG_IN':
-          return {...state, isLogged: state.username, email: state.email, password: state.password}
-      default:
+        return {...state, isLogged: state.username, email: state.email, password: state.password};
+        
+      case "CHANGE_USERNAME":
+        return (
+          {...state, loggedUser: action.payload}
+        )
+      
+          default:
           return state;
   }
 }
@@ -62,7 +68,7 @@ export class MainApp extends Component {
   render() {
     if (this.props.isLogged === false) {
       return (
-          <SignIn doSignIn={this.doSignIn} chuj={this.props.nazwa_uzytkownika}/>
+          <SignIn doSignIn={this.doSignIn} />
       )
     }
     if (this.props.isLogged !== false ) {
