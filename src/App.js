@@ -5,13 +5,14 @@ import {connect, Provider } from 'react-redux';
 // import Signup from './components/Signup'
 // import Texts from './components/Texts';
 import SignIn from './components/SignIn';
+import SignUp from './components/Signup'
 import { userdata } from './testData/DevDatabase'
 import ProjectButton from './components/ProjectButton'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import ProjectList from './components/ProjectList'
 import ProjectPage from './components/ProjectPage'
+import { store } from './Redux'
 
-// import  firebase from 'firebase';
 
 
 
@@ -19,52 +20,24 @@ import ProjectPage from './components/ProjectPage'
 /////// CZĘŚĆ REDUXOWA ///////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-const reducer = (state, action) => {
-  switch (action.type) {
-      case 'LOG_IN':
-        return {...state, isLogged: state.username, email: state.email, password: state.password};
-        
-      case "ENTER_INPUT":
-        return (
-          {...state, inputValue: action.payload}
-        )
-      case "CHANGE_USERNAME":
-          console.log('sprawdzamy console loga - DZIAŁA')
-          return (
-            {...state, loggedUser: state.inputValue, inputValue: ''}
-          )
-      
-          default:
-          return state;
-  }
-}
 
-const defaultState = {
-  isLogged: false,
-  inputValue: '',
-  loggedUser: ''
-}
-
-const store = createStore(
-  reducer, defaultState,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
 
 
 /// tutaj stan ze store przekazuje się do propsów
 const mapStateToProps = state => {
   return {
-      isLogged: state.isLogged,
-      nazwa_uzytkownika: state.loggedUser
+      isLogged: state.signIn.isLogged,
+      nazwa_uzytkownika: state.signIn.loggedUser
   }
 }
 
-// a tutaj do propsów przekazują się akcje do wywołania
-const mapDispatchToProps = dispatch => {
-  return {
-      increment: () => dispatch({ type: 'INCREMENT'}),
-      decrement: () => dispatch({ type: 'DECREMENT' })
+  // a tutaj do propsów przekazują się akcje do wywołania
+  const mapDispatchToProps = dispatch => {
+    return {
+        increment: () => dispatch({ type: 'INCREMENT'}),
+        decrement: () => dispatch({ type: 'DECREMENT' })
+    }
   }
-}
 
 
 
@@ -76,7 +49,13 @@ export class MainApp extends Component {
   render() {
     if (this.props.isLogged === false) {
       return (
-          <SignIn doSignIn={this.doSignIn} />
+          
+          <Router>
+            <Route exact path="/" component={SignIn} />
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+          </Router>
+
       )
     }
     if (this.props.isLogged !== false ) {
@@ -136,13 +115,6 @@ export class App extends Component {
     }
   }
 
-  // doCreateUser = (username, email, password, password2) => {
-  //   // this.setState({
-  //   //   username: username,
-  //   //   email: email,
-  //   //   password: password  
-  //   // })
-
   //   // FORM VALIDATION
 
   //   // Check if username is not taken
@@ -156,14 +128,9 @@ export class App extends Component {
   //   // //// FIREBASE CREATE USER FUNCTION ////
   //   // ///////////////////////////////////////
 
-  //   // // Firebase Auth Create User //
-  //   // firebase.auth().createUserWithEmailAndPassword(email, password);
+
     
-  //   // // Adding user to the database //
-  //   // firebase.database().ref('users/' + username).set({
-  //   //   username: username,
-  //   //   email: email
-  //   // });
+
   // }
 
   // doSignIn = (email, password) => {
