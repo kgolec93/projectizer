@@ -24,10 +24,15 @@ const reducer = (state, action) => {
       case 'LOG_IN':
         return {...state, isLogged: state.username, email: state.email, password: state.password};
         
-      case "CHANGE_USERNAME":
+      case "ENTER_INPUT":
         return (
-          {...state, loggedUser: action.payload}
+          {...state, inputValue: action.payload}
         )
+      case "CHANGE_USERNAME":
+          console.log('sprawdzamy console loga - DZIAŁA')
+          return (
+            {...state, loggedUser: state.inputValue, inputValue: ''}
+          )
       
           default:
           return state;
@@ -36,10 +41,13 @@ const reducer = (state, action) => {
 
 const defaultState = {
   isLogged: false,
-  loggedUser: 'kgolec93'
+  inputValue: '',
+  loggedUser: ''
 }
 
-const store = createStore(reducer, defaultState);
+const store = createStore(
+  reducer, defaultState,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 
 /// tutaj stan ze store przekazuje się do propsów
