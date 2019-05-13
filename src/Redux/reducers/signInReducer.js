@@ -2,10 +2,10 @@ import  firebase from 'firebase';
 
 
 const signInState = {
-    isLogged: false,
+    isLogged: true,
     emailInput: '',
     passwordInput: '',
-    loggedUser: '',
+    loggedUser: 'kamil.golec@gmail.com',
 
 }
 

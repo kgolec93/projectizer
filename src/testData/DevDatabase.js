@@ -1,6 +1,6 @@
 export const userdata = {
     username: 'kgolec93',
-    email: 'kgolec93@mail.com',
+    email: 'kamil.golec@gmail.com',
     password: 'kupa123',
     projects: [
         {

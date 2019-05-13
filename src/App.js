@@ -79,7 +79,7 @@ export class MainApp extends Component {
               {/* <h1>PROJECTS</h1>
               <h1>TASKS</h1> */}
 
-              <Route exact path='/projects' component={ProjectList}/>
+              <Route path exact='/' component={ProjectList}/>
               {/* needs to set the change of state, but to many levels to pass, so redux needed */}
               {/* <Route path={`/projects/${this.state.currentProject}`} component={ProjectPage}/> */}
 
