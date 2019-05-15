@@ -9,7 +9,8 @@ const mapStateToProps = (state) => {
   return {
     username: state.signIn.loggedUser, 
     emailInput: state.signIn.emailInput,
-    passwordInput: state.signIn.passwordInput
+    passwordInput: state.signIn.passwordInput,
+    errorMessage: state.signIn.errorMessage,
   }
 }
 
@@ -17,7 +18,8 @@ const mapDispatchToProps = dispatch => {
   return {
     enterEmail: (e) => dispatch({type: 'ENTER_EMAIL', payload: e.target.value }),
     enterPassword: (e) => dispatch({type: 'ENTER_PASSWORD', payload: e.target.value }),
-    logUserIn: () => dispatch({type: 'LOG_USER'})
+    dispatchError: (error) => dispatch({type: 'SIGNIN_ERROR', payload: error}),
+    logUserIn: (user) => dispatch({type: 'LOG_USER', payload: user})
   }
 }
 ///////////////////////////////////
@@ -25,13 +27,15 @@ const mapDispatchToProps = dispatch => {
 class index extends Component {
 
   onSubmit = event => {
-    firebase.auth().signInWithEmailAndPassword(this.props.emailInput, this.props.passwordInput);
-    setTimeout(()=>{
-      
-      this.props.logUserIn();
-    }, 1500);
+    firebase.auth().signInWithEmailAndPassword(this.props.emailInput, this.props.passwordInput)
+    .catch((error) => {
+      if (error) {
+        this.props.dispatchError(error.message)
+      }
+    });
     event.preventDefault();
   }
+
 
 
 /// TESTING ISSUE
@@ -46,6 +50,8 @@ checkUser = () => {
 }
 
   render() {
+
+
     return (
     <div className="blackout">
         <div className="signupWindow">
@@ -65,7 +71,11 @@ checkUser = () => {
                     value={this.props.passwordInput} 
                     onChange={this.props.enterPassword}
                   />
-                  <p className="loginError">{this.props.errorMessage}</p>
+                  {this.props.errorMessage !== null &&
+                    <p className="loginError">
+                      {this.props.errorMessage}
+                    </p>
+                  }
                   <button 
                     type="submit"
                   >

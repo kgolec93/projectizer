@@ -36,7 +36,9 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => {
     return {
         increment: () => dispatch({ type: 'INCREMENT'}),
-        decrement: () => dispatch({ type: 'DECREMENT' })
+        decrement: () => dispatch({ type: 'DECREMENT' }),
+        logUserIn: (user) => dispatch({ type: 'LOG_USER', payload: user}),
+        logUserOut: () => dispatch({ type: 'LOG_OUT' }),
     }
   }
 
@@ -46,7 +48,15 @@ const mapStateToProps = state => {
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
+
 export class MainApp extends Component {
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      user ? this.props.logUserIn(user) : this.props.logUserOut()
+    });
+  }
+
   render() {
     if (this.props.isLogged === false) {
       return (
@@ -68,7 +78,6 @@ export class MainApp extends Component {
         <Router>
 
         <div>
-          {/* <Signup doCreateUser={this.doCreateUser}/> */}
           <div className="landingPage">
             <header>
               <Link className='link' style={{color:'white'}} to='/'>WorkItUp!</Link>
@@ -78,17 +87,13 @@ export class MainApp extends Component {
                 <li>Mail</li>
                 <li>{this.props.nazwa_uzytkownika}</li>
                 <li>User fot.</li>
+                <li onClick={this.props.logUserOut}>Log out</li>
               </ul>
             </header>
             <main>
               <ProjectPage />
-              {/* <h1>PROJECTS</h1>
-              <h1>TASKS</h1> */}
 
               <Route path exact='/' component={ProjectList}/>
-              {/* needs to set the change of state, but to many levels to pass, so redux needed */}
-              {/* <Route path={`/projects/${this.state.currentProject}`} component={ProjectPage}/> */}
-
               <Route path='/projects/newproject' component={NewProject}/>
 
 

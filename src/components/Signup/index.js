@@ -3,6 +3,7 @@ import '../globalStyles/loginForm.css'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import  firebase from 'firebase';
+import { userDataTemplate } from '../../DataTemplates/userDataTemplate';
 
 
 const mapStateToProps = state => {
@@ -36,34 +37,30 @@ export class index extends Component {
 
   onSubmit = (event) => {
   firebase.auth().createUserWithEmailAndPassword(this.props.email, this.props.password1)
+    .then(authUser => {
+      firebase.database().ref('users/' + authUser.user.uid).set({
+        username: this.props.username,
+        email: this.props.email,
+        tasks: [],
+        projects: [] 
+      })
+    })
     .catch((error) => {
       if (error) {
         this.props.dispatchError(error.message)
       }
     })
-    .then(
-      
-    );
-    setTimeout(()=>{
-      if (this.props.firebaseUserData !== null) {
-        // fetching logged user data
-        this.props.fetchUserData(firebase.auth().currentUser);
-        firebase.database().ref('users/' + this.props.firebaseUserData.uid).set({
-          username: this.props.username,
-          email: this.props.email
-        })
-      }
-    }, 1000)
-
- 
-      console.log(this.props.firebaseUserData)
-
-  // this.props.dispatchError(errorMessage)
-
-  //   let user = firebase.auth().currentUser;
-
-
-
+    // setTimeout(()=>{
+    //   if (this.props.firebaseUserData !== null) {
+    //     // fetching logged user data
+    //     firebase.database().ref('users/' + this.props.firebaseUserData.uid).set({
+    //         username: this.props.username,
+    //         email: this.props.email,
+    //         tasks: [],
+    //         projects: [] 
+    //     })
+    //   }
+    // }, 2400)
   event.preventDefault();
 }
 

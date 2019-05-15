@@ -9,17 +9,27 @@ const globalState = {
 
 export const globalReducer = (state=globalState, action) => {
     switch (action.type) {
+        case 'TEST_USER_DATA':
+            console.log("OBSERVER WORKS")
         case 'FIREBASE_USER_DATA':
             return (
                 {...state, firebaseUserData: action.payload}
             )
+        case 'LOG_OUT':
+            firebase.auth().signOut();
+            return (
+                {...state,
+                    firebaseUserData: null,
+                    loggedUser: null, 
+                    isLogged: false
+                }
+            )
         case "LOG_USER":
-            const user = firebase.auth().currentUser
             return (
               {...state, 
-                firebaseUserData: user,
-                loggedUser: user.email, 
-                isLogged: true
+                    firebaseUserData: action.payload,
+                    loggedUser: action.payload.email, 
+                    isLogged: true
               }
             ) 
         default:

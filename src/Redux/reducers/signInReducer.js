@@ -19,16 +19,20 @@ export const signInReducer = (state=signInState, action) => {
           return (
             {...state, passwordInput: action.payload}
           )          
-        case "LOG_USER":
-          const user = firebase.auth().currentUser;
-          console.log(user)
-          // action.payload.preventDefault();
+        // case "LOG_USER":
+        //   const user = firebase.auth().currentUser;
+        //   console.log(user)
+        //   // action.payload.preventDefault();
+        //   return (
+        //     {...state, 
+        //       emailInput: '', 
+        //       passwordInput: ''
+        //     }
+        //   )
+        case 'SIGNIN_ERROR':
           return (
-            {...state, 
-              emailInput: '', 
-              passwordInput: ''
-            }
-          )     
+              {...state, errorMessage: action.payload}
+          )       
         default:
             return state;
     }
