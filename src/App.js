@@ -8,12 +8,13 @@ import SignIn from './components/SignIn';
 import SignUp from './components/Signup'
 import { userdata } from './testData/DevDatabase'
 import ProjectButton from './components/ProjectButton'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import ProjectList from './components/ProjectList'
 import ProjectPage from './components/ProjectPage'
 import { store } from './Redux'
-
-
+import NewProject from './components/NewProject/NewProject';
+import firebase from 'firebase'
+import  { FirebaseContext } from './components/Firebase';
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -26,8 +27,8 @@ import { store } from './Redux'
 /// tutaj stan ze store przekazuje się do propsów
 const mapStateToProps = state => {
   return {
-      isLogged: state.signIn.isLogged,
-      nazwa_uzytkownika: state.signIn.loggedUser
+      isLogged: state.global.isLogged,
+      nazwa_uzytkownika: state.global.loggedUser
   }
 }
 
@@ -53,7 +54,11 @@ export class MainApp extends Component {
           <Router>
             <Route exact path="/" component={SignIn} />
             <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
+            <FirebaseContext.Consumer>
+              {firebase => {
+                return <Route exact path="/signup" component={SignUp} />
+              }}
+            </FirebaseContext.Consumer>
           </Router>
 
       )
@@ -61,11 +66,12 @@ export class MainApp extends Component {
     if (this.props.isLogged !== false ) {
       return (
         <Router>
+
         <div>
           {/* <Signup doCreateUser={this.doCreateUser}/> */}
           <div className="landingPage">
             <header>
-              <p>WorkItUp!</p>
+              <Link className='link' style={{color:'white'}} to='/'>WorkItUp!</Link>
               <ul>
                 <li>Notif.</li>
                 <li>Tasks</li>
@@ -75,7 +81,7 @@ export class MainApp extends Component {
               </ul>
             </header>
             <main>
-
+              <ProjectPage />
               {/* <h1>PROJECTS</h1>
               <h1>TASKS</h1> */}
 
@@ -83,10 +89,9 @@ export class MainApp extends Component {
               {/* needs to set the change of state, but to many levels to pass, so redux needed */}
               {/* <Route path={`/projects/${this.state.currentProject}`} component={ProjectPage}/> */}
 
+              <Route path='/projects/newproject' component={NewProject}/>
 
-              <div className="projectButton addProjectButton">
-                <p>Start a new project!</p>
-              </div>
+
 
             </main>
             <footer>

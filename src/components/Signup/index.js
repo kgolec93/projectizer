@@ -10,7 +10,9 @@ const mapStateToProps = state => {
     username: state.signUp.signupUsername,
     email: state.signUp.signupEmail,
     password1: state.signUp.signupPassword1,
-    password2: state.signUp.signupPassword2
+    password2: state.signUp.signupPassword2,
+    errorMessage: state.signUp.errorMessage,
+    firebaseUserData: state.global.firebaseUserData
   }
 }
 
@@ -20,19 +22,48 @@ const mapDispatchToProps = dispatch => {
     enterEmail: (e) => dispatch({type: 'SIGNUP_EMAIL', payload: e.target.value }),
     enterPassword1: (e) => dispatch({type: 'SIGNUP_PASSWORD', payload: e.target.value }),
     enterPassword2: (e) => dispatch({type: 'SIGNUP_PASSWORD_CONFIRM', payload: e.target.value }),
-    registerUser: (e) => dispatch({type: 'SIGNUP_REGISTER_USER', payload: e})
+    registerUser: (e) => dispatch({type: 'SIGNUP_REGISTER_USER', payload: e}),
+    dispatchError: (error) => dispatch({type: 'SIGNUP_ERROR', payload: error}),
+    fetchUserData: (data) => dispatch({type: 'FIREBASE_USER_DATA', payload: data}),
+    createUser: () => dispatch({type: 'CREATE_USER'})
   }
 }
 
-
 export class index extends Component {
 
-onSubmit = (event) => {
-  firebase.auth().createUserWithEmailAndPassword(this.props.email, this.props.password1);
-  firebase.database().ref('users/' + this.props.username).set({
-    username: this.props.username,
-    email: this.props.email
-  });
+
+    
+
+  onSubmit = (event) => {
+  firebase.auth().createUserWithEmailAndPassword(this.props.email, this.props.password1)
+    .catch((error) => {
+      if (error) {
+        this.props.dispatchError(error.message)
+      }
+    })
+    .then(
+      
+    );
+    setTimeout(()=>{
+      if (this.props.firebaseUserData !== null) {
+        // fetching logged user data
+        this.props.fetchUserData(firebase.auth().currentUser);
+        firebase.database().ref('users/' + this.props.firebaseUserData.uid).set({
+          username: this.props.username,
+          email: this.props.email
+        })
+      }
+    }, 1000)
+
+ 
+      console.log(this.props.firebaseUserData)
+
+  // this.props.dispatchError(errorMessage)
+
+  //   let user = firebase.auth().currentUser;
+
+
+
   event.preventDefault();
 }
 
@@ -77,7 +108,12 @@ checkUser = () => {
                 value={this.props.password2}
                 onChange={this.props.enterPassword2} 
               />
-              <p className="loginError"></p>
+              {this.props.errorMessage !== null &&
+                <p className="loginError">
+                  {this.props.errorMessage}
+                </p>
+              }
+
               <button 
                 type="submit" 
               >

@@ -2,10 +2,10 @@ import  firebase from 'firebase';
 
 
 const signInState = {
-    isLogged: true,
+    // isLogged: false,
     emailInput: '',
     passwordInput: '',
-    loggedUser: 'kamil.golec@gmail.com',
+    // loggedUser: 'kamil.golec@gmail.com',
 
 }
 
@@ -20,18 +20,15 @@ export const signInReducer = (state=signInState, action) => {
             {...state, passwordInput: action.payload}
           )          
         case "LOG_USER":
-            const user = firebase.auth().currentUser;
-            console.log(user)
-            // action.payload.preventDefault();
-            return (
-              {...state, 
-                loggedUser: user.email, 
-                emailInput: '', 
-                passwordInput: '', 
-                isLogged: true, 
-                userData: user
-              }
-            )     
+          const user = firebase.auth().currentUser;
+          console.log(user)
+          // action.payload.preventDefault();
+          return (
+            {...state, 
+              emailInput: '', 
+              passwordInput: ''
+            }
+          )     
         default:
             return state;
     }

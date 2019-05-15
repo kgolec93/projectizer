@@ -6,7 +6,9 @@ const signUpState = {
     signupUsername: '',
     signupEmail: '',
     signupPassword1: '',
-    signupPassword2: ''
+    signupPassword2: '',
+    firebaseUserData: null,
+    errorMessage: null
 }
 
 
@@ -40,6 +42,12 @@ export const signUpReducer = (state=signUpState, action) => {
             // });
             action.payload.preventDefault();
             
+        case 'SIGNUP_ERROR':
+            return (
+                {...state, errorMessage: action.payload}
+            )
+        case 'CREATE_USER':
+            return {...state, userData: firebase.auth().currentUser}
         default:
             return state;             
     }

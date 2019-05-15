@@ -11,7 +11,7 @@ ReactDOM.render(
           {firebase => {
             return <App />;
           }}
-          </FirebaseContext.Consumer>
+        </FirebaseContext.Consumer>
     </FirebaseContext.Provider>
     , document.getElementById('root'));
 

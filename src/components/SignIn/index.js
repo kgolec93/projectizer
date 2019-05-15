@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => {
   return {
     enterEmail: (e) => dispatch({type: 'ENTER_EMAIL', payload: e.target.value }),
     enterPassword: (e) => dispatch({type: 'ENTER_PASSWORD', payload: e.target.value }),
-    logUserIn: (e) => dispatch({type: 'LOG_USER', payload: e})
+    logUserIn: () => dispatch({type: 'LOG_USER'})
   }
 }
 ///////////////////////////////////
@@ -25,8 +25,11 @@ const mapDispatchToProps = dispatch => {
 class index extends Component {
 
   onSubmit = event => {
-    firebase.auth().signInWithEmailAndPassword(this.props.emailInput, this.props.passwordInput)
-    .then(this.props.logUserIn);
+    firebase.auth().signInWithEmailAndPassword(this.props.emailInput, this.props.passwordInput);
+    setTimeout(()=>{
+      
+      this.props.logUserIn();
+    }, 1500);
     event.preventDefault();
   }
 
