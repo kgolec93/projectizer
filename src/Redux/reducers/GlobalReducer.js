@@ -4,6 +4,7 @@ const globalState = {
     firebaseUserData: null,
     isLogged: false,
     loggedUser: null,
+    userData: null
 }
 
 
@@ -21,7 +22,8 @@ export const globalReducer = (state=globalState, action) => {
                 {...state,
                     firebaseUserData: null,
                     loggedUser: null, 
-                    isLogged: false
+                    isLogged: false,
+                    userData: null
                 }
             )
         case "LOG_USER":
@@ -29,9 +31,21 @@ export const globalReducer = (state=globalState, action) => {
               {...state, 
                     firebaseUserData: action.payload,
                     loggedUser: action.payload.email, 
-                    isLogged: true
+                    isLogged: true,
               }
             ) 
+        case "FETCH_DATA":            
+            return (
+                {...state, userData: action.payload}
+            )
+        case "UPDATE_DATA":            
+            return (
+                {...state, userData: action.payload}
+            )
+        case 'PROJECT_LIST':
+            return (
+                {...state, projectList: action.payload}
+            )
         default:
             return state;             
     }

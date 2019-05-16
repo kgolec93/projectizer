@@ -28,7 +28,8 @@ import  { FirebaseContext } from './components/Firebase';
 const mapStateToProps = state => {
   return {
       isLogged: state.global.isLogged,
-      nazwa_uzytkownika: state.global.loggedUser
+      nazwa_uzytkownika: state.global.loggedUser,
+      userData: state.global.firebaseUserData
   }
 }
 
@@ -39,6 +40,7 @@ const mapStateToProps = state => {
         decrement: () => dispatch({ type: 'DECREMENT' }),
         logUserIn: (user) => dispatch({ type: 'LOG_USER', payload: user}),
         logUserOut: () => dispatch({ type: 'LOG_OUT' }),
+        fetchUserData: (data) => dispatch({ type: 'FETCH_DATA', payload: data }),
     }
   }
 
@@ -51,10 +53,23 @@ const mapStateToProps = state => {
 
 export class MainApp extends Component {
 
+  onSignIn = (user) => {
+    this.props.logUserIn(user)
+    
+    firebase.database().ref(`users/${this.props.userData.uid}`)
+    .on('value', (snapshot)=>this.props.fetchUserData(snapshot.val()))
+  }
+
+  fetchData = () => {
+    console.log(this.props.userData)
+  }
+
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      user ? this.props.logUserIn(user) : this.props.logUserOut()
-    });
+      user ? this.onSignIn(user) : this.props.logUserOut()
+    })
+    
+    
   }
 
   render() {
@@ -91,7 +106,7 @@ export class MainApp extends Component {
               </ul>
             </header>
             <main>
-              <ProjectPage />
+              {/* <ProjectPage /> */}
 
               <Route path exact='/' component={ProjectList}/>
               <Route path='/projects/newproject' component={NewProject}/>

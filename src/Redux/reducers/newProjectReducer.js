@@ -11,11 +11,11 @@ export const newProjectReducer = (state=newProjectState, action) => {
         case 'ENTER_PROJECTNAME':
             return {...state, projectName: action.payload}
         case 'ENTER_PROJECTLEADER':
-            return {...state, projecLeader: action.payload}
+            return {...state, projectLeader: action.payload}
         case 'ENTER_DATE':
             return {...state, deadline: action.payload}
         case 'ADD_PROJECT':
-
+            return {...state, projectName: '', projectLeader: '', deadline: ''}
         default:
             return state;
     }

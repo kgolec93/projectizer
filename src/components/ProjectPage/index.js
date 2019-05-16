@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { projectData as data } from '../../testData/DevDatabase';
 import  firebase from 'firebase';
+import NewProject from '../NewProject/NewProject';
 
 const mapStateToProps = state => {
   return{
@@ -10,7 +11,8 @@ const mapStateToProps = state => {
     taskInput: state.projectPage.taskInput,
     data: state.projectPage.currentProjectData,
     loggedUser: state.signIn.loggedUser,
-    commentInput: state.projectPage.commentInput
+    commentInput: state.projectPage.commentInput,
+    userData: state.global.userData
   }
 }
 
@@ -113,7 +115,6 @@ export class index extends Component {
                 <button onClick={this.addComment}>Add!</button>
               </div>
             }
-  
         </div>
       )
     }
