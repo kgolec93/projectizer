@@ -15,6 +15,8 @@ import { store } from './Redux'
 import NewProject from './components/NewProject/NewProject';
 import firebase from 'firebase'
 import  { FirebaseContext } from './components/Firebase';
+import Loader from './components/Loader'
+import Header from './components/Header'
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +31,8 @@ const mapStateToProps = state => {
   return {
       isLogged: state.global.isLogged,
       nazwa_uzytkownika: state.global.loggedUser,
-      userData: state.global.firebaseUserData
+      userData: state.global.firebaseUserData,
+      userDatabase: state.global.userData
   }
 }
 
@@ -55,9 +58,17 @@ export class MainApp extends Component {
 
   onSignIn = (user) => {
     this.props.logUserIn(user)
+    .then(
+      firebase.database().ref(`users/${this.props.userData.uid}`)
+      .once('value', (snapshot)=>{this.props.fetchUserData(snapshot.val())})
+    )
     
-    firebase.database().ref(`users/${this.props.userData.uid}`)
-    .on('value', (snapshot)=>this.props.fetchUserData(snapshot.val()))
+
+
+    // firebase.database().ref(`users/${this.props.firebaseUserData.uid}`)
+    // .on('value', snapshot => {
+    //     this.props.updateData(snapshot.val())
+    // })
   }
 
   fetchData = () => {
@@ -67,16 +78,32 @@ export class MainApp extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       user ? this.onSignIn(user) : this.props.logUserOut()
-    })
+    });
+    
+    // if (this.props.userData !== null) {
+    //   firebase.database().ref(`users/${this.props.userData.uid}`)
+    //   .on('value', snapshot => {
+    //       this.props.fetchUserData(snapshot.val())
+    //   })
+    // }
+
+  
     
     
   }
 
   render() {
+    if (this.props.isLogged === null && this.props.userDatabase === null)
+      return (
+        <div>
+          <Loader className="loader-main" />
+        </div>
+      )
     if (this.props.isLogged === false) {
       return (
           
           <Router>
+            <Header />
             <Route exact path="/" component={SignIn} />
             <Route exact path="/signin" component={SignIn} />
             <FirebaseContext.Consumer>
@@ -94,22 +121,13 @@ export class MainApp extends Component {
 
         <div>
           <div className="landingPage">
-            <header>
-              <Link className='link' style={{color:'white'}} to='/'>WorkItUp!</Link>
-              <ul>
-                <li>Notif.</li>
-                <li>Tasks</li>
-                <li>Mail</li>
-                <li>{this.props.nazwa_uzytkownika}</li>
-                <li>User fot.</li>
-                <li onClick={this.props.logUserOut}>Log out</li>
-              </ul>
-            </header>
+          <Header />
             <main>
               {/* <ProjectPage /> */}
 
               <Route path exact='/' component={ProjectList}/>
-              <Route path='/projects/newproject' component={NewProject}/>
+              <Route path ='/projects' component={ProjectList}/>
+              <Route path='/newproject' component={NewProject}/>
 
 
 

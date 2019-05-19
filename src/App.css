@@ -70,3 +70,44 @@ footer p {
 .link {
   text-decoration: none;
 }
+
+@keyframes loader {
+  from {
+    transform: rotate(0deg);
+}
+  to {
+    transform: rotate(359deg);
+}
+}
+
+.loader {
+  width: 50px;
+  height: auto;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  animation: loader 2s infinite linear;
+
+}
+
+.loaderMain {
+  
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+
+}
+
+.headerIcon {
+  display: inline-block;
+  width: 60px;
+  height: 40px;
+  padding: 6px;
+}
+
+.headerIcon:hover {
+  background-color: rgb(78, 78, 78);
+  cursor: pointer;
+  border-radius: 3px;
+}

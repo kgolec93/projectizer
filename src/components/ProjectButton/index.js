@@ -11,21 +11,19 @@ export class index extends Component {
     }
 
     handleClick = () => {
-        console.log('test: ' + this.props.projectName)
+        console.log(this.props.projectKey)
     }
 
     render() {
         return (
-        <Link className="link" to={`/projects/${this.props.projectName}`}>
             <div className="projectButton" onClick={this.handleClick}>
                 <div className="projectBasicData">
                     <p style={{flex: 4}}>{this.props.projectName}</p>
                     <p style={pStyle}>{this.props.projectLeader}</p>
-                    <p style={pStyle}>{this.props.deadline}</p>
+                    {/* <p style={pStyle}>{this.props.projectKey}</p> */}
                     <p style={pStyle}>{this.props.currentStatus}</p>
                 </div>
             </div>
-        </Link>
 
         )
     }

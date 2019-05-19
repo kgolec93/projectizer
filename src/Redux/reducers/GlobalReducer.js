@@ -2,7 +2,7 @@ import firebase from 'firebase'
 
 const globalState = {
     firebaseUserData: null,
-    isLogged: false,
+    isLogged: null,
     loggedUser: null,
     userData: null
 }
