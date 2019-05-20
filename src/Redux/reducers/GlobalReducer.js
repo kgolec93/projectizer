@@ -46,6 +46,10 @@ export const globalReducer = (state=globalState, action) => {
             return (
                 {...state, projectList: action.payload}
             )
+        case 'SELECT_PROJECT':
+            return (
+                {...state, selectedProject: action.payload}
+            )
         default:
             return state;             
     }

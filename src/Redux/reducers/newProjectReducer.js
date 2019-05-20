@@ -16,6 +16,8 @@ export const newProjectReducer = (state=newProjectState, action) => {
             return {...state, deadline: action.payload}
         case 'ADD_PROJECT':
             return {...state, projectName: '', projectLeader: '', deadline: ''}
+        case 'SELECT_DEADLINE':
+            return {...state, deadline: action.payload}
         default:
             return state;
     }

@@ -64,6 +64,7 @@ handleClick = () => {
                             projectKey={item.key}
                             projectName={item.name}
                             projectLeader={item.leader}
+                            deadline={item.deadline}
                         />
                     ))}
                 </div>

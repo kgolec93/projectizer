@@ -2,13 +2,17 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 import  firebase from 'firebase';
+import DatePicker from 'react-datepicker'
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const mapStateToProps = state => {
   return{
     projectName: state.newProject.projectName,
     projectLeader: state.newProject.projectLeader,
     deadline: state.newProject.deadline,
-    userData: state.global.firebaseUserData
+    userData: state.global.firebaseUserData,
+    calendarIsOpened: state.newProject.calendarIsOpened
   }
 }
 
@@ -17,24 +21,27 @@ const mapDispatchToProps = dispatch => {
     enterProjectName: (e) => dispatch({type: 'ENTER_PROJECTNAME', payload: e.target.value}),
     enterProjectLeader: (e) => dispatch({type: 'ENTER_PROJECTLEADER', payload: e.target.value}),
     test: () => dispatch({type:'TEST_MESSAGE'}),
-    addProject: (uid) => dispatch({type: 'ADD_PROJECT', payload: uid})
+    addProject: (uid) => dispatch({type: 'ADD_PROJECT', payload: uid}),
+    calendarChange: (date) => dispatch({type: 'SELECT_DEADLINE', payload: date}),
+    toggleCalendar: () => dispatch({type: 'TOGGLE_CALENDAR'})
   }
 }
 
 export class index extends Component {
 
+
+  ////// ADD PROJECT TO THE DB //////
   addProject = (event) => {
     firebase.database().ref(`users/${this.props.userData.uid}/projects`)
       .push({
-      name: this.props.projectName,
-      leader: this.props.projectLeader
-    })
+        name: this.props.projectName,
+        leader: this.props.projectLeader,
+        deadline: `${this.props.deadline}`
+      })
+    console.log(this.props.deadline)
     this.props.addProject();
     event.preventDefault();
   }
-
-  // firebase.database().ref(`users/${this.props.userData.uid}`)
-  // .once('value', (snapshot)=>this.props.fetchUserData(snapshot.val()))
 
   render() {
     return (
@@ -42,6 +49,7 @@ export class index extends Component {
         <form onSubmit={this.addProject}>
             <p>Project name:</p>
             <input 
+                required
                 type="text"
                 value={this.props.projectName}
                 onChange={this.props.enterProjectName}
@@ -49,12 +57,21 @@ export class index extends Component {
             />
             <p>Project leader:</p>
             <input 
+                required
                 type="text"
                 value={this.props.projectLeader}
                 onChange={this.props.enterProjectLeader}
             />
-            <p>Deadline (TEST SO FAR):</p>
-            <input type="text"/>
+
+            {/* DATE PICKER */}
+            <p>Deadline:</p>
+            <DatePicker
+              required
+              onChange={this.props.calendarChange}
+              selected={ this.props.deadline }
+            />
+
+            
             <br />
             <button type="submit">
                 Start project!
