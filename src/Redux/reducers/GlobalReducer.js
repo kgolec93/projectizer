@@ -4,7 +4,8 @@ const globalState = {
     firebaseUserData: null,
     isLogged: null,
     loggedUser: null,
-    userData: null
+    userData: null,
+    selectedProject: null
 }
 
 
@@ -49,6 +50,15 @@ export const globalReducer = (state=globalState, action) => {
         case 'SELECT_PROJECT':
             return (
                 {...state, selectedProject: action.payload}
+            )
+        case 'CLOSE_PROJECTPAGE':
+        
+            console.log("test")
+            return (
+                {...state, 
+                    selectedProject: null,
+                    
+                }
             )
         default:
             return state;             

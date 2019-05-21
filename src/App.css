@@ -3,7 +3,7 @@ header, footer {
   color: white;
   display: flex;
   justify-content: space-between;
-  z-index: 99;
+  z-index: 90;
 }
 
 header ul {
@@ -81,7 +81,7 @@ footer p {
 }
 
 .loader {
-  width: 50px;
+  width: 100px;
   height: auto;
   display: inline-block;
   margin-left: auto;
@@ -110,4 +110,22 @@ footer p {
   background-color: rgb(78, 78, 78);
   cursor: pointer;
   border-radius: 3px;
+}
+
+.blackout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(22, 22, 22, 0.5);
+  z-index: 99;
+  overflow: scroll;
+}
+
+.projectWindow {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+
 }

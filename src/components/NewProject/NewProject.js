@@ -36,7 +36,10 @@ export class index extends Component {
       .push({
         name: this.props.projectName,
         leader: this.props.projectLeader,
-        deadline: `${this.props.deadline}`
+        deadline: `${this.props.deadline}`,
+        dateAdded: Date.now(),
+        status: 'TO DO',
+        customStatus: 'Initial status'
       })
     console.log(this.props.deadline)
     this.props.addProject();

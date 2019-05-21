@@ -5,8 +5,15 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProjectPage from '../ProjectPage'
 import CurrentProjects from '../ProjectList/CurrentProjects'
 import NewProject from '../../components/NewProject/NewProject'
+import { connect } from 'react-redux'
 
-export class index extends Component {
+const mapStateToProps = state => {
+  return {
+    selectedProject: state.global.selectedProject
+  }
+}
+
+class index extends Component {
   render() {
     return (
       <Router>
@@ -15,16 +22,17 @@ export class index extends Component {
         <Link className='link' to='/projectpage'>TEST LINK TO PROJECT PAGE</Link><br />
         <Link className='link' to='/projects'>TEST LINK TO PROJECTS</Link><br />
         {/* <Link className='link' to='/projects/newproject'>TEST LINK TO NEW PROJECT</Link> */}
-        <Route 
+        <CurrentProjects />
+        {/* <Route 
             exact path='/projects' 
             projectName="janusz1"
             component={CurrentProjects}            
-          />
-          <Route 
-            path='/projectpage' 
-            projectName="janusz1"
-            component={ProjectPage}            
-          />          
+          /> */}
+          {this.props.selectedProject !== null &&
+            <ProjectPage 
+              selectedProject={this.props.selectedProject}
+            />
+          }
           <Route 
             path='/projects/newproject'
             component={NewProject}            
@@ -40,4 +48,5 @@ export class index extends Component {
   }
 }
 
-export default index
+export const ProjectList = connect(mapStateToProps)(index)
+export default ProjectList

@@ -1,18 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { projectData as data } from '../../testData/DevDatabase';
+// import { projectData as data } from '../../testData/DevDatabase';
 import  firebase from 'firebase';
 import NewProject from '../NewProject/NewProject';
+import Loader from '../Loader'
+import ProjectToDo from '../ProjectToDo'
+import ProjectComment from '../ProjectComment'
+import Moment from 'react-moment'
 
-const mapStateToProps = state => {
-  return{
+
+const mapStateToProps = state => {return {
+    commentList: Object.keys(state.projectPage.comments || {}).map(
+      key => ({
+        ...state.projectPage.comments[key],
+        key: key,
+      }),
+    ).reverse(),    
+    taskList: Object.keys(state.projectPage.tasks || {}).map(
+      key => ({
+        ...state.projectPage.tasks[key],
+        key: key,
+      }),
+    ),
+    data: state.projectPage.currentProjectData,
     commentInputVisible: state.projectPage.isCommentInputVisible,
     taskInputVisible: state.projectPage.isTaskInputVisible,
     taskInput: state.projectPage.taskInput,
-    data: state.projectPage.currentProjectData,
-    loggedUser: state.signIn.loggedUser,
+    loggedUser: state.global.loggedUser,
     commentInput: state.projectPage.commentInput,
-    userData: state.global.userData
+    firebaseUserData: state.global.firebaseUserData,
+    selectedProject: state.global.selectedProject,
   }
 }
 
@@ -20,67 +37,103 @@ const mapDispatchToProps = dispatch => {
   return{
     toggleNewComment:() => dispatch({type: 'TOGGLE_NEW_COMMENT'}),
     toggleNewTask:() => dispatch({type: 'TOGGLE_NEW_TASK'}),
-    loadDataToState:(data) => dispatch({type: 'LOAD_DATA', payload: data}),
     enterTask:(e) => dispatch({type: 'ENTER_TASK', payload: e.target.value}),
     enterComment:(e) => dispatch({type: 'ENTER_COMMENT', payload: e.target.value}),
     addTask:() => dispatch({type: 'ADD_TASK'}),
     addComment:() => dispatch({type: 'ADD_COMMENT'}),
+    projectData: (data) => dispatch({type: 'LOAD_DATA', payload: data}),
+    createList: (data) => dispatch({type: 'CREATE_PROJECT_LISTS', payload: data}),
+    closeProject: () => dispatch({type: 'CLOSE_PROJECTPAGE'})
   }
 }
 
 
 
-const taskStyle = {
-  display: 'flex',
-  width: '90%',
-  padding: '10px',
-  justifyContent: 'space-between',
-  backgroundColor: '#b0b4ba',
-  margin: '5px auto'
-}
-const commentStyle = {
-  width: '90%',
-  padding: '10px',
-  justifyContent: 'space-between',
-  backgroundColor: '#b0b4ba',
-  margin: '5px auto'
-}
-
 export class index extends Component {
+  constructor() {
+    super();
+    this.state = {
+      
+    }
+  }
+  componentDidMount() {
+    if (this.props.selectedProject !== null) {
+      firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
+      .on('value', snapshot => {
+        this.props.projectData(snapshot.val());
+        this.props.createList(snapshot.val());
+      })
+    }
+  }
 
   addTask = () => {
-    data.tasks.push({
-      name: this.props.taskInput,
-      date: '14.04.2019',
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/tasks`)
+    .push({
+      date: Date.now(),
+      text: this.props.taskInput,
       isDone: false
-    });
+    })
     this.props.addTask();
+    console.log("ADD TASK")
   }
 
   addComment = () => {
-    data.comments.push({
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/comments`)
+    .push({
       author: this.props.loggedUser,
-      date: '14.04.2019',
+      date: Date.now(),
       text: this.props.commentInput
-    });
+    })
     this.props.addComment();
+  }
+
+  closeWindow = () => {
+    this.props.closeProject();
+  }
+
+  test = () => {
+    console.log(this.props.taskList.length)
   }
 
   render() {
     if (this.props.data !== null) {
       return (
-        <div>
-          <h2>{data.name}</h2>
-          <p>Project leader: {this.props.data.leader}</p>
-          <p>{this.props.data.status}</p>
-          <p>{this.props.data.statusCustom}</p>
-          <h3>Tasks</h3>
-            {this.props.data.tasks.map(item => (
-              <div style={taskStyle}>
-                <p>{item.name}</p>
-                <p>{item.date}</p>
-              </div>
-            ))}
+        <div className="blackout" >
+          <div className="projectWindow">
+          <h1 onClick={this.closeWindow}>X</h1>
+          <h2 style={textStyle}>{this.props.data.name}</h2>
+          <p style={textStyle}>Project leader: {this.props.data.leader}</p>
+
+          <p style={textStyle}>Deadline:&nbsp; 
+            <Moment format="YYYY/MM/DD">
+                {this.props.data.deadline}
+            </Moment>
+          </p>
+          <p style={textStyle}>Started on&nbsp;
+            <Moment format="YYYY/MM/DD">
+              {this.props.data.dateAdded}
+            </Moment>
+          </p>
+          <p style={textStyle}>{this.props.projectData.status}</p>
+          <p style={textStyle}>{this.props.projectData.statusCustom}</p>
+
+          <hr />
+
+        {/* TASK LIST & TASK INPUT */}
+          <h3 onClick={this.test}>Tasks</h3>
+          {this.props.taskList !== null && 
+            <div>
+              {this.props.taskList.map(item => (
+                <ProjectToDo
+                  text={item.text}
+                  date={item.date}
+                  status={item.isDone}
+                  itemKey={item.key}
+                />
+              ))}
+            </div>
+          }
+
             <button onClick={this.props.toggleNewTask}>Add task</button>
             {this.props.taskInputVisible === true &&
               <div>
@@ -91,21 +144,27 @@ export class index extends Component {
                 <button onClick={this.addTask}>Add!</button>
               </div>
             }
-            <h3>Comments</h3>
-            {this.props.data.comments.map(item => (
-              <div style={commentStyle}>
-                <div style={{display: 'flex'}}>
-                  <p>{item.author}</p>
-                  <p>{item.date}</p>
-                </div>
-                <div>
-                  <p>{item.text}</p>
-                </div>
-              </div>
-  
-            ))}
-            
-            <button onClick={this.props.toggleNewComment}>Add comment</button>
+
+
+          <hr />
+
+
+        {/* COMMENT LIST & COMMENT INPUT */}
+          <h3>Comments</h3>
+          {this.props.commentList !== null &&
+            <div>
+              {this.props.commentList.map(item => (
+                <ProjectComment 
+                      author={item.author}   
+                      date={item.date}    
+                      text={item.text}   
+                      itemKey={item.key}          
+                />
+              ))}
+            </div>
+          }
+
+          <button onClick={this.props.toggleNewComment}>Add comment</button>
             {this.props.commentInputVisible === true &&
               <div>
                 <textarea name="" id="" cols="30" rows="10"
@@ -114,23 +173,27 @@ export class index extends Component {
                 ></textarea><br />
                 <button onClick={this.addComment}>Add!</button>
               </div>
-            }
+            } 
+
+          </div>
         </div>
       )
     }
     else {
       return(
-        <p>Data loading</p>
+        <Loader />
       )
     }
   }
-
-  // componentDidMount() {
-  //   this.props.loadDataToState(data);
-  // }
-
-
 }
 
-export const ProjectPage = connect(mapStateToProps, mapDispatchToProps)(index)
+const textStyle = {
+  color: 'white'
+}
+
+
+
+
+
+export const ProjectPage = connect(mapStateToProps, mapDispatchToProps )(index)
 export default ProjectPage

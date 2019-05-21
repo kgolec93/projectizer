@@ -36,7 +36,12 @@ export class index extends Component {
                       <img src={iconProject} className='headerIcon' alt=""/>
                     </Link>
                   </li>
-                  <li><img src={iconTaskList} className='headerIcon' alt=""/></li>
+                  <li>
+                  <Link className='link' to='/tasks'>
+                    <img src={iconTaskList} className='headerIcon' alt=""/>
+                  </Link>
+                  
+                  </li>
 
                   <li><img src={iconUser} className='headerIcon' alt=""/></li>
                   <li onClick={this.props.logUserOut}>Log out</li>

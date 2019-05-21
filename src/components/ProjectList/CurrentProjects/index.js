@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
     }
     return {
         firebaseUserData: state.global.firebaseUserData,
+        selectedProject: state.global.selectedProject,
         userData: state.global.userData
     }
 }
@@ -34,9 +35,6 @@ const mapDispatchToProps = (dispatch) => {
 export class index extends Component {
 
   componentDidMount() {
-      setTimeout(() => {
-          console.log(this.props.projectList)
-      }, 4000)
     // console.log(this.props.projectList)
     if (this.props.firebaseUserData !== undefined) {
         firebase.database().ref(`users/${this.props.firebaseUserData.uid}`)
@@ -68,18 +66,13 @@ handleClick = () => {
                         />
                     ))}
                 </div>
-            }
+            }  
             
-
-
-
             <Link to="/projects/newproject">
                 <div className="projectButton addProjectButton">
                     <p>Start a new project!</p>
                 </div>            
             </Link>
-
-            <NewProject />
         </div>
 
     )

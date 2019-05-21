@@ -1,14 +1,12 @@
-import  firebase from 'firebase';
-import { projectData as data } from '../../testData/DevDatabase' 
-
-
 const projectPageState = {
     taskInput: '',
     commentInput: '',
     statusInput: '',
     isCommentInputVisible: false,
     isTaskInputVisible: false,
-    currentProjectData: data
+    currentProjectData: null,
+    comments: null,
+    tasks: null
 }
 
 export const projectPageReducer = (state=projectPageState, action) => {
@@ -20,15 +18,23 @@ export const projectPageReducer = (state=projectPageState, action) => {
         case "ENTER_TASK":
             return {...state, taskInput: action.payload}
         case "ADD_TASK":
-            return {...state, currentProjectData: data, taskInput: ''}
+            return {...state, taskInput: ''}
         case "ADD_COMMENT":
-            return {...state, currentProjectData: data, commentInput: ''}
+            return {...state, commentInput: ''}
         case "ENTER_STATUS":
 
         case "TOGGLE_NEW_COMMENT":
             return {...state, isCommentInputVisible: !state.isCommentInputVisible}
         case "TOGGLE_NEW_TASK":
             return {...state, isTaskInputVisible: !state.isTaskInputVisible}
+        case "CREATE_PROJECT_LISTS":
+            return {...state, comments: action.payload.comments, tasks: action.payload.tasks}
+        case "CLOSE_PROJECTPAGE":
+            return {...state,
+                currentProjectData: null,
+                comments: null
+            }
+        
         default:
             return state;
     }

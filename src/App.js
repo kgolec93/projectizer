@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import { createStore } from 'redux';
-import {connect, Provider } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 // import Signup from './components/Signup'
 // import Texts from './components/Texts';
 import SignIn from './components/SignIn';
 import SignUp from './components/Signup'
-import { userdata } from './testData/DevDatabase'
 import ProjectButton from './components/ProjectButton'
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
 import ProjectList from './components/ProjectList'
 import ProjectPage from './components/ProjectPage'
 import { store } from './Redux'
@@ -17,6 +16,7 @@ import firebase from 'firebase'
 import  { FirebaseContext } from './components/Firebase';
 import Loader from './components/Loader'
 import Header from './components/Header'
+import Tasks from './components/Tasks'
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,8 @@ const mapStateToProps = state => {
       isLogged: state.global.isLogged,
       nazwa_uzytkownika: state.global.loggedUser,
       userData: state.global.firebaseUserData,
-      userDatabase: state.global.userData
+      userDatabase: state.global.userData,
+      selectedProject: state.global.selectedProject
   }
 }
 
@@ -63,12 +64,6 @@ export class MainApp extends Component {
       .once('value', (snapshot)=>{this.props.fetchUserData(snapshot.val())})
     )
     
-
-
-    // firebase.database().ref(`users/${this.props.firebaseUserData.uid}`)
-    // .on('value', snapshot => {
-    //     this.props.updateData(snapshot.val())
-    // })
   }
 
   fetchData = () => {
@@ -79,17 +74,6 @@ export class MainApp extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       user ? this.onSignIn(user) : this.props.logUserOut()
     });
-    
-    // if (this.props.userData !== null) {
-    //   firebase.database().ref(`users/${this.props.userData.uid}`)
-    //   .on('value', snapshot => {
-    //       this.props.fetchUserData(snapshot.val())
-    //   })
-    // }
-
-  
-    
-    
   }
 
   render() {
@@ -124,10 +108,9 @@ export class MainApp extends Component {
           <Header />
             <main>
               {/* <ProjectPage /> */}
-
-              <Route path exact='/' component={ProjectList}/>
-              <Route path ='/projects' component={ProjectList}/>
-              <Route path='/newproject' component={NewProject}/>
+                <Route exact path ='/'/>
+                <Route path ='/projects' component={ProjectList}/>
+                <Route path='/tasks' component={Tasks}/>
 
 
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import deleteIcon from '../../assets/icons/delete.svg'
 import Moment from 'react-moment'
-import moment from 'moment'
+// import moment from 'moment'
 import {connect} from 'react-redux'
 
 const mapStateToProps = state => {
