@@ -36,19 +36,6 @@ class index extends Component {
     event.preventDefault();
   }
 
-
-
-/// TESTING ISSUE
-logOut = () => {
-  firebase.auth().signOut()
-}
-
-/// TESTING ISSUE
-checkUser = () => {
-  var user = firebase.auth().currentUser;
-  console.log(user)
-}
-
   render() {
 
 
@@ -82,8 +69,6 @@ checkUser = () => {
                   Login
                   </button>
                 </form>
-            <button onClick={this.logOut}>TEST LOG OUT</button><br />
-            <button onClick={this.checkUser}>TEST CHECK USER</button><br />
 
             <Link to='/signup'>Don't have an account? Sign up!</Link>
         </div>

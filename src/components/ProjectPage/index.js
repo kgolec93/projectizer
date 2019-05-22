@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import  firebase from 'firebase';
 import NewProject from '../NewProject/NewProject';
 import Loader from '../Loader'
-import ProjectToDo from '../ProjectToDo'
+import ProjectTask from '../ProjectTask'
 import ProjectComment from '../ProjectComment'
 import Moment from 'react-moment'
 
@@ -56,10 +56,13 @@ export class index extends Component {
       
     }
   }
+
   componentDidMount() {
     if (this.props.selectedProject !== null) {
       firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
       .on('value', snapshot => {
+        console.log("CHANGE DATA");
+        console.log(snapshot.val());
         this.props.projectData(snapshot.val());
         this.props.createList(snapshot.val());
       })
@@ -74,7 +77,6 @@ export class index extends Component {
       isDone: false
     })
     this.props.addTask();
-    console.log("ADD TASK")
   }
 
   addComment = () => {
@@ -93,6 +95,14 @@ export class index extends Component {
 
   test = () => {
     console.log(this.props.taskList.length)
+  }
+
+  removeProject = () => {
+    
+    this.props.closeProject();
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
+    .remove();
+    this.closeWindow();
   }
 
   render() {
@@ -116,7 +126,9 @@ export class index extends Component {
           </p>
           <p style={textStyle}>{this.props.projectData.status}</p>
           <p style={textStyle}>{this.props.projectData.statusCustom}</p>
-
+          <br />
+          <br />
+          <p onClick={this.removeProject}>REMOVE</p>
           <hr />
 
         {/* TASK LIST & TASK INPUT */}
@@ -124,7 +136,7 @@ export class index extends Component {
           {this.props.taskList !== null && 
             <div>
               {this.props.taskList.map(item => (
-                <ProjectToDo
+                <ProjectTask
                   text={item.text}
                   date={item.date}
                   status={item.isDone}

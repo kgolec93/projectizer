@@ -90,11 +90,7 @@ export class MainApp extends Component {
             <Header />
             <Route exact path="/" component={SignIn} />
             <Route exact path="/signin" component={SignIn} />
-            <FirebaseContext.Consumer>
-              {firebase => {
-                return <Route exact path="/signup" component={SignUp} />
-              }}
-            </FirebaseContext.Consumer>
+            <Route exact path="/signup" component={SignUp} /> 
           </Router>
 
       )
@@ -108,9 +104,10 @@ export class MainApp extends Component {
           <Header />
             <main>
               {/* <ProjectPage /> */}
-                <Route exact path ='/'/>
+                <Route exact path ='/' component={ProjectList}/>
                 <Route path ='/projects' component={ProjectList}/>
                 <Route path='/tasks' component={Tasks}/>
+
 
 
 

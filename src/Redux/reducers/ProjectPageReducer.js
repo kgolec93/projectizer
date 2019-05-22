@@ -28,11 +28,14 @@ export const projectPageReducer = (state=projectPageState, action) => {
         case "TOGGLE_NEW_TASK":
             return {...state, isTaskInputVisible: !state.isTaskInputVisible}
         case "CREATE_PROJECT_LISTS":
-            return {...state, comments: action.payload.comments, tasks: action.payload.tasks}
+            if (action.payload !== null) {
+                return {...state, comments: action.payload.comments, tasks: action.payload.tasks}
+            }
         case "CLOSE_PROJECTPAGE":
             return {...state,
                 currentProjectData: null,
-                comments: null
+                comments: null,
+                tasks: null,
             }
         
         default:

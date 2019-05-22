@@ -23,7 +23,8 @@ const mapDispatchToProps = dispatch => {
     test: () => dispatch({type:'TEST_MESSAGE'}),
     addProject: (uid) => dispatch({type: 'ADD_PROJECT', payload: uid}),
     calendarChange: (date) => dispatch({type: 'SELECT_DEADLINE', payload: date}),
-    toggleCalendar: () => dispatch({type: 'TOGGLE_CALENDAR'})
+    toggleCalendar: () => dispatch({type: 'TOGGLE_CALENDAR'}),
+    toggleNewProjectForm: () => dispatch({type:'TOGGLE_NEWPROJECT'})
   }
 }
 
@@ -41,14 +42,15 @@ export class index extends Component {
         status: 'TO DO',
         customStatus: 'Initial status'
       })
-    console.log(this.props.deadline)
+    this.props.toggleNewProjectForm();
     this.props.addProject();
     event.preventDefault();
   }
 
   render() {
     return (
-      <div>
+      <div className="blackout">
+        <h1 onClick={this.props.toggleNewProjectForm}>X</h1>
         <form onSubmit={this.addProject}>
             <p>Project name:</p>
             <input 

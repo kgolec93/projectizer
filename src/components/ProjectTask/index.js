@@ -5,7 +5,8 @@ import Moment from 'react-moment'
 
 const mapStateToProps = state => {
     return{
-        firebaseUserData: state.global.firebaseUserData
+        firebaseUserData: state.global.firebaseUserData,
+        selectedProject: state.global.selectedProject
     }
 }
 
@@ -21,13 +22,13 @@ class index extends Component {
 
     // REMOVING CERTAIN ITEM
     removeItem = () => {
-        firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}`)
+        firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/tasks/${this.props.itemKey}`)
         .remove()
     }
 
     // CHANGE STATUS
     toggleStatus = () => {
-        const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}/isDone`)
+        const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/tasks/${this.props.itemKey}/isDone`)
         item.once('value', snapshot => {
            const status = !snapshot.val();
            item.set(status);
@@ -44,7 +45,7 @@ class index extends Component {
 
     // SAVE CHANGES IN TODO ITEM
     saveItem = () => {
-        const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}/text`)
+        const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/tasks/${this.props.itemKey}/text`)
         item.set(this.state.newText);
         
         this.setState({

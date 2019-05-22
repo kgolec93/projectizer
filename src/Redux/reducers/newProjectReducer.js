@@ -3,7 +3,8 @@ import firebase from'firebase'
 const newProjectState = {
     projectName: '',
     projectLeader: '',
-    deadline: ''
+    deadline: '',
+    isNewProjectShown: false,
 }
 
 export const newProjectReducer = (state=newProjectState, action) => {
@@ -18,6 +19,8 @@ export const newProjectReducer = (state=newProjectState, action) => {
             return {...state, projectName: '', projectLeader: '', deadline: ''}
         case 'SELECT_DEADLINE':
             return {...state, deadline: action.payload}
+        case 'TOGGLE_NEWPROJECT':
+            return {...state, isNewProjectShown: !state.isNewProjectShown}
         default:
             return state;
     }

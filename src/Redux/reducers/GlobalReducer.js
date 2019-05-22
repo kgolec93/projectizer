@@ -43,6 +43,10 @@ export const globalReducer = (state=globalState, action) => {
             return (
                 {...state, userData: action.payload}
             )
+        case "UPDATE_TASK_DATA":            
+            return (
+                {...state, userData: action.payload}
+            )
         case 'PROJECT_LIST':
             return (
                 {...state, projectList: action.payload}

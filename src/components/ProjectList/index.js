@@ -9,36 +9,38 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = state => {
   return {
-    selectedProject: state.global.selectedProject
+    selectedProject: state.global.selectedProject,
+    isNewProjectShown: state.newProject.isNewProjectShown
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleNewProjectForm: () => dispatch({type:'TOGGLE_NEWPROJECT'})
   }
 }
 
 class index extends Component {
+
   render() {
     return (
       <Router>
         <div>
-
-        <Link className='link' to='/projectpage'>TEST LINK TO PROJECT PAGE</Link><br />
-        <Link className='link' to='/projects'>TEST LINK TO PROJECTS</Link><br />
-        {/* <Link className='link' to='/projects/newproject'>TEST LINK TO NEW PROJECT</Link> */}
         <CurrentProjects />
-        {/* <Route 
-            exact path='/projects' 
-            projectName="janusz1"
-            component={CurrentProjects}            
-          /> */}
           {this.props.selectedProject !== null &&
             <ProjectPage 
               selectedProject={this.props.selectedProject}
             />
           }
-          <Route 
-            path='/projects/newproject'
-            component={NewProject}            
-          />
-          {/* <ProjectPage /> */}
-          
+
+          {this.props.isNewProjectShown === true &&
+            <NewProject />
+          }
+
+          <div onClick={this.props.toggleNewProjectForm} className="projectButton addProjectButton">
+              <p>Start a new project!</p>
+          </div>   
+      
 
         </div>
 
@@ -48,5 +50,5 @@ class index extends Component {
   }
 }
 
-export const ProjectList = connect(mapStateToProps)(index)
+export const ProjectList = connect(mapStateToProps, mapDispatchToProps)(index)
 export default ProjectList

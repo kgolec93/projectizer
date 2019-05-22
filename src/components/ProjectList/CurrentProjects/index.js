@@ -28,18 +28,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateData: (data) => dispatch({type: 'UPDATE_DATA', payload: data})
+        updateData: (data) => dispatch({type: 'UPDATE_DATA', payload: data}),
+        createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data})
     }
 }
 
 export class index extends Component {
 
   componentDidMount() {
-    // console.log(this.props.projectList)
     if (this.props.firebaseUserData !== undefined) {
         firebase.database().ref(`users/${this.props.firebaseUserData.uid}`)
         .on('value', snapshot => {
-            this.props.updateData(snapshot.val())
+            this.props.updateData(snapshot.val());
+            this.props.createList(snapshot.val());
         })
     }
   }
@@ -48,31 +49,44 @@ handleClick = () => {
     console.log(this.key)
 }
 
+removeProject = (proj) => {
+    proj.remove();
+}
+
   render() {
     return (
         <div>
-            <p>Current projects</p>
             {this.props.userData === null &&
                 <Loader/>
             }
             {this.props.userData !== null && 
                 <div>
-                    {this.props.projectList.map(item => (
-                        <ProjectButton 
-                            projectKey={item.key}
-                            projectName={item.name}
-                            projectLeader={item.leader}
-                            deadline={item.deadline}
-                        />
-                    ))}
-                </div>
+
+                    {this.props.projectList.length === 0 &&
+                    <div>
+                        You have no projects. Start a new one!
+                    </div>
+                    }
+
+                    {this.props.projectList.length !== 0 &&
+                        <div>
+                            {this.props.projectList.map(item => (
+                                <ProjectButton 
+                                    projectKey={item.key}
+                                    projectName={item.name}
+                                    projectLeader={item.leader}
+                                    deadline={item.deadline}
+                                    removeProject={this.removeProject}
+                                />
+                            ))}
+                        </div>
+                    }
+
+                </div>               
+
             }  
             
-            <Link to="/projects/newproject">
-                <div className="projectButton addProjectButton">
-                    <p>Start a new project!</p>
-                </div>            
-            </Link>
+
         </div>
 
     )
