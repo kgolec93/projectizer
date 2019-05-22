@@ -8,6 +8,12 @@ import ProjectTask from '../ProjectTask'
 import ProjectComment from '../ProjectComment'
 import Moment from 'react-moment'
 
+const statusList = 
+[
+  'To do',
+  'In progress',
+  'Done'
+]
 
 const mapStateToProps = state => {return {
     commentList: Object.keys(state.projectPage.comments || {}).map(
@@ -30,6 +36,7 @@ const mapStateToProps = state => {return {
     commentInput: state.projectPage.commentInput,
     firebaseUserData: state.global.firebaseUserData,
     selectedProject: state.global.selectedProject,
+    status: state.projectPage.status,
   }
 }
 
@@ -43,7 +50,8 @@ const mapDispatchToProps = dispatch => {
     addComment:() => dispatch({type: 'ADD_COMMENT'}),
     projectData: (data) => dispatch({type: 'LOAD_DATA', payload: data}),
     createList: (data) => dispatch({type: 'CREATE_PROJECT_LISTS', payload: data}),
-    closeProject: () => dispatch({type: 'CLOSE_PROJECTPAGE'})
+    closeProject: () => dispatch({type: 'CLOSE_PROJECTPAGE'}),
+    changeStatus: (status) => dispatch({type: 'CHANGE_STATUS', payload: status})
   }
 }
 
@@ -77,6 +85,10 @@ export class index extends Component {
       isDone: false
     })
     this.props.addTask();
+  }
+
+  changeStatus = (e) => {
+    this.props.changeStatus(e.target.value)
   }
 
   addComment = () => {
@@ -124,8 +136,27 @@ export class index extends Component {
               {this.props.data.dateAdded}
             </Moment>
           </p>
-          <p style={textStyle}>{this.props.projectData.status}</p>
-          <p style={textStyle}>{this.props.projectData.statusCustom}</p>
+
+
+
+
+
+          {/* STATUS LIST CHANGE - IN PROGRESS */}
+          <select onChange={this.changeStatus}>
+            {statusList.map(item => (
+              <option>{item}</option>
+            ))}
+          </select>
+
+
+
+
+
+          {/* FUNCTION TO BE DONE */}
+          <p style={textStyle}>{this.props.data.customStatus}</p>
+          <p>EDIT STATUS</p>
+
+
           <br />
           <br />
           <p onClick={this.removeProject}>REMOVE</p>

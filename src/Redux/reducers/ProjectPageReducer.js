@@ -6,7 +6,7 @@ const projectPageState = {
     isTaskInputVisible: false,
     currentProjectData: null,
     comments: null,
-    tasks: null
+    tasks: null,
 }
 
 export const projectPageReducer = (state=projectPageState, action) => {
@@ -37,6 +37,8 @@ export const projectPageReducer = (state=projectPageState, action) => {
                 comments: null,
                 tasks: null,
             }
+        case 'CHANGE_STATUS':
+            return {...state, status: action.payload}
         
         default:
             return state;

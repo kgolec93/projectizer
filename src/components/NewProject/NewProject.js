@@ -39,7 +39,7 @@ export class index extends Component {
         leader: this.props.projectLeader,
         deadline: `${this.props.deadline}`,
         dateAdded: Date.now(),
-        status: 'TO DO',
+        status: 'To do',
         customStatus: 'Initial status'
       })
     this.props.toggleNewProjectForm();
