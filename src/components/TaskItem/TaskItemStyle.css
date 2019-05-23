@@ -1,0 +1,13 @@
+.taskItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px dotted red;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.taskItemDone {
+    background-color: rgb(168, 202, 165);
+}

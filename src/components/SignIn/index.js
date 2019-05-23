@@ -26,6 +26,10 @@ const mapDispatchToProps = dispatch => {
 
 class index extends Component {
 
+  componentWillUnmount() {
+    this.props.dispatchError('')
+  }
+
   onSubmit = event => {
     firebase.auth().signInWithEmailAndPassword(this.props.emailInput, this.props.passwordInput)
     .catch((error) => {

@@ -5,21 +5,36 @@ import { Link } from 'react-router-dom'
 
 const mapStateToProps = state => {
     return {
-        emailInput: state.signIn.emailInput
+        emailInput: state.signIn.emailInput,
+        errorMessage: state.signUp.errorMessage,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        enterEmail: (e) => dispatch({type: 'ENTER_EMAIL', payload: e.target.value })
+        enterEmail: (e) => dispatch({type: 'ENTER_EMAIL', payload: e.target.value }),
+        dispatchError: (error) => dispatch({type: 'SIGNUP_ERROR', payload: error}),
     }
 }
 
 
 class index extends Component {
 
+    componentWillUnmount() {
+        this.props.dispatchError('')
+    }
+
     onSubmit = (e) => {
-        console.log(this.props.emailInput)
+
+        firebase.auth().sendPasswordResetEmail(this.props.emailInput)
+        .then(()=> this.props.dispatchError(`Email with further instructions has been sent`))
+        .catch((error)=>{
+                if (error) {
+                    this.props.dispatchError(error.message)
+                }
+            }
+        )
+        // console.log(this.props.emailInput)
         e.preventDefault();
     }
 

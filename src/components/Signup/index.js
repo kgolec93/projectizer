@@ -30,11 +30,55 @@ const mapDispatchToProps = dispatch => {
 
 export class index extends Component {
 
+componentWillUnmount() {
+    this.props.dispatchError('')
+}
 
-    
 
-  onSubmit = (event) => {
-  firebase.auth().createUserWithEmailAndPassword(this.props.email, this.props.password1)
+///////////////////////////////
+//////// REGISTER USER ////////
+///////////////////////////////
+onSubmit = (event) => {
+
+  ///////// SIGNUP FORM VALIDATION /////////
+  const username = this.props.username;
+  const email = this.props.email;
+  const pass1 = this.props.password1;
+  const pass2 = this.props.password2;
+
+  console.log(`username: ${username}`);
+  console.log(`email: ${email}`);
+  console.log(`pass1: ${pass1}`);
+  console.log(`pass2: ${pass2}`);
+
+
+  /////// CASE PASSWORDS DON'T MATCH //////
+  if (pass1 !== pass2) {
+    this.props.dispatchError(`Passwords don't match`)
+    event.preventDefault();
+  }
+
+  //////// CASE USERNAME IS EMPTY ///////
+  else if (username === '') {
+    this.props.dispatchError(`You need to enter your username`);
+    event.preventDefault();
+  }  
+  
+  //////// CASE EMAIL IS EMPTY ///////
+  else if (email === '') {
+    this.props.dispatchError(`You need to enter your email`);
+    event.preventDefault();
+  }  
+  
+  //////// CASE PASSWORD IS EMPTY ///////
+  else if (pass1 === '') {
+    this.props.dispatchError(`You entered no password`);
+    event.preventDefault();
+  }
+
+  //////// FINAL RESULT IF PRE-VALIDATION PASSED //////
+  else if (pass1 !== '' && pass1 === pass2 && username !== '' && email !== '') {
+    firebase.auth().createUserWithEmailAndPassword(this.props.email, this.props.password1)
     .then(authUser => {
       firebase.database().ref('users/' + authUser.user.uid).set({
         username: this.props.username,
@@ -46,7 +90,8 @@ export class index extends Component {
         this.props.dispatchError(error.message)
       }
     })
-  event.preventDefault();
+    event.preventDefault();
+  }
 }
 
   render() {

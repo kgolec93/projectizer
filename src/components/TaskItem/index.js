@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import firebase from 'firebase'
 import { connect } from 'react-redux'
 import Moment from 'react-moment'
+import './TaskItemStyle.css'
 
 const mapStateToProps = state => {
     return{
@@ -63,23 +64,23 @@ class index extends Component {
     render() {
         if (this.state.isEditing === false) {
             return (
-                <div style={taskStyle}>
-                    <p onClick={this.toggleStatus}>{this.props.status ? 'DONE' : 'TO DO'}</p>
-                    <p>{this.props.text}</p>
-                    <p>
+                <div className={this.props.status ? 'taskItemDone taskItem' : 'taskItem'}>
+                    <p style={{flex: '1'}} onClick={this.toggleStatus}>{this.props.status ? 'DONE' : 'TO DO'}</p>
+                    <p style={{flex: '10'}}>{this.props.text}</p>
+                    <p style={{flex: '3'}}>
                         <Moment format="YYYY/MM/DD">
                             {this.props.date}
                         </Moment>
                     </p>
-                    <p onClick={this.editItem}>EDIT</p>
-                    <p onClick={this.removeItem}>X</p>
+                    <p style={{flex: '1'}} onClick={this.editItem}>EDIT</p>
+                    <p style={{flex: '1'}} onClick={this.removeItem}>X</p>
                 </div>
             )
         }
 
         else if (this.state.isEditing === true) {
             return (
-                <div style={taskStyle}>
+                <div className='taskItem'>
                     <input 
                         value={this.state.newText}
                         onChange={this.handleChange} 
