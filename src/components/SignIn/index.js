@@ -43,7 +43,6 @@ class index extends Component {
     <div className="blackout">
         <div className="signupWindow">
             <h4>Sign in</h4>
-            <p>test: {this.props.username}</p>
             <form onSubmit={this.onSubmit} className="loginForm">
               
                   <input 
@@ -70,6 +69,7 @@ class index extends Component {
                   </button>
                 </form>
 
+            <Link to='/forgotpassword'>Forgot password?</Link><br />
             <Link to='/signup'>Don't have an account? Sign up!</Link>
         </div>
     </div>

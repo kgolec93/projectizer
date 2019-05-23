@@ -17,7 +17,7 @@ import  { FirebaseContext } from './components/Firebase';
 import Loader from './components/Loader'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
-
+import ForgotPassword from './components/ForgotPassword'
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /////// CZĘŚĆ REDUXOWA ///////////////////////////////////////////////////////////////////
@@ -89,8 +89,9 @@ export class MainApp extends Component {
           <Router>
             <Header />
             <Route exact path="/" component={SignIn} />
-            <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} /> 
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} /> 
+            <Route path="/forgotpassword" component={ForgotPassword }/>
           </Router>
 
       )
