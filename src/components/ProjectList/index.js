@@ -22,9 +22,8 @@ class index extends Component {
 
   render() {
     return (
-      <Router>
         <div>
-        <CurrentProjects />
+          <CurrentProjects />
           {this.props.selectedProject !== null &&
             <ProjectPage 
               selectedProject={this.props.selectedProject}
@@ -38,11 +37,8 @@ class index extends Component {
           <div onClick={this.props.toggleNewProjectForm} className="projectButton addProjectButton">
               <p>Start a new project!</p>
           </div>   
-      
-
         </div>
 
-      </Router> 
 
     )
   }
