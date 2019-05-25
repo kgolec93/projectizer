@@ -5,6 +5,9 @@ import Moment from 'react-moment'
 import './TaskItemStyle.css'
 import tickIcon from '../../assets/icons/tick.svg'
 
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css';
+
 const mapStateToProps = state => {
     return{
         firebaseUserData: state.global.firebaseUserData
@@ -18,7 +21,8 @@ class index extends Component {
         super();
         this.state = {
             isEditing: false,
-            newText: ''
+            newText: '',
+            newDate: ``
         }
     }
 
@@ -35,13 +39,17 @@ class index extends Component {
            const status = !snapshot.val();
            item.set(status);
         })
+
+        /// test
+        console.log(this.state.newDate)
     }
 
     // EDITING TODO ITEM
     editItem = () => {
         this.setState({
             isEditing: true,
-            newText: this.props.text
+            newText: this.props.text,
+            newDate: this.props.date
         })
     }
 
@@ -49,9 +57,14 @@ class index extends Component {
     saveItem = () => {
         const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}/text`)
         item.set(this.state.newText);
-        
+        if (this.state.newDate !== ''){
+            firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}/date`)
+            .set(this.state.newDate)
+        }
         this.setState({
-            isEditing: false
+            isEditing: false,
+            newText: '',
+            newDate: ''
         })
     }
 
@@ -60,6 +73,13 @@ class index extends Component {
         this.setState({
             newText: e.target.value
         })
+    }
+
+    dateUpdate = (newDate) => {
+        this.setState({
+            newDate: `newDate`
+        })
+        // console.log(date)
     }
     
 
@@ -92,10 +112,16 @@ class index extends Component {
 
         else if (this.state.isEditing === true) {
             return (
-                <div className='taskItem'>
+                <div className='taskItem'
+                    onClick={console.log(this.state)}>
                     <input 
                         value={this.state.newText}
                         onChange={this.handleChange} 
+                    />
+                    <DatePicker
+                        onChange={this.dateUpdate}
+                        selected={this.state.newDate}
+                        placeholderText="Change deadline date"
                     />
                     <p onClick={this.saveItem}>SAVE</p>
                 </div>
@@ -104,19 +130,8 @@ class index extends Component {
     }
 }
 
-
-const taskStyle = {
-    display: 'flex',
-    width: '90%',
-    padding: '10px',
-    justifyContent: 'space-between',
-    backgroundColor: '#b0b4ba',
-    margin: '5px auto'
-  }
-
-
-  export const ProjectTask = connect(mapStateToProps)(index)
-  export default ProjectTask
+export const ProjectTask = connect(mapStateToProps)(index)
+export default ProjectTask
   
 
 
