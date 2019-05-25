@@ -40,7 +40,7 @@ class index extends Component {
 
   render() {
     return (
-      <div className="blackout">
+      <div>
         <div className="signupWindow">
                 <h4>Reset password</h4>
                 <form onSubmit={this.onSubmit} className="loginForm">
@@ -63,7 +63,7 @@ class index extends Component {
                     </button>
                     </form>
 
-                <Link to='/signin'>Go back</Link>
+                <Link className="link" to='/signin'>Go back</Link>
             </div>
       </div>
     )

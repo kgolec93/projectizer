@@ -44,37 +44,36 @@ class index extends Component {
 
 
     return (
-    <div className="blackout">
+    <div>
         <div className="signupWindow">
             <h4>Sign in</h4>
             <form onSubmit={this.onSubmit} className="loginForm">
-              
-                  <input 
-                    type="text" 
-                    placeholder="Email" 
-                    value={this.props.emailInput} 
-                    onChange={this.props.enterEmail}
-                  />
-                  <input 
-                    type="password" 
-                    placeholder="Password" 
-                    value={this.props.passwordInput} 
-                    onChange={this.props.enterPassword}
-                  />
-                  {this.props.errorMessage !== null &&
-                    <p className="loginError">
-                      {this.props.errorMessage}
-                    </p>
-                  }
-                  <button 
-                    type="submit"
-                  >
-                  Login
-                  </button>
-                </form>
+              <input 
+                type="text" 
+                placeholder="Email" 
+                value={this.props.emailInput} 
+                onChange={this.props.enterEmail}
+              />
+              <input 
+                type="password" 
+                placeholder="Password" 
+                value={this.props.passwordInput} 
+                onChange={this.props.enterPassword}
+              />
+              {this.props.errorMessage !== null &&
+                <p className="loginError">
+                  {this.props.errorMessage}
+                </p>
+              }
+              <button 
+                type="submit"
+              >
+              Login
+              </button>
+            </form>
 
-            <Link to='/forgotpassword'>Forgot password?</Link><br />
-            <Link to='/signup'>Don't have an account? Sign up!</Link>
+            <Link className="link" to='/forgotpassword'>Forgot password?</Link><br />
+            <Link className="link" to='/signup'>Don't have an account? Sign up!</Link>
         </div>
     </div>
 

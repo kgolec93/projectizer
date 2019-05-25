@@ -16,7 +16,7 @@ const projectPageState = {
 export const projectPageReducer = (state=projectPageState, action) => {
     switch (action.type) {
         case "LOAD_DATA":
-            return {...state, currentProjectData: action.payload, status: action.payload.status}
+            return {...state, currentProjectData: action.payload}
         case "ENTER_COMMENT":
             return {...state, commentInput: action.payload}
         case "ENTER_TASK":
@@ -37,7 +37,7 @@ export const projectPageReducer = (state=projectPageState, action) => {
             return {...state, isStatusListVisible: !state.isStatusListVisible}
         case "CREATE_PROJECT_LISTS":
             if (action.payload !== null) {
-                return {...state, comments: action.payload.comments, tasks: action.payload.tasks}
+                return {...state, comments: action.payload.comments, tasks: action.payload.tasks, participants: action.payload.participants}
             }
         case "CLOSE_PROJECTPAGE":
             return {...state,

@@ -26,7 +26,7 @@ export class index extends Component {
   render() {
     return (
         <header>
-            <Link className='link' style={{color:'white'}} to='/'>WorkItUp!</Link>
+            <Link className='link' style={{color:'white'}} to='/'>Projectizer</Link>
             <div>
               {this.props.isLogged ? (
                 <ul>
@@ -53,8 +53,12 @@ export class index extends Component {
                 </ul>
               ) : (
                 <ul>
-                  <li>SIGN IN</li>
-                  <li>SIGN UP</li>
+                  <Link className="link" to='/signin'>
+                    <li className='headerButton'>SIGN IN</li>              
+                  </Link>
+                  <Link className="link" to='/signup'>                  
+                    <li className='headerButton'>SIGN UP</li>
+                  </Link>
                 </ul>
               )}
             </div>

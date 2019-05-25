@@ -96,7 +96,7 @@ onSubmit = (event) => {
 
   render() {
     return (
-      <div className="blackout">
+      <div>
         <div className="signupWindow">
           <h4>Join Us!</h4>
           <form onSubmit={this.onSubmit} className="loginForm">
@@ -137,7 +137,7 @@ onSubmit = (event) => {
               </button>
           </form>
 
-          <Link to='/signin'>Already have an account? Sign in!</Link>
+          <Link className="link" to='/signin'>Already have an account? Sign in!</Link>
         </div>
       </div>
 

@@ -11,18 +11,16 @@ header ul {
   list-style: none;
 }
 
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
 header li, p {
   padding: 4px;
 }
 
-main {
-  width: 70vw;
-  background-color: rgb(241, 241, 241);
-  margin: 0px auto;
-  height: 100%;
-  flex: auto;
-  box-shadow: 0px 0px 4px 0px rgb(177, 177, 177);
-}
 
 footer p {
   margin: auto;
@@ -84,7 +82,7 @@ footer p {
 .loader {
   width: 100px;
   height: auto;
-  display: inline-block;
+  display: block;
   margin-left: auto;
   margin-right: auto;
   animation: loader 2s infinite linear;
@@ -92,7 +90,6 @@ footer p {
 }
 
 .loaderMain {
-  
   position: fixed;
   top: 50vh;
   left: 50vw;
@@ -130,4 +127,57 @@ footer p {
   top: 10%;
   left: 10%;
 
+}
+
+.participantDetails {
+  width: 400px;
+  background: #444;
+  color: #f3f3f3;
+  transform: translate(-10%, -10%);
+  position: fixed;
+  padding: 10px;
+}
+
+.participantDetails ul {
+  list-style: none;
+}
+
+.participantDetails:hover {
+  cursor: default
+}
+
+.headerButton {
+  margin: 4px;
+  border: 1px solid white;
+  border-radius: 4px;
+  padding: 4px 16px;
+}
+
+.headerButton:hover {
+  cursor: pointer;
+}
+
+.homePage {
+  display: flex;
+  min-height: 100%;
+  height: 100%;
+  flex: auto;
+  border: 1px dotted blue;
+}
+
+.signupContainer {
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  width: 100%;
+  background-color: rgb(241, 241, 241);
+  margin: 0px auto;
+  height: 100%;
+  flex: auto;
+  box-shadow: 0px 0px 4px 0px rgb(177, 177, 177);
+  align-items: center;
 }

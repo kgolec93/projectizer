@@ -7,7 +7,7 @@ import { connect, Provider } from 'react-redux';
 import SignIn from './components/SignIn';
 import SignUp from './components/Signup'
 import ProjectButton from './components/ProjectButton'
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 import ProjectList from './components/ProjectList'
 import ProjectPage from './components/ProjectPage'
 import { store } from './Redux'
@@ -43,10 +43,19 @@ const mapStateToProps = state => {
   }
 
 
+  const HomePage = () => {
+    return (
+      <div className="homePage">
+        <div style={{flex: 2}}>
+          left side
+        </div>
+        <div className='signupContainer' style={{flex: 1}}>
+          {/* <SignUp /> */}
+        </div>
 
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
+      </div>
+    )
+  }
 
 
 export class MainApp extends Component {
@@ -81,14 +90,21 @@ export class MainApp extends Component {
       return (
           
           <Router>
-            <Header />
-            <Switch>
-              <Route exact path="/" component={SignIn} />
-              <Route path="/signin" component={SignIn} />
-              <Route path="/signup" component={SignUp} /> 
-              <Route path="/forgotpassword" component={ForgotPassword }/>
-              <Route component={NoMatch} />
-            </Switch>
+            <div className='landingPage'>
+              <Header />
+              <main>
+                <Switch> 
+                  <Route exact path="/" component={HomePage} />
+                  <Route path="/signin" component={SignIn} />
+                  <Route path="/signup" component={SignUp} /> 
+                  <Route path="/forgotpassword" component={ForgotPassword }/>
+                  <Route component={NoMatch} />
+                </Switch>
+              </main>
+              <footer>
+                <p>kgolec93</p>
+              </footer>
+            </div>
 
           </Router>
 
@@ -97,13 +113,13 @@ export class MainApp extends Component {
     if (this.props.isLogged !== false ) {
       return (
         <Router>
-
         <div>
           <div className="landingPage">
           <Header />
             <main>
               {/* <ProjectPage /> */}
               <Switch>
+                <Route path="/signin" render={() => (<Redirect to="/" />)} /> 
                 <Route exact path ='/' component={ProjectList}/>
                 <Route path ='/projects' component={ProjectList}/>
                 <Route path='/tasks' component={Tasks}/>
