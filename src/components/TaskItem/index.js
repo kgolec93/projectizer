@@ -3,6 +3,7 @@ import firebase from 'firebase'
 import { connect } from 'react-redux'
 import Moment from 'react-moment'
 import './TaskItemStyle.css'
+import tickIcon from '../../assets/icons/tick.svg'
 
 const mapStateToProps = state => {
     return{
@@ -66,7 +67,17 @@ class index extends Component {
         if (this.state.isEditing === false) {
             return (
                 <div className={this.props.status ? 'taskItemDone taskItem' : 'taskItem'}>
-                    <p style={{flex: '1'}} onClick={this.toggleStatus}>{this.props.status ? 'DONE' : 'TO DO'}</p>
+                    <div style={{flex: '1'}} onClick={this.toggleStatus}>
+                        {this.props.status ? 
+                            <div className="taskStatusButton">
+                                <img src={tickIcon} className='tickIcon' alt=""/>
+                            </div> 
+                            : 
+                            <div className="taskStatusButton">
+                                
+                            </div> 
+                        }
+                    </div>
                     <p style={{flex: '10'}}>{this.props.text}</p>
                     <p style={{flex: '3'}}>
                         <Moment format="YYYY/MM/DD">
