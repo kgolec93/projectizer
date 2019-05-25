@@ -10,6 +10,7 @@ const mapStateToProps = state => {
     }
 }
 
+
 class index extends Component {
 
     constructor() {

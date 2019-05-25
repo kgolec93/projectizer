@@ -4,6 +4,8 @@ import TaskItem from '../TaskItem'
 import firebase from 'firebase'
 import Loader from '../Loader'
 
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css';
 
 
 const mapStateToProps = state => {
@@ -16,16 +18,20 @@ const mapStateToProps = state => {
     ),
     firebaseUserData: state.global.firebaseUserData,
     userData: state.global.userData,
-    tasks: state.task.tasks
+    tasks: state.task.tasks,
+    deadline: state.task.deadline
   }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
       updateData: (data) => dispatch({type: 'UPDATE_TASK_DATA', payload: data}),
-      createTaskList: (data) =>dispatch({type: 'CREATE_TASK_LIST', payload: data})
+      createTaskList: (data) =>dispatch({type: 'CREATE_TASK_LIST', payload: data}),
+      calendarChange: (date) => dispatch({type: 'SELECT_TASK_DEADLINE', payload: date}),
+
     }
 }
+
 
 class index extends Component {
   componentDidMount() {
@@ -48,7 +54,7 @@ class index extends Component {
   addTask = () => {
       firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks`)
       .push({
-        date: Date.now(),
+        date: `${this.props.deadline}`,
         text: this.state.taskInput,
         isDone: false
       })
@@ -104,8 +110,15 @@ class index extends Component {
         {/* New task input form */}
         <div>
           <input 
+            required
             value={this.state.taskInput}
             onChange={this.taskInput}
+            placeholder="Enter task name"
+          />
+          <DatePicker
+              onChange={this.props.calendarChange}
+              selected={this.props.deadline }
+              placeholderText="Choose deadline date"
           />
           <button onClick={this.addTask}>Add!</button>
         </div>

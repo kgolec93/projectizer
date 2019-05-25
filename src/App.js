@@ -18,15 +18,10 @@ import Loader from './components/Loader'
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import ForgotPassword from './components/ForgotPassword'
-
-//////////////////////////////////////////////////////////////////////////////////////////
-/////// CZĘŚĆ REDUXOWA ///////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////
+import UserPage from './components/UserPage';
+import NoMatch from './components/NoMatch'
 
 
-
-
-/// tutaj stan ze store przekazuje się do propsów
 const mapStateToProps = state => {
   return {
       isLogged: state.global.isLogged,
@@ -37,7 +32,6 @@ const mapStateToProps = state => {
   }
 }
 
-  // a tutaj do propsów przekazują się akcje do wywołania
   const mapDispatchToProps = dispatch => {
     return {
         increment: () => dispatch({ type: 'INCREMENT'}),
@@ -88,10 +82,14 @@ export class MainApp extends Component {
           
           <Router>
             <Header />
-            <Route exact path="/" component={SignIn} />
-            <Route path="/signin" component={SignIn} />
-            <Route path="/signup" component={SignUp} /> 
-            <Route path="/forgotpassword" component={ForgotPassword }/>
+            <Switch>
+              <Route exact path="/" component={SignIn} />
+              <Route path="/signin" component={SignIn} />
+              <Route path="/signup" component={SignUp} /> 
+              <Route path="/forgotpassword" component={ForgotPassword }/>
+              <Route component={NoMatch} />
+            </Switch>
+
           </Router>
 
       )
@@ -105,9 +103,14 @@ export class MainApp extends Component {
           <Header />
             <main>
               {/* <ProjectPage /> */}
+              <Switch>
                 <Route exact path ='/' component={ProjectList}/>
                 <Route path ='/projects' component={ProjectList}/>
                 <Route path='/tasks' component={Tasks}/>
+                <Route path='/user' component={UserPage}/>
+                <Route component={NoMatch} />
+              </Switch>
+
 
 
 
@@ -138,33 +141,6 @@ export class App extends Component {
       currentProject: ''
     }
   }
-
-  //   // FORM VALIDATION
-
-  //   // Check if username is not taken
-
-  //   // Check if email is not taken
-
-  //   // 
-
-
-  //   // ///////////////////////////////////////
-  //   // //// FIREBASE CREATE USER FUNCTION ////
-  //   // ///////////////////////////////////////
-
-
-    
-
-  // }
-
-  // doSignIn = (email, password) => {
-  //   if (email === userdata.email && password === userdata.password) {
-  //     this.setState({isLogged: true, loggedUser: userdata.username})
-  //   }
-  //   else {
-  //     alert("Wrong email or password")
-  //   }
-  // }
 
   render() {
     return(

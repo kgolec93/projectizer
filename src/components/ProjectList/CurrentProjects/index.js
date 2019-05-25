@@ -76,7 +76,7 @@ removeProject = (proj) => {
                                     projectName={item.name}
                                     projectLeader={item.leader}
                                     deadline={item.deadline}
-                                    removeProject={this.removeProject}
+                                    status={item.status}
                                 />
                             ))}
                         </div>

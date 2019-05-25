@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { userdata } from '../../testData/DevDatabase'
-import ProjectButton from '../ProjectButton'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProjectPage from '../ProjectPage'
 import CurrentProjects from '../ProjectList/CurrentProjects'

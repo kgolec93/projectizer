@@ -1,6 +1,7 @@
 const taskListState = {
     taskInput: '',
-    tasks: null
+    tasks: null,
+    deadline: ''
 }
 
 export const taskReducer = (state=taskListState, action) => 
@@ -13,6 +14,8 @@ export const taskReducer = (state=taskListState, action) =>
                 ...state,
                 tasks: action.payload.tasks
             }
+        case 'SELECT_TASK_DEADLINE':
+                return {...state, deadline: action.payload}
         default:
             return state;
     }

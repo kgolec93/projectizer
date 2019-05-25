@@ -32,6 +32,7 @@ export class index extends Component {
                     <Moment style={pStyle} format="YYYY/MM/DD">
                         {this.props.deadline}
                     </Moment>
+                    <p style={pStyle}>{this.props.status}</p>
                 </div>
             </div>
 
