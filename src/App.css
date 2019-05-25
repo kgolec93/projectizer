@@ -133,7 +133,7 @@ footer p {
   width: 400px;
   background: #444;
   color: #f3f3f3;
-  transform: translate(-10%, -10%);
+  transform: translate(-10%, -90%);
   position: fixed;
   padding: 10px;
 }
