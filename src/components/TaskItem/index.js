@@ -126,7 +126,7 @@ class index extends Component {
                         value={this.state.newText}
                         onChange={this.handleChange} 
                     />
-                    <p onClick={this.saveItem} className='taskSaveButton hover'>SAVE</p>
+                    <div onClick={this.saveItem} className='taskSaveButton hover'><p>SAVE</p></div>
                 </div>
             )
         }

@@ -51,7 +51,7 @@ class index extends Component {
     this.state = {
       taskInput: '',
       isInputVisible: false,
-      errorMsg: false
+      errorMsg: false,
     }
   }
 
@@ -88,7 +88,8 @@ class index extends Component {
 
   toggleTaskInput = () => {
     this.setState({
-      isInputVisible: !this.state.isInputVisible
+      isInputVisible: !this.state.isInputVisible,
+      errorMsg: false
     })
   }
 
@@ -107,7 +108,7 @@ class index extends Component {
           <div>
           {/* New task input form */}
           {this.state.isInputVisible === true &&
-            <div>
+            <div className='newTask'>
               <input 
                 required
                 value={this.state.taskInput}
@@ -115,12 +116,22 @@ class index extends Component {
                 placeholder="Enter task name"
               />
               <DatePicker
-                  onChange={this.props.calendarChange}
-                  selected={this.props.deadline }
-                  placeholderText="Choose deadline date"
+                className='taskDatepicker'
+                onChange={this.props.calendarChange}
+                selected={this.props.deadline}
+                placeholderText="Choose deadline date"
               />
-              <button onClick={this.addTask}>Add!</button>
-              <button onClick={this.toggleTaskInput}>Cancel</button>
+              <button 
+                className='hover'
+                onClick={this.addTask} 
+                style={{flex: 1}}>Add!
+              </button>
+              <button 
+                className='hover'
+                onClick={this.toggleTaskInput} 
+                style={{flex: 1}}>Cancel
+              </button>
+
               {this.state.errorMsg ?
                 <p>
                   Name field cannot be empty
