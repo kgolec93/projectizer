@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => {
     return {
       updateData: (data) => dispatch({type: 'UPDATE_TASK_DATA', payload: data}),
       createTaskList: (data) =>dispatch({type: 'CREATE_TASK_LIST', payload: data}),
-      calendarChange: (date) => dispatch({type: 'SELECT_TASK_DEADLINE', payload: date}),
+      calendarChange: (date) => dispatch({type: 'SELECT_TASK_DEADLINE', payload: date.getTime()}),
 
     }
 }
@@ -47,20 +47,31 @@ class index extends Component {
   constructor() {
     super();
     this.state = {
-      taskInput: ''
+      taskInput: '',
+      isInputVisible: false,
+      errorMsg: false
     }
   }
 
   addTask = () => {
+    if (this.state.taskInput !== '') {
       firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks`)
       .push({
-        date: `${this.props.deadline}`,
+        date: this.props.deadline,
         text: this.state.taskInput,
         isDone: false
       })
-    this.setState({
-      taskInput: ''
-    })
+      this.setState({
+        isInputVisible: false,
+        taskInput: '',
+        date: '',
+        errorMsg: false
+      })
+    }
+    else {
+      this.setState({errorMsg: true})
+    }
+
   }
 
   taskInput = (e) => {
@@ -71,6 +82,12 @@ class index extends Component {
 
   test = () => {
     console.log(this.props.taskList)
+  }
+
+  toggleTaskInput = () => {
+    this.setState({
+      isInputVisible: !this.state.isInputVisible
+    })
   }
 
   render() {
@@ -108,6 +125,7 @@ class index extends Component {
         }  
 
         {/* New task input form */}
+        {this.state.isInputVisible ? 
         <div>
           <input 
             required
@@ -121,7 +139,21 @@ class index extends Component {
               placeholderText="Choose deadline date"
           />
           <button onClick={this.addTask}>Add!</button>
+          <button onClick={this.toggleTaskInput}>Cancel</button>
+          {this.state.errorMsg ?
+            <p>
+              Name field cannot be empty
+            </p>
+            :
+            <p></p>
+          }
         </div>
+        :
+        <div onClick={this.toggleTaskInput}> 
+          <p>Add new task!</p>
+        </div>
+        }
+
 
       </div>
     )

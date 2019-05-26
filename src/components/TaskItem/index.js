@@ -10,7 +10,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const mapStateToProps = state => {
     return{
-        firebaseUserData: state.global.firebaseUserData
+        firebaseUserData: state.global.firebaseUserData,
+        itemIsEdited: state.task.itemIsEdited
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        editItem: (key)=> dispatch({type: 'TOGGLE_EDIT', payload: key})
     }
 }
 
@@ -20,11 +27,16 @@ class index extends Component {
     constructor() {
         super();
         this.state = {
+            thisItem: '',
             isEditing: false,
             newText: '',
-            newDate: ``
+            newDate: ''
         }
     }
+
+    // componentDidUpdate() {
+    //     console.log(this.state)
+    // }
 
     // REMOVING CERTAIN ITEM
     removeItem = () => {
@@ -41,31 +53,33 @@ class index extends Component {
         })
 
         /// test
-        console.log(this.state.newDate)
+        // console.log(this.state.newDate)
     }
 
     // EDITING TODO ITEM
     editItem = () => {
+        const selected = this.props.itemKey
+        console.log(selected)
+        // this.props.editItem(this.props.itemKey)        
         this.setState({
+            thisItem: selected,
             isEditing: true,
             newText: this.props.text,
-            newDate: this.props.date
+            newDate: this.props.newDate
         })
+        console.log(this.state)
     }
 
     // SAVE CHANGES IN TODO ITEM
     saveItem = () => {
         const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}/text`)
         item.set(this.state.newText);
-        if (this.state.newDate !== ''){
-            firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}/date`)
-            .set(this.state.newDate)
-        }
         this.setState({
             isEditing: false,
             newText: '',
-            newDate: ''
+            newDate: this.props.date
         })
+        this.props.editItem('')
     }
 
     // CONTROLLED INPUT
@@ -73,15 +87,7 @@ class index extends Component {
         this.setState({
             newText: e.target.value
         })
-    }
-
-    dateUpdate = (newDate) => {
-        this.setState({
-            newDate: `newDate`
-        })
-        // console.log(date)
-    }
-    
+    }  
 
     render() {
         if (this.state.isEditing === false) {
@@ -112,16 +118,10 @@ class index extends Component {
 
         else if (this.state.isEditing === true) {
             return (
-                <div className='taskItem'
-                    onClick={console.log(this.state)}>
+                <div className='taskItem'>
                     <input 
                         value={this.state.newText}
                         onChange={this.handleChange} 
-                    />
-                    <DatePicker
-                        onChange={this.dateUpdate}
-                        selected={this.state.newDate}
-                        placeholderText="Change deadline date"
                     />
                     <p onClick={this.saveItem}>SAVE</p>
                 </div>
@@ -130,7 +130,7 @@ class index extends Component {
     }
 }
 
-export const ProjectTask = connect(mapStateToProps)(index)
+export const ProjectTask = connect(mapStateToProps, mapDispatchToProps)(index)
 export default ProjectTask
   
 

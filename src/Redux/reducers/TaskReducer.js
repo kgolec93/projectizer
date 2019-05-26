@@ -1,12 +1,15 @@
 const taskListState = {
     taskInput: '',
     tasks: null,
-    deadline: ''
+    deadline: '',
+    itemIsEdited: '',
 }
 
 export const taskReducer = (state=taskListState, action) => 
 {
     switch(action.type) {
+        case 'TOGGLE_EDIT':
+            return {...state, itemIsEdited: action.payload}
         case 'TASK_INPUT':
             return {...state, taskInput: action.value}
         case 'CREATE_TASK_LIST':
