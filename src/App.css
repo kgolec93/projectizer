@@ -133,27 +133,7 @@ footer p {
   padding: auto;
 }
 
-.projectWindow {
-  padding: 30px;
 
-}
-
-.participantDetails {
-  width: 400px;
-  background: #444;
-  color: #f3f3f3;
-  transform: translate(-10%, -90%);
-  position: fixed;
-  padding: 10px;
-}
-
-.participantDetails ul {
-  list-style: none;
-}
-
-.participantDetails:hover {
-  cursor: default
-}
 
 .headerButton {
   margin: 4px;
@@ -189,7 +169,6 @@ main {
   flex: auto;
   box-shadow: 0px 0px 4px 0px rgb(177, 177, 177);
   align-items: center;
-  padding: 20px;
 }
 
 .hover:hover {
@@ -272,3 +251,99 @@ main {
 .editableText {
   display: flex;
 }
+
+/* PROJECT PAGE STYLING */
+
+.projectWindow {
+  padding: 30px;
+  max-width: 1168px;
+  margin: 0px auto;
+  background-color: #dadde7;
+}
+
+.projectHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.projectHeader>*{
+  padding: 4px;
+}
+
+.projectHeader h2 {
+  font-weight: 200;
+  font-size: 2em;
+}
+
+.projectHeader2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.statusButton {
+  border: 1px solid #373f61;
+  border-radius: 4px;
+  text-align: center;
+  flex: 1;
+}
+
+.projectHR {
+  border: none;
+  border-top: 1px solid #373f61;
+  margin: 24px 0px;
+}
+
+.projectTextContainer {
+  padding: 8px;
+}
+
+/* PROJECT PARTICIPANT ITEM */
+
+.participantContainer {
+  background-color: #f3f3f3;
+  display: flex;
+  flex-direction: column;
+  /* test */
+  margin-top: 8px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.participantBasic {
+  display: flex;
+}
+
+.participantDetails {
+  display: flex;
+  flex-direction: column;
+  padding-left: 24px;
+}
+
+.participantDetails:hover {
+  cursor: default
+}
+
+.projectpageAddButton {
+  /* height: 100px; */
+  border: none;
+  margin-top: 8px;
+  background-color: #373f61;
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  color: #f3f3f3;
+}
+
+/* PROJECT TASK ITEM  */
+ .projectTaskContainer {
+  background-color: #f3f3f3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding: 4px;
+  border-radius: 4px;
+ }

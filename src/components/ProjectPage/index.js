@@ -96,7 +96,9 @@ export class index extends Component {
       editLeader: false,
       editLeaderInput: '',
       editCustomStatus: false,
-      editCustomStatusInput: ''
+      editCustomStatusInput: '',
+      editStatusList: false,
+      editStatusListInput: ''
     }
   }
 
@@ -120,17 +122,6 @@ export class index extends Component {
       isDone: false
     })
     this.props.addTask();
-  }
-
-  changeStatus = (e) => {    
-
-    this.props.changeStatus(e.target.value);
-    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
-    .update({
-      status: e.target.value
-    })
-    this.props.toggleStatusList();
-
   }
 
   addComment = () => {
@@ -269,76 +260,99 @@ export class index extends Component {
     })
     this.setState({editCustomStatus: false, editCustomStatusInput: ''})
   }
+
+  toggleEditStatusList = () => {
+    this.setState({editStatusList: !this.state.editStatusList})
+  }
+
+  changeStatus = (e) => {
+    // this.props.changeStatus(e.target.value);
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
+    .update({
+      status: e.target.value
+    })
+    this.toggleEditStatusList();
+  }
+
+  testPart = (e) => {
+    console.log(e.target.key)
+  }
+
   ////////////////////////////////////////
 
   render() {
     if (this.props.data !== null) {
       return (
-        <div>
-          <div className="projectWindow">
+        <div className="projectWindow">
           <Link to="/projects" className="link">
-            <h1 onClick={this.closeWindow}>X</h1>
+            <p onClick={this.closeWindow}>Go back</p>
           </Link>
 
           {/* EDITABLE PROJECT NAME */}
-          {this.state.editName ? 
-          <div>
-            <input 
-              name='editName'
-              value={this.state.editNameInput}
-              onChange={this.enterValue}
-              type="text"
-            />
-            <button onClick={this.updateName}>Update</button>
-          </div>
-          :
-          <div className="hover editableText" onClick={this.toggleEditName}>
-            <h2>{this.props.data.name}</h2>
-          </div>
-          }
-
-          {/* EDITABLE PROJECT LEADER */}
-          {this.state.editLeader ? 
-          <div>
-            <input 
-              name='editLeader'
-              value={this.state.editLeaderInput}
-              onChange={this.enterValue}
-              type="text"
-            />
-            <button onClick={this.updateLeader}>Update</button>
-          </div>
-          :
-          <div className="hover editableText" onClick={this.toggleEditLeader}>
-            <p>Project leader: {this.props.data.leader}</p>
-          </div>
-          }
-
-
-          
-          <p>Deadline:&nbsp; 
-            <Moment format="YYYY/MM/DD">
-                {this.props.data.deadline}
-            </Moment>
-          </p>
-          <p>Started on&nbsp;
-            <Moment format="YYYY/MM/DD">
-              {this.props.data.dateAdded}
-            </Moment>
-          </p>
-
-        {/* STATUS LIST CHANGE - IN PROGRESS */}
-          {this.props.statusList ? 
-            <select onChange={this.changeStatus}>
-              {statusList.map(item => (
-                <option>{item}</option>
-              ))}
-            </select>
+          <div className='projectHeader'>
+            {this.state.editName ? 
+            <div style={{flex: 5}}>
+              <input 
+                name='editName'
+                value={this.state.editNameInput}
+                onChange={this.enterValue}
+                type="text"
+              />
+              <button onClick={this.updateName}>Update</button>
+            </div>
             :
-            <p onClick={this.props.toggleStatusList}>
-              {this.props.data.status}
+            <div style={{flex: 5}} className="hover" onClick={this.toggleEditName}>
+              <h2>{this.props.data.name}</h2>
+            </div>
+            }
+
+            {/* PROJECT DEADLINE */}
+            <p style={{flex: 1}} className='statusButton'>Deadline:&nbsp; 
+              <Moment format="YYYY/MM/DD">
+                  {this.props.data.deadline}
+              </Moment>
             </p>
-          }
+
+            {/* STATUS LIST CHANGE */}          
+            {this.state.editStatusList ? 
+              <select style={{flex: 1}} onChange={this.changeStatus}>
+                  <option value='' disabled selected>Change status</option>
+                  <option value='To do'>To do</option>
+                  <option value='In progress'>In progress</option>
+                  <option value='Done'>Done</option>
+              </select>
+              :
+              <p onClick={this.toggleEditStatusList} className='statusButton hover'>
+                {this.props.data.status} 
+              </p>
+            }
+          </div>
+          <div className='projectTextContainer'>
+            <p style={{fontWeight: 100, fontSize: '0.8rem'}}>Started on&nbsp;
+              <Moment format="YYYY/MM/DD">
+                {this.props.data.dateAdded}
+              </Moment>
+            </p>
+          </div>
+          
+          <div className='projectHeader2'>
+            {/* EDITABLE PROJECT LEADER */}
+            {this.state.editLeader ? 
+            <div>
+              <input 
+                name='editLeader'
+                value={this.state.editLeaderInput}
+                onChange={this.enterValue}
+                type="text"
+              />
+              <button onClick={this.updateLeader}>Update</button>
+            </div>
+            :
+            <div className="hover projectTextContainer" onClick={this.toggleEditLeader}>
+              <h4 style={{fontWeight: 200}}>Project leader: <span style={{fontWeight: 400}}>{this.props.data.leader}</span></h4>
+            </div>
+            }
+          </div>
 
         {/* CHANGE CUSTOM STATUS */}
           {this.state.editCustomStatus ?
@@ -357,29 +371,11 @@ export class index extends Component {
               </form>
             </div>
             :
-            <div className="hover editableText" onClick={this.toggleEditCustomStatus}>
-              <p>Status: {this.props.data.customStatus}</p>
+            <div className="hover projectTextContainer" onClick={this.toggleEditCustomStatus}>
+              <h4 style={{fontWeight: 200}}>Status: <span style={{fontWeight: 400}}>{this.props.data.customStatus}</span></h4>
             </div>
           }
-
-          <br />
-          <br />
-          <p onClick={this.toggleConfirmationWindow}>REMOVE PROJECT (TEST)</p>
-          
-          {/* Remove project confirmation */}
-          {this.state.isConfirmationWindow === true &&
-          <div>
-            <p>Are you sure? You cannot undo this action!</p>
-            <button onClick={this.removeProject}>Yes, remove project</button>
-            <button onClick={this.toggleConfirmationWindow}>Cancel</button>
-          </div>
-          }
-
-          <hr />
-
-
-
-
+          <hr className='projectHR' />
 
         {/* PARTICIPANTS LIST */}
           <h3>Participants</h3>     
@@ -392,6 +388,7 @@ export class index extends Component {
                 name={item.name}
                 email={item.email}
                 number={item.number}
+                itemKey={item.key}
               />
             ))
           }
@@ -434,9 +431,10 @@ export class index extends Component {
               <button onClick={this.toggleParticipantForm}>CANCEL</button>
             </div>
             :          
-            <button onClick={this.toggleParticipantForm}>Add participant</button>
+            <button className='projectpageAddButton' onClick={this.toggleParticipantForm}>Add participant</button>
           }
           
+        <hr className='projectHR' />
         {/* TASK LIST & TASK INPUT */}
           <h3>Tasks</h3>
           {this.props.taskList !== null && 
@@ -462,9 +460,10 @@ export class index extends Component {
                 <button onClick={this.props.toggleNewTask}>Cancel</button>
               </div>
               :
-              <button onClick={this.props.toggleNewTask}>Add task</button>
+              <button className='projectpageAddButton' onClick={this.props.toggleNewTask}>Add task</button>
             }
-          <hr />
+
+          <hr className='projectHR' />
 
 
         {/* COMMENT LIST & COMMENT INPUT */}
@@ -492,10 +491,19 @@ export class index extends Component {
                 <button onClick={this.props.toggleNewComment}>Cancel</button>
               </div>
               :
-              <button onClick={this.props.toggleNewComment}>Add comment</button>
+              <button className='projectpageAddButton' onClick={this.props.toggleNewComment}>Add comment</button>
             } 
-
-          </div>
+            <br />
+            <p onClick={this.toggleConfirmationWindow}>REMOVE PROJECT (TEST)</p>
+            
+            {/* Remove project confirmation */}
+            {this.state.isConfirmationWindow === true &&
+            <div>
+              <p>Are you sure? You cannot undo this action!</p>
+              <button onClick={this.removeProject}>Yes, remove project</button>
+              <button onClick={this.toggleConfirmationWindow}>Cancel</button>
+            </div>
+            }
         </div>
       )
     }

@@ -64,23 +64,23 @@ class index extends Component {
     render() {
         if (this.state.isEditing === false) {
             return (
-                <div style={taskStyle}>
-                    <p onClick={this.toggleStatus}>{this.props.status ? 'DONE' : 'TO DO'}</p>
-                    <p>{this.props.text}</p>
-                    <p>
+                <div className='projectTaskContainer'>
+                    <p style={{flex:1}} onClick={this.toggleStatus}>{this.props.status ? 'DONE' : 'TO DO'}</p>
+                    <p style={{flex:5}}>{this.props.text}</p>
+                    <p style={{flex:2}}>
                         <Moment format="YYYY/MM/DD">
                             {this.props.date}
                         </Moment>
                     </p>
-                    <p onClick={this.editItem}>EDIT</p>
-                    <p onClick={this.removeItem}>X</p>
+                    <p style={{flex:1}} onClick={this.editItem}>EDIT</p>
+                    <p style={{flex:1}} onClick={this.removeItem}>X</p>
                 </div>
             )
         }
 
         else if (this.state.isEditing === true) {
             return (
-                <div style={taskStyle}>
+                <div className='projectTaskContainer'>
                     <input 
                         value={this.state.newText}
                         onChange={this.handleChange} 
@@ -92,15 +92,6 @@ class index extends Component {
     }
 }
 
-
-const taskStyle = {
-    display: 'flex',
-    width: '90%',
-    padding: '10px',
-    justifyContent: 'space-between',
-    backgroundColor: '#b0b4ba',
-    margin: '5px auto'
-  }
 
 
   export const ProjectTask = connect(mapStateToProps)(index)

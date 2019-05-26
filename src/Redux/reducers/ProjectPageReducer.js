@@ -10,7 +10,8 @@ const projectPageState = {
     currentProjectData: null,
     comments: null,
     tasks: null,
-    status: ''
+    status: '',
+    selectedParticipant: null
 }
 
 export const projectPageReducer = (state=projectPageState, action) => {
@@ -38,6 +39,11 @@ export const projectPageReducer = (state=projectPageState, action) => {
         case "CREATE_PROJECT_LISTS":
             if (action.payload !== null) {
                 return {...state, comments: action.payload.comments, tasks: action.payload.tasks, participants: action.payload.participants}
+            }
+        case 'SELECT_PARTICIPANT':
+            return {
+                ...state,
+                selectedParticipant: action.payload
             }
         case "CLOSE_PROJECTPAGE":
             return {...state,

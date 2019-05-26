@@ -1,36 +1,43 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-
-export class index extends Component {
-    constructor() {
-        super();
-        this.state = {
-            isParticipantDetailsVisible: false,
-            mousePositionX: 1,
-            mousePositionY: 1
-        }
+const mapStateToProps = state => {
+    return{
+        selectedParticipant: state.projectPage.selectedParticipant
     }
+}
 
-    toggleDetails = (e) => {
-        this.setState({
-            isParticipantDetailsVisible: !this.state.isParticipantDetailsVisible,
-            mousePositionX: e.clientX,
-            mousePositionY: e.clientY,
-        })
-        console.log(`${this.state.mousePositionX}`)
+const mapDispatchToProps = dispatch => {
+    return {
+        selectParticipant:(key) => dispatch({type: 'SELECT_PARTICIPANT', payload: key})
+    }
+}
+
+class index extends Component {
+
+    selectParticipant = () => {
+        if (this.props.selectedParticipant === null || this.props.selectedParticipant !== this.props.itemKey) {
+            this.props.selectParticipant(this.props.itemKey)
+        }
+        else {
+            this.props.selectParticipant(null)
+        }
     }
 
     render() {
         return (
-            <div onClick={this.toggleDetails}>
-                <p>{this.props.function}: {this.props.name}</p>
-                {this.state.isParticipantDetailsVisible === true &&
-                <div onMouseLeave={this.toggleDetails}className="participantDetails" style={{top: this.state.mousePositionY, left: this.state.mousePositionX}}>
-                    <ul>
-                        <li>{this.props.function}: {this.props.name}</li>
-                        <li>Email: {this.props.email ? this.props.email : 'N/A'}</li>
-                        <li>Phone number: {this.props.number ? this.props.number : 'N/A'}</li>
-                    </ul>
+            <div className='participantContainer'>
+                <div className='participantBasic'>
+                    <p className='hover' onClick={this.selectParticipant} style={{flex: 2, fontWeight: 200}}>{this.props.function}: </p>
+                    <p className='hover' onClick={this.selectParticipant} style={{flex: 4, fontWeight: 400}}>{this.props.name}</p>
+                    <p style={{flex: 1}}>EDIT</p>
+                    <p style={{flex: 1}}>REMOVE</p>
+                </div>
+
+                {this.props.itemKey == this.props.selectedParticipant &&
+                <div className='participantDetails'>
+                    <p>Email: {this.props.email ? this.props.email : 'N/A'}</p>
+                    <p>Phone number: {this.props.number ? this.props.number : 'N/A'}</p>
                 </div>
                 }
             </div>
@@ -38,4 +45,5 @@ export class index extends Component {
     }
 }
 
-export default index
+export const ParticipantItem = connect(mapStateToProps, mapDispatchToProps)(index)
+export default ParticipantItem
