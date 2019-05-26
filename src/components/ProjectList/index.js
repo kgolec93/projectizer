@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProjectPage from '../ProjectPage'
-import CurrentProjects from '../ProjectList/CurrentProjects'
+import CurrentProjects from '../CurrentProjects'
 import NewProject from '../../components/NewProject/NewProject'
 import { connect } from 'react-redux'
 
@@ -23,21 +23,28 @@ class index extends Component {
   render() {
     return (
         <div>
-          <CurrentProjects />
-          {this.props.selectedProject !== null &&
-            <ProjectPage 
-              selectedProject={this.props.selectedProject}
-            />
-          }
+            {/* Selected project page window */}
+            {this.props.selectedProject !== null &&
+              <ProjectPage 
+                selectedProject={this.props.selectedProject}
+              />
+            }
 
-          {this.props.isNewProjectShown === true &&
-            <NewProject />
-          }
+            {/* New project form window */}
+            {this.props.isNewProjectShown === true &&
+              <NewProject />
+            }
 
-          <div onClick={this.props.toggleNewProjectForm} className="projectButton addProjectButton">
+            {/* List of projects */}
+            <CurrentProjects />
+
+
+
+            <div onClick={this.props.toggleNewProjectForm} className="projectButton addProjectButton">
               <p>Start a new project!</p>
-          </div>   
+            </div>  
         </div>
+
 
 
     )

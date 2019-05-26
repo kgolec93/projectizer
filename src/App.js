@@ -121,7 +121,8 @@ export class MainApp extends Component {
               <Switch>
                 <Route path="/signin" render={() => (<Redirect to="/" />)} /> 
                 <Route exact path ='/' component={ProjectList}/>
-                <Route path ='/projects' component={ProjectList}/>
+                <Route exact path ='/projects' component={ProjectList}/>
+                <Route path ='/projects/projectpage' component={ProjectPage}/>
                 <Route path='/tasks' component={Tasks}/>
                 <Route path='/user' component={UserPage}/>
                 <Route component={NoMatch} />

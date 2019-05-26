@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { userdata } from '../../../testData/DevDatabase'
-import ProjectButton from '../../ProjectButton'
+import { userdata } from '../../testData/DevDatabase'
+import ProjectButton from '../ProjectButton'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import ProjectPage from '../../ProjectPage'
+import ProjectPage from '../ProjectPage'
 import { connect } from 'react-redux'
-import NewProject from '../../NewProject/NewProject';
+import NewProject from '../NewProject/NewProject';
 import firebase from 'firebase'
-import Loader from '../../Loader'
+import Loader from '../Loader'
 
 const mapStateToProps = (state) => {
     if (state.global.userData !== null) {
@@ -53,42 +53,40 @@ removeProject = (proj) => {
     proj.remove();
 }
 
-  render() {
+render() {
     return (
         <div>
             {this.props.userData === null &&
                 <Loader/>
             }
             {this.props.userData !== null && 
-                <div>
-
-                    {this.props.projectList.length === 0 &&
+                <Link to='/projects/projectpage' className="link">
                     <div>
-                        You have no projects. Start a new one!
-                    </div>
-                    }
 
-                    {this.props.projectList.length !== 0 &&
+                        {this.props.projectList.length === 0 &&
                         <div>
-                            {this.props.projectList.map(item => (
-                                <ProjectButton 
-                                    projectKey={item.key}
-                                    projectName={item.name}
-                                    projectLeader={item.leader}
-                                    deadline={item.deadline}
-                                    status={item.status}
-                                />
-                            ))}
+                            You have no projects. Start a new one!
                         </div>
-                    }
+                        }
 
-                </div>               
-
+                        {this.props.projectList.length !== 0 &&
+                            <div>
+                                {this.props.projectList.map(item => (
+                                    <ProjectButton 
+                                        projectKey={item.key}
+                                        projectName={item.name}
+                                        projectLeader={item.leader}
+                                        deadline={item.deadline}
+                                        status={item.status}
+                                    />
+                                ))}
+                            </div>
+                        }
+                    </div>     
+                </Link>
+           
             }  
-            
-
         </div>
-
     )
   }
 }

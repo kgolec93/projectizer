@@ -6,6 +6,7 @@ import ProjectTask from '../ProjectTask'
 import ProjectComment from '../ProjectComment'
 import Moment from 'react-moment'
 import ParticipantItem from '../ParticipantItem'
+import { Link } from 'react-router-dom'
 
 const statusList = 
 [
@@ -211,9 +212,11 @@ export class index extends Component {
   render() {
     if (this.props.data !== null) {
       return (
-        <div className="blackout" >
+        <div>
           <div className="projectWindow">
-          <h1 onClick={this.closeWindow}>X</h1>
+          <Link to="/projects" className="link">
+            <h1 onClick={this.closeWindow}>X</h1>
+          </Link>
           <h2 style={textStyle}>{this.props.data.name}</h2>
           <p style={textStyle}>Project leader: {this.props.data.leader}</p>
           <p style={textStyle}>Deadline:&nbsp; 
