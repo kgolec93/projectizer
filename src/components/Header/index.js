@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 
 /// ICONS ///
@@ -23,6 +23,12 @@ const mapDispatchToProps = dispatch => {
 }
 
 export class index extends Component {
+
+  test = (e) => {
+    console.log(e.target.offsetLeft);
+    console.log(e.target.offsetWidth)
+  }
+
   render() {
     return (
         <header>
@@ -30,23 +36,29 @@ export class index extends Component {
             <div>
               {this.props.isLogged ? (
                 <ul>
-                  <li>Welcome {this.props.username}</li>
+                  <li className='welcomeText'>Welcome {this.props.username}</li>
                   <li>
-                    <Link className='link' to='/projects'>
-                      <img src={iconProject} className='headerIcon' alt=""/>
-                    </Link>
+                    <NavLink className='link' to='/projects' activeClassName="navActive">
+                      <img 
+                        onMouseOver={this.test} 
+                        name='Projects'
+                        src={iconProject} 
+                        className='headerIcon' 
+                        alt=""
+                      />
+                    </NavLink>
                   </li>
                   <li>
-                    <Link className='link' to='/tasks'>
+                    <NavLink className='link' to='/tasks' activeClassName="navActive">
                       <img src={iconTaskList} className='headerIcon' alt=""/>
-                    </Link>
+                    </NavLink>
                   </li>
-                  <Link className='link' to='/user'> 
+                  <NavLink className='link' to='/user' activeClassName="navActive"> 
                     <li><img src={iconUser} className='headerIcon' alt=""/></li>
-                  </Link>
+                  </NavLink>
                   <li>
                     <Link className="link" to='/'>
-                      <p onClick={this.props.logUserOut}>Log out</p>
+                      <p className='logoutButton' onClick={this.props.logUserOut}>Log out</p>
                     </Link>
                   </li>
 
@@ -62,6 +74,8 @@ export class index extends Component {
                 </ul>
               )}
             </div>
+            
+            {/* <div className='nameWindow'><p></p></div> */}
 
 
         </header>

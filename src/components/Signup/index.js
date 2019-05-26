@@ -130,7 +130,8 @@ onSubmit = (event) => {
                 </p>
               }
 
-              <button 
+              <button
+                className='hover' 
                 type="submit" 
               >
               SIGN UP

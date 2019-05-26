@@ -57,6 +57,7 @@ class index extends Component {
                         </p>
                     }
                     <button 
+                        className='hover'
                         type="submit"
                     >
                     Reset password

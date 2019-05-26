@@ -24,26 +24,15 @@ class index extends Component {
   render() {
     return (
         <div>
-            {/* Selected project page window */}
-            {this.props.selectedProject !== null &&
-              <ProjectPage 
-                selectedProject={this.props.selectedProject}
-              />
-            }
-
-            {/* New project form window */}
-            {this.props.isNewProjectShown === true &&
-              <NewProject />
-            }
+            {/* Add project button */}
+            <Link to='/projects/newproject' className='link'>
+              <div onClick={this.props.toggleNewProjectForm} className="addButton hover">
+                <p>Start a new project!</p><img src={addIcon} style={iconStyle} alt=""/>
+              </div> 
+            </Link> 
 
             {/* List of projects */}
             <CurrentProjects />
-
-
-
-            <div onClick={this.props.toggleNewProjectForm} className="addButton hover">
-              <p>Start a new project!</p><img src={addIcon} style={iconStyle} alt=""/>
-            </div>  
         </div>
 
 
@@ -56,7 +45,8 @@ const iconStyle = {
   display: 'inline-block',
   height: '40px',
   width: 'auto',
-  opacity: '0.5'
+  opacity: '0.5',
+  margin: '8px'
 }
 
 export const ProjectList = connect(mapStateToProps, mapDispatchToProps)(index)

@@ -17,7 +17,7 @@ const mapStateToProps = state => {
         ...state.task.tasks[key],
         key: key,
       })
-    ),
+    ).reverse(),
     firebaseUserData: state.global.firebaseUserData,
     userData: state.global.userData,
     tasks: state.task.tasks,
@@ -105,14 +105,49 @@ class index extends Component {
         {this.props.userData !== null && 
 
           <div>
-            {/* If no tasks on the loaded list */}
-            {this.props.taskList.length === 0 &&
-              <p>You have no tasks started!</p>
-            }
+          {/* New task input form */}
+          {this.state.isInputVisible === true &&
+            <div>
+              <input 
+                required
+                value={this.state.taskInput}
+                onChange={this.taskInput}
+                placeholder="Enter task name"
+              />
+              <DatePicker
+                  onChange={this.props.calendarChange}
+                  selected={this.props.deadline }
+                  placeholderText="Choose deadline date"
+              />
+              <button onClick={this.addTask}>Add!</button>
+              <button onClick={this.toggleTaskInput}>Cancel</button>
+              {this.state.errorMsg ?
+                <p>
+                  Name field cannot be empty
+                </p>
+                :
+                <p></p>
+              }
+            </div>
+          }
+
+          {/* If no tasks on the loaded list */}
+          {this.props.taskList.length === 0 &&
+            <h2 className='nullListMessage hover' onClick={this.toggleTaskInput}>You have no tasks started. Click here to add the first one</h2>
+          }
+
+
 
             {/* If there are tasks on the list */}
             {this.props.taskList.length !== 0 &&
               <div>
+
+              {this.state.isInputVisible === false &&
+                <div onClick={this.toggleTaskInput} className='addButton hover'> 
+                  <p>Add new task!</p><img src={addIcon} style={iconStyle} alt=""/>
+                </div>
+              }
+
                 {this.props.taskList.map(item => (
                   <TaskItem
                     text={item.text}
@@ -126,35 +161,7 @@ class index extends Component {
           </div>
         }  
 
-        {/* New task input form */}
-        {this.state.isInputVisible ? 
-        <div>
-          <input 
-            required
-            value={this.state.taskInput}
-            onChange={this.taskInput}
-            placeholder="Enter task name"
-          />
-          <DatePicker
-              onChange={this.props.calendarChange}
-              selected={this.props.deadline }
-              placeholderText="Choose deadline date"
-          />
-          <button onClick={this.addTask}>Add!</button>
-          <button onClick={this.toggleTaskInput}>Cancel</button>
-          {this.state.errorMsg ?
-            <p>
-              Name field cannot be empty
-            </p>
-            :
-            <p></p>
-          }
-        </div>
-        :
-        <div onClick={this.toggleTaskInput} className='addButton hover'> 
-          <p>Add new task!</p><img src={addIcon} style={iconStyle} alt=""/>
-        </div>
-        }
+
 
 
       </div>
@@ -167,7 +174,8 @@ const iconStyle = {
   display: 'inline-block',
   height: '40px',
   width: 'auto',
-  opacity: '0.5'
+  opacity: '0.5',
+  margin: '8px'
 }
 
 export const Tasks = connect(mapStateToProps, mapDispatchToProps)(index)

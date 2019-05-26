@@ -6,7 +6,7 @@ import { connect, Provider } from 'react-redux';
 // import Texts from './components/Texts';
 import SignIn from './components/SignIn';
 import SignUp from './components/Signup'
-import ProjectButton from './components/ProjectButton'
+import ProjectButton from './components/ProjectItem'
 import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 import ProjectList from './components/ProjectList'
 import ProjectPage from './components/ProjectPage'
@@ -28,7 +28,8 @@ const mapStateToProps = state => {
       nazwa_uzytkownika: state.global.loggedUser,
       userData: state.global.firebaseUserData,
       userDatabase: state.global.userData,
-      selectedProject: state.global.selectedProject
+      selectedProject: state.global.selectedProject,
+      isNewProject: state.newProject.isNewProjectShown
   }
 }
 
@@ -124,6 +125,11 @@ export class MainApp extends Component {
                 <Route exact path ='/projects' component={ProjectList}/>
                 <Route path ='/projects/projectpage' component={ProjectPage}>
                   {this.props.selectedProject === null &&
+                    <Redirect to="/projects" />
+                  }
+                </Route>
+                <Route path='/projects/newproject' component={NewProject}>
+                  {this.props.isNewProject === false &&
                     <Redirect to="/projects" />
                   }
                 </Route>

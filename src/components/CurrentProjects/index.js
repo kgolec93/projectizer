@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { userdata } from '../../testData/DevDatabase'
-import ProjectButton from '../ProjectButton'
+import ProjectButton from '../ProjectItem'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProjectPage from '../ProjectPage'
 import { connect } from 'react-redux'
@@ -60,18 +60,17 @@ render() {
                 <Loader/>
             }
             {this.props.userData !== null && 
-                <Link to='/projects/projectpage' className="link">
                     <div>
 
                         {this.props.projectList.length === 0 &&
-                        <div>
-                            You have no projects. Start a new one!
-                        </div>
+                            <h2 className='nullListMessage'>You have no projects started. Click here to start a new one</h2>
                         }
 
                         {this.props.projectList.length !== 0 &&
                             <div>
                                 {this.props.projectList.map(item => (
+                                    
+                                <Link to='/projects/projectpage' className="link">
                                     <ProjectButton 
                                         projectKey={item.key}
                                         projectName={item.name}
@@ -79,11 +78,11 @@ render() {
                                         deadline={item.deadline}
                                         status={item.status}
                                     />
+                                </Link>
                                 ))}
                             </div>
                         }
-                    </div>     
-                </Link>
+                    </div> 
            
             }  
         </div>

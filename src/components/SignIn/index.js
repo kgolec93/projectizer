@@ -65,7 +65,8 @@ class index extends Component {
                   {this.props.errorMessage}
                 </p>
               }
-              <button 
+              <button
+                className='hover' 
                 type="submit"
               >
               Login

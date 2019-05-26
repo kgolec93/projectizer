@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import  firebase from 'firebase';
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => {
     addProject: (uid) => dispatch({type: 'ADD_PROJECT', payload: uid}),
     calendarChange: (date) => dispatch({type: 'SELECT_DEADLINE', payload: date}),
     toggleCalendar: () => dispatch({type: 'TOGGLE_CALENDAR'}),
-    toggleNewProjectForm: () => dispatch({type:'TOGGLE_NEWPROJECT'})
+    toggleNewProjectForm: () => dispatch({type: 'TOGGLE_NEWPROJECT'})
   }
 }
 
@@ -49,8 +49,7 @@ export class index extends Component {
 
   render() {
     return (
-      <div className="blackout">
-        <h1 onClick={this.props.toggleNewProjectForm}>X</h1>
+      <div>
         <form onSubmit={this.addProject}>
             <p>Project name:</p>
             <input 
@@ -78,10 +77,14 @@ export class index extends Component {
 
             
             <br />
-            <button type="submit">
-                Start project!
-            </button>
+              <button type="submit">
+                  Start project!
+              </button>  
+
         </form>
+        <Link to='/projects' className='link'>
+          <p onClick={this.props.toggleNewProjectForm}>Go back</p>
+        </Link>
       </div>
     )
   }
