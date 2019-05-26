@@ -217,14 +217,14 @@ export class index extends Component {
           <Link to="/projects" className="link">
             <h1 onClick={this.closeWindow}>X</h1>
           </Link>
-          <h2 style={textStyle}>{this.props.data.name}</h2>
-          <p style={textStyle}>Project leader: {this.props.data.leader}</p>
-          <p style={textStyle}>Deadline:&nbsp; 
+          <h2>{this.props.data.name}</h2>
+          <p>Project leader: {this.props.data.leader}</p>
+          <p>Deadline:&nbsp; 
             <Moment format="YYYY/MM/DD">
                 {this.props.data.deadline}
             </Moment>
           </p>
-          <p style={textStyle}>Started on&nbsp;
+          <p>Started on&nbsp;
             <Moment format="YYYY/MM/DD">
               {this.props.data.dateAdded}
             </Moment>
@@ -256,22 +256,25 @@ export class index extends Component {
 
             </div>
             :
-            <p style={textStyle} onClick={this.props.toggleStatusInput}>{this.props.data.customStatus ? this.props.data.customStatus : 'No status set'}</p>
+            <p onClick={this.props.toggleStatusInput}>{this.props.data.customStatus ? this.props.data.customStatus : 'No status set'}</p>
           }
 
           <br />
           <br />
           <p onClick={this.toggleConfirmationWindow}>REMOVE PROJECT (TEST)</p>
-          <hr />
-
+          
           {/* Remove project confirmation */}
           {this.state.isConfirmationWindow === true &&
-          <div className="blackout">
+          <div>
             <p>Are you sure? You cannot undo this action!</p>
             <button onClick={this.removeProject}>Yes, remove project</button>
             <button onClick={this.toggleConfirmationWindow}>Cancel</button>
           </div>
           }
+
+          <hr />
+
+
 
 
 
