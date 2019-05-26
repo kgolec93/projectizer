@@ -12,7 +12,7 @@ header ul {
   list-style: none;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
+  padding: 4px;
 }
 
 header ul>li {
@@ -111,13 +111,13 @@ footer p {
 
 .headerIcon {
   display: inline-block;
-  width: 60px;
-  height: 40px;
+  width: 36px;
+  height: auto;
   padding: 6px;
 }
 
 .headerIcon:hover {
-  background-color: rgb(78, 78, 78);
+  background-color: #50587c;
   cursor: pointer;
   border-radius: 3px;
 }
@@ -197,6 +197,7 @@ main {
 }
 
 .addButton {
+  height: 100px;
   margin-top: 8px;
   background-color: #373f61;
   width: 100%;
@@ -227,3 +228,39 @@ main {
   margin-top: 20vh;
   padding: 50px;  
 }
+
+.newTask {
+  /* min-height: 100px; */
+  margin-top: 8px;
+  background-color: #373f61;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  color: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  font-weight: 200;
+  flex-wrap: wrap;
+}
+
+.newTask>* {
+  margin: 4px !important;
+}
+
+.newTask input {
+  border-radius: 4px;
+  border: none;
+  padding: 8px;
+  flex: 6;
+}
+
+.newTask button {
+  border-radius: 4px;
+  border: 1px solid #f3f3f3;
+  padding: 8px;
+  background: none;
+  color: #f3f3f3;
+  font-size: 1rem;
+}
+
