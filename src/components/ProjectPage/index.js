@@ -91,6 +91,12 @@ export class index extends Component {
       isParticipantFormVisible: false,
       isConfirmationWindow: false,
       isParticipantDetailsVisible: false,
+      editName: false,
+      editNameInput: '',
+      editLeader: false,
+      editLeaderInput: '',
+      editCustomStatus: false,
+      editCustomStatusInput: ''
     }
   }
 
@@ -156,9 +162,9 @@ export class index extends Component {
   changeCustomStatus = () => {
     firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
     .update({
-      customStatus: this.props.customStatus
+      customStatus: this.state.editCustomStatusInput
     })
-    this.props.toggleStatusInput();
+    this.setState({editCustomStatus: false, editCustomStatusInput: ''})
   }
 
   enterParticipant = (e) => {
@@ -174,6 +180,22 @@ export class index extends Component {
         break
       case 'participantNumber':
         this.setState({participantNumber: e.target.value});
+        break
+      default:
+        return (this.state)
+    }
+  }
+
+  enterValue = (e) => {
+    switch (e.target.name) {
+      case 'editName':
+        this.setState({editNameInput: e.target.value})
+        break
+      case 'editLeader':
+        this.setState({editLeaderInput: e.target.value})
+        break      
+      case 'editCustomStatus':
+        this.setState({editCustomStatusInput: e.target.value})
         break
       default:
         return (this.state)
@@ -209,6 +231,46 @@ export class index extends Component {
     this.setState({isConfirmationWindow: !this.state.isConfirmationWindow})
   }
 
+  //// Edit project name functionality 
+  toggleEditName = () => {
+    this.setState({editName: !this.state.editName, editNameInput: this.props.data.name})
+  }
+
+  updateName = () => {
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
+    .update({
+      name: this.state.editNameInput
+    })
+    this.setState({editName: false, editNameInput: ''})
+  }
+
+  //// Edit project leader functionality 
+  toggleEditLeader = () => {
+    this.setState({editLeader: !this.state.editLeader, editLeaderInput: this.props.data.leader})
+  }
+
+  updateLeader = () => {
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
+    .update({
+      leader: this.state.editLeaderInput
+    })
+    this.setState({editLeader: false, editLeaderInput: ''})
+  }
+
+  //// Edit custom status functionality
+  toggleEditCustomStatus = () => {
+    this.setState({editCustomStatus: !this.state.editCustomStatus, editCustomStatusInput: this.props.data.customStatus})
+  }
+
+  updateCustomStatus = () => {
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
+    .update({
+      customStatus: this.state.editLeaderInput
+    })
+    this.setState({editCustomStatus: false, editCustomStatusInput: ''})
+  }
+  ////////////////////////////////////////
+
   render() {
     if (this.props.data !== null) {
       return (
@@ -217,8 +279,43 @@ export class index extends Component {
           <Link to="/projects" className="link">
             <h1 onClick={this.closeWindow}>X</h1>
           </Link>
-          <h2>{this.props.data.name}</h2>
-          <p>Project leader: {this.props.data.leader}</p>
+
+          {/* EDITABLE PROJECT NAME */}
+          {this.state.editName ? 
+          <div>
+            <input 
+              name='editName'
+              value={this.state.editNameInput}
+              onChange={this.enterValue}
+              type="text"
+            />
+            <button onClick={this.updateName}>Update</button>
+          </div>
+          :
+          <div className="hover editableText" onClick={this.toggleEditName}>
+            <h2>{this.props.data.name}</h2>
+          </div>
+          }
+
+          {/* EDITABLE PROJECT LEADER */}
+          {this.state.editLeader ? 
+          <div>
+            <input 
+              name='editLeader'
+              value={this.state.editLeaderInput}
+              onChange={this.enterValue}
+              type="text"
+            />
+            <button onClick={this.updateLeader}>Update</button>
+          </div>
+          :
+          <div className="hover editableText" onClick={this.toggleEditLeader}>
+            <p>Project leader: {this.props.data.leader}</p>
+          </div>
+          }
+
+
+          
           <p>Deadline:&nbsp; 
             <Moment format="YYYY/MM/DD">
                 {this.props.data.deadline}
@@ -244,19 +341,25 @@ export class index extends Component {
           }
 
         {/* CHANGE CUSTOM STATUS */}
-          
-          {this.props.statusInput ?
+          {this.state.editCustomStatus ?
             <div>
               <form onSubmit={this.changeCustomStatus}>
-                <input required type="text" value={this.props.customStatus} onChange={this.props.changeCustomStatus} />
+                <input 
+                  required 
+                  type="text" 
+                  name='editCustomStatus'
+                  value={this.state.editCustomStatusInput} 
+                  onChange={this.enterValue} 
+                />
                 <button type="submtit">
                   Update
                 </button>
               </form>
-
             </div>
             :
-            <p onClick={this.props.toggleStatusInput}>{this.props.data.customStatus ? this.props.data.customStatus : 'No status set'}</p>
+            <div className="hover editableText" onClick={this.toggleEditCustomStatus}>
+              <p>Status: {this.props.data.customStatus}</p>
+            </div>
           }
 
           <br />

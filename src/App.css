@@ -264,3 +264,11 @@ main {
   font-size: 1rem;
 }
 
+.editableText:hover {
+  border: 1px dotted grey;
+  border-radius: 4px;
+}
+
+.editableText {
+  display: flex;
+}
