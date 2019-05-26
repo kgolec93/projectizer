@@ -46,15 +46,11 @@
 .loginForm button {
     border-radius: 5px;
     border: none;
-    background: #be8872;
-    color: white;
+    background: #373f61;
+    color: #f3f3f3;
     padding: 4px;
     width: 70%;
     margin: 16px auto;
-}
-
-.loginForm button:hover {
-    cursor: pointer;
 }
 
 .loginError {

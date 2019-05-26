@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Moment from 'react-moment'
 import './TaskItemStyle.css'
 import tickIcon from '../../assets/icons/tick.svg'
+import editIcon from '../../assets/icons/edit.svg'
+import deleteIcon from '../../assets/icons/delete.svg'
 
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
@@ -21,7 +23,6 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-
 class index extends Component {
 
     constructor() {
@@ -33,10 +34,6 @@ class index extends Component {
             newDate: ''
         }
     }
-
-    // componentDidUpdate() {
-    //     console.log(this.state)
-    // }
 
     // REMOVING CERTAIN ITEM
     removeItem = () => {
@@ -51,9 +48,6 @@ class index extends Component {
            const status = !snapshot.val();
            item.set(status);
         })
-
-        /// test
-        // console.log(this.state.newDate)
     }
 
     // EDITING TODO ITEM
@@ -96,7 +90,7 @@ class index extends Component {
                     <div style={{flex: '1'}} onClick={this.toggleStatus}>
                         {this.props.status ? 
                             <div className="taskStatusButton">
-                                <img src={tickIcon} className='tickIcon' alt=""/>
+                                <img src={tickIcon} className='taskItemIcon' alt=""/>
                             </div> 
                             : 
                             <div className="taskStatusButton">
@@ -110,8 +104,17 @@ class index extends Component {
                             {this.props.date}
                         </Moment>
                     </p>
-                    <p style={{flex: '1'}} onClick={this.editItem}>EDIT</p>
-                    <p style={{flex: '1'}} onClick={this.removeItem}>X</p>
+                    <div style={{flex: '1'}} >
+                        <div onClick={this.editItem} className="taskIconButton">
+                            <img src={editIcon} className='taskItemIcon' />
+                        </div>
+                    </div>
+                    <div style={{flex: '1'}}>
+                        <div onClick={this.removeItem} className="taskIconButton">
+                            <img src={deleteIcon} className='taskItemIcon' style={{padding: '4px'}} />
+                        </div>
+                    </div>
+
                 </div>
             )
         }
@@ -123,7 +126,7 @@ class index extends Component {
                         value={this.state.newText}
                         onChange={this.handleChange} 
                     />
-                    <p onClick={this.saveItem}>SAVE</p>
+                    <p onClick={this.saveItem} className='taskSaveButton hover'>SAVE</p>
                 </div>
             )
         }

@@ -7,6 +7,8 @@ import Loader from '../Loader'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
 
+import addIcon from '../../assets/icons/add.svg'
+
 
 const mapStateToProps = state => {
   return {
@@ -149,8 +151,8 @@ class index extends Component {
           }
         </div>
         :
-        <div onClick={this.toggleTaskInput}> 
-          <p>Add new task!</p>
+        <div onClick={this.toggleTaskInput} className='addButton hover'> 
+          <p>Add new task!</p><img src={addIcon} style={iconStyle} alt=""/>
         </div>
         }
 
@@ -160,6 +162,16 @@ class index extends Component {
   }
 }
 
+
+const iconStyle = {
+  display: 'inline-block',
+  height: '40px',
+  width: 'auto',
+  opacity: '0.5'
+}
+
 export const Tasks = connect(mapStateToProps, mapDispatchToProps)(index)
 export default Tasks
+
+
 

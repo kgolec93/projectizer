@@ -4,6 +4,7 @@ import ProjectPage from '../ProjectPage'
 import CurrentProjects from '../CurrentProjects'
 import NewProject from '../../components/NewProject/NewProject'
 import { connect } from 'react-redux'
+import addIcon from '../../assets/icons/add.svg'
 
 const mapStateToProps = state => {
   return {
@@ -40,8 +41,8 @@ class index extends Component {
 
 
 
-            <div onClick={this.props.toggleNewProjectForm} className="projectButton addProjectButton">
-              <p>Start a new project!</p>
+            <div onClick={this.props.toggleNewProjectForm} className="addButton hover">
+              <p>Start a new project!</p><img src={addIcon} style={iconStyle} alt=""/>
             </div>  
         </div>
 
@@ -49,6 +50,13 @@ class index extends Component {
 
     )
   }
+}
+
+const iconStyle = {
+  display: 'inline-block',
+  height: '40px',
+  width: 'auto',
+  opacity: '0.5'
 }
 
 export const ProjectList = connect(mapStateToProps, mapDispatchToProps)(index)

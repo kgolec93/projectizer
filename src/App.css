@@ -1,14 +1,17 @@
 header, footer {
-  background-color: #333;
+  background-color: #373f61;
   color: white;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   z-index: 90;
 }
 
 header ul {
   display: flex;
   list-style: none;
+  align-items: center;
+  justify-content: space-between;
 }
 
 footer {
@@ -171,10 +174,29 @@ footer p {
 
 main {
   width: 100%;
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(199, 201, 216);
   margin: 0px auto;
   min-height: 100%;
   flex: auto;
   box-shadow: 0px 0px 4px 0px rgb(177, 177, 177);
   align-items: center;
+  padding: 20px;
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+
+.addButton {
+  margin-top: 8px;
+  background-color: #f3f3f3;
+  width: 100%;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  color: #888;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
 }
