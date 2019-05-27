@@ -53,10 +53,6 @@ const mapStateToProps = state => {return {
 const mapDispatchToProps = dispatch => {
   return{
     //// TO BE CHANGED TO COMPONENT STATE
-    toggleNewComment:() => dispatch({type: 'TOGGLE_NEW_COMMENT'}),
-    //// TO BE CHANGED TO COMPONENT STATE
-    toggleNewTask:() => dispatch({type: 'TOGGLE_NEW_TASK'}),
-    //// TO BE CHANGED TO COMPONENT STATE
     enterTask:(e) => dispatch({type: 'ENTER_TASK', payload: e.target.value}),
     //// TO BE CHANGED TO COMPONENT STATE
     enterComment:(e) => dispatch({type: 'ENTER_COMMENT', payload: e.target.value}),
@@ -66,10 +62,6 @@ const mapDispatchToProps = dispatch => {
     addTask:() => dispatch({type: 'ADD_TASK'}),
     //// TO BE CHANGED TO COMPONENT STATE
     addComment:() => dispatch({type: 'ADD_COMMENT'}),  
-    //// TO BE CHANGED TO COMPONENT STATE
-    toggleStatusInput: () => dispatch({type: 'TOGGLE_STATUS_INPUT'}),
-    //// TO BE CHANGED TO COMPONENT STATE
-    toggleStatusList: () => dispatch({type: 'TOGGLE_STATUS_LIST'}),
 
     projectData: (data) => dispatch({type: 'LOAD_DATA', payload: data}),
     createList: (data) => dispatch({type: 'CREATE_PROJECT_LISTS', payload: data}),
@@ -91,6 +83,8 @@ export class index extends Component {
       isParticipantFormVisible: false,
       isConfirmationWindow: false,
       isParticipantDetailsVisible: false,
+      isTaskInputVisible: false,
+      isCommentInputVisible: false,
       editName: false,
       editNameInput: '',
       editLeader: false,
@@ -98,7 +92,9 @@ export class index extends Component {
       editCustomStatus: false,
       editCustomStatusInput: '',
       editStatusList: false,
-      editStatusListInput: ''
+      editStatusListInput: '',
+      taskErrorMessage: 'Enter task name',
+      commentErrorMessage: '',
     }
   }
 
@@ -114,24 +110,49 @@ export class index extends Component {
     }
   }
 
+  toggleNewTask = () => {
+    this.setState({isTaskInputVisible: !this.state.isTaskInputVisible})
+  }
+
   addTask = () => {
-    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/tasks`)
-    .push({
-      date: Date.now(),
-      text: this.props.taskInput,
-      isDone: false
-    })
-    this.props.addTask();
+    if (this.props.taskInput.trim() !== '') {
+      firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/tasks`)
+      .push({
+        date: Date.now(),
+        text: this.props.taskInput,
+        isDone: false
+      })
+      this.props.addTask();
+      this.toggleNewTask();
+    }
+    else {
+      this.setState({
+        taskErrorMessage: 'You need to type something!'
+      })
+    }
+
+  }
+
+  toggleNewComment = () => {
+    this.setState({isCommentInputVisible: !this.state.isCommentInputVisible})
   }
 
   addComment = () => {
-    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/comments`)
-    .push({
-      author: this.props.loggedUser,
-      date: Date.now(),
-      text: this.props.commentInput
-    })
-    this.props.addComment();
+    if (this.props.commentInput.trim() !== '') {
+      firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/comments`)
+      .push({
+        author: this.props.loggedUser,
+        date: Date.now(),
+        text: this.props.commentInput
+      })
+      this.props.addComment();
+      this.toggleNewComment();
+    }
+    else {
+      this.setState({
+        commentErrorMessage: 'You need to write something!'
+      })
+    }
   }
 
   closeWindow = () => {
@@ -291,18 +312,19 @@ export class index extends Component {
           {/* EDITABLE PROJECT NAME */}
           <div className='projectHeader'>
             {this.state.editName ? 
-            <div style={{flex: 5}}>
+            <div style={{flex: 5}} className='projectHeaderForm'>
               <input 
+                className='projectHeaderInput'
                 name='editName'
                 value={this.state.editNameInput}
                 onChange={this.enterValue}
                 type="text"
               />
-              <button onClick={this.updateName}>Update</button>
+              <button className='projectHeaderButton' onClick={this.updateName}>Update</button>
             </div>
             :
-            <div style={{flex: 5}} className="hover" onClick={this.toggleEditName}>
-              <h2>{this.props.data.name}</h2>
+            <div style={{flex: 5}}>
+              <h2 className="hover" onClick={this.toggleEditName}>{this.props.data.name}</h2>
             </div>
             }
 
@@ -336,20 +358,26 @@ export class index extends Component {
           </div>
           
           <div className='projectHeader2'>
-            {/* EDITABLE PROJECT LEADER */}
+          {/* EDITABLE PROJECT LEADER */}
             {this.state.editLeader ? 
-            <div>
+            <div className='projectHeaderForm'>
               <input 
+                className='projectHeaderInput'
                 name='editLeader'
                 value={this.state.editLeaderInput}
                 onChange={this.enterValue}
                 type="text"
               />
-              <button onClick={this.updateLeader}>Update</button>
+              <button 
+                className='projectHeaderButton' 
+                onClick={this.updateLeader}
+              >
+              Update
+              </button>
             </div>
             :
-            <div className="hover projectTextContainer" onClick={this.toggleEditLeader}>
-              <h4 style={{fontWeight: 200}}>Project leader: <span style={{fontWeight: 400}}>{this.props.data.leader}</span></h4>
+            <div className="projectTextContainer" >
+              <h4 style={{fontWeight: 200}}>Project leader: <span className="hover" onClick={this.toggleEditLeader} style={{fontWeight: 400}}>{this.props.data.leader}</span></h4>
             </div>
             }
           </div>
@@ -357,28 +385,92 @@ export class index extends Component {
         {/* CHANGE CUSTOM STATUS */}
           {this.state.editCustomStatus ?
             <div>
-              <form onSubmit={this.changeCustomStatus}>
+              <form 
+                onSubmit={this.changeCustomStatus}
+                className='projectHeaderForm'
+              >
                 <input 
+                  className='projectHeaderInput'
                   required 
                   type="text" 
                   name='editCustomStatus'
                   value={this.state.editCustomStatusInput} 
                   onChange={this.enterValue} 
                 />
-                <button type="submtit">
+                <button
+                  className='projectHeaderButton'
+                  type="submtit"
+                >
                   Update
                 </button>
               </form>
             </div>
             :
-            <div className="hover projectTextContainer" onClick={this.toggleEditCustomStatus}>
-              <h4 style={{fontWeight: 200}}>Status: <span style={{fontWeight: 400}}>{this.props.data.customStatus}</span></h4>
+            <div className="projectTextContainer" >
+              <h4 style={{fontWeight: 200}}>Status: <span className="hover" onClick={this.toggleEditCustomStatus} style={{fontWeight: 400}}>{this.props.data.customStatus}</span></h4>
             </div>
           }
           <hr className='projectHR' />
 
         {/* PARTICIPANTS LIST */}
           <h3>Participants</h3>     
+
+
+
+          {this.state.isParticipantFormVisible ? 
+            <div className='projectpageAddButton' >
+              <form onSubmit={this.addParticipant} 
+                style={
+                  {
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }
+                }>
+                <input 
+                  className='participantInput'
+                  type='text'
+                  required
+                  name='participantFunction'
+                  onChange={this.enterParticipant}
+                  value={this.state.participantFunction}
+                  placeholder="Function"
+                />
+                <input
+                  className='participantInput'
+                  type='text'
+                  required
+                  name='participantName'
+                  onChange={this.enterParticipant}
+                  value={this.state.participantName}
+                  placeholder="Name"
+                />
+                <input
+                  className='participantInput'
+                  type='email'
+                  name='participantEmail'
+                  onChange={this.enterParticipant}
+                  value={this.state.participantEmail}
+                  placeholder="Email"
+                />
+                <input
+                  className='participantInput'
+                  type='number'
+                  name='participantNumber'
+                  onChange={this.enterParticipant}
+                  value={this.state.participantNumber}
+                  placeholder="Phone number"
+                />
+                <button className='projectPageAddContentButton hover' style={{flex: 1}} type="submit">Add</button>
+                <button className='projectPageAddContentButton hover' style={{flex: 1}}  onClick={this.toggleParticipantForm}>Cancel</button>
+              </form>
+            </div>
+            :          
+            <div className='projectpageAddButton hover' onClick={this.toggleParticipantForm}>
+              <p style={{width: '100%', fontSize: '0.9rem'}}>Add participant</p>
+            </div>
+          }
 
           {/* map of project participants */}
           {this.props.participantsList !== null &&
@@ -392,51 +484,44 @@ export class index extends Component {
               />
             ))
           }
-
-          {this.state.isParticipantFormVisible ? 
-            <div>
-              <form onSubmit={this.addParticipant}>
-                <input
-                  type='text'
-                  required
-                  name='participantFunction'
-                  onChange={this.enterParticipant}
-                  value={this.state.participantFunction}
-                  placeholder="Function"
-                />
-                <input
-                  type='text'
-                  required
-                  name='participantName'
-                  onChange={this.enterParticipant}
-                  value={this.state.participantName}
-                  placeholder="Name"
-                />
-                <input
-                  type='email'
-                  name='participantEmail'
-                  onChange={this.enterParticipant}
-                  value={this.state.participantEmail}
-                  placeholder="Email"
-                />
-                <input
-                  type='number'
-                  name='participantNumber'
-                  onChange={this.enterParticipant}
-                  value={this.state.participantNumber}
-                  placeholder="Phone number"
-                />
-                <button type="submit">Add participant</button>
-              </form>
-              <button onClick={this.toggleParticipantForm}>CANCEL</button>
-            </div>
-            :          
-            <button className='projectpageAddButton' onClick={this.toggleParticipantForm}>Add participant</button>
-          }
           
         <hr className='projectHR' />
         {/* TASK LIST & TASK INPUT */}
           <h3>Tasks</h3>
+
+          {this.state.isTaskInputVisible ?
+            <div className='projectpageAddButton' >
+              <input 
+                placeholder={this.state.taskErrorMessage}
+                className='participantInput'
+                style={{flex: 5}}
+                value={this.props.taskInput}
+                onChange={this.props.enterTask}
+              />
+              <button 
+                style={{flex: 1}}
+                className='projectPageAddContentButton hover' 
+                onClick={this.addTask}
+              >
+              Add!
+              </button>
+              <button 
+                style={{flex: 1}}
+                className='projectPageAddContentButton hover' 
+                onClick={this.toggleNewTask}
+              >
+              Cancel
+              </button>
+            </div>
+            :
+            <button 
+              className='projectpageAddButton hover' 
+              onClick={this.toggleNewTask}
+            >
+              <p style={{width: '100%', fontSize: '0.9rem'}}>Add task</p>
+            </button>
+          }
+
           {this.props.taskList !== null && 
             <div>
               {this.props.taskList.map(item => (
@@ -450,24 +535,58 @@ export class index extends Component {
             </div>
           }
 
-            {this.props.taskInputVisible ?
-              <div>
-                <input 
-                  value={this.props.taskInput}
-                  onChange={this.props.enterTask}
-                />
-                <button onClick={this.addTask}>Add!</button>
-                <button onClick={this.props.toggleNewTask}>Cancel</button>
-              </div>
-              :
-              <button className='projectpageAddButton' onClick={this.props.toggleNewTask}>Add task</button>
-            }
+
 
           <hr className='projectHR' />
 
 
-        {/* COMMENT LIST & COMMENT INPUT */}
+        {/* COMMENT INPUT */}
           <h3>Comments</h3>
+          {this.state.isCommentInputVisible ?
+            <div>
+              <textarea 
+                placeholder={this.state.commentErrorMessage}
+                className='projectCommentInput'
+                name="" 
+                cols="20" 
+                rows="10"
+                value={this.props.commentInput}
+                onChange={this.props.enterComment}
+              ></textarea><br />
+              <div 
+                style={{
+                    width: '50%',
+                    display: 'flex'
+                }}
+              >
+                <button 
+                  className='projectPageAddContentButton hover' 
+                  onClick={this.addComment}
+                  style={{
+                    flex: 1,
+                    backgroundColor: '#373f61'
+                  }}
+                >
+                Add!
+                </button>
+                <button 
+                  style={{
+                    flex: 1,
+                    backgroundColor: '#373f61'
+                  }}
+                  className='projectPageAddContentButton hover' 
+                  onClick={this.toggleNewComment}
+                >
+                Cancel
+                </button>
+              </div>
+            </div>
+            :
+            <button className='projectpageAddButton hover' onClick={this.toggleNewComment}>
+              <p style={{width: '100%', fontSize: '0.9rem'}}>Add comment</p>
+            </button>
+          } 
+          {/* COMMENTS LIST */}
           {this.props.commentList !== null &&
             <div>
               {this.props.commentList.map(item => (
@@ -480,30 +599,47 @@ export class index extends Component {
               ))}
             </div>
           }
-
-            {this.props.commentInputVisible ?
-              <div>
-                <textarea name="" id="" cols="30" rows="10"
-                  value={this.props.commentInput}
-                  onChange={this.props.enterComment}
-                ></textarea><br />
-                <button onClick={this.addComment}>Add!</button>
-                <button onClick={this.props.toggleNewComment}>Cancel</button>
-              </div>
-              :
-              <button className='projectpageAddButton' onClick={this.props.toggleNewComment}>Add comment</button>
-            } 
             <br />
-            <p onClick={this.toggleConfirmationWindow}>REMOVE PROJECT (TEST)</p>
-            
-            {/* Remove project confirmation */}
-            {this.state.isConfirmationWindow === true &&
-            <div>
-              <p>Are you sure? You cannot undo this action!</p>
-              <button onClick={this.removeProject}>Yes, remove project</button>
-              <button onClick={this.toggleConfirmationWindow}>Cancel</button>
+
+
+            <div
+              className='projectpageAddButton hover'
+              style={{fontSize: '0.9rem'}}
+            >
+              {this.state.isConfirmationWindow ? 
+                <div
+                  style={{
+                    display: 'flex',
+                    width: '100%',
+                    alignItems: 'center'
+                  }}
+                >
+                  <p
+                    style={{flex: 5, textAlign:'left'}}
+                  >Are you sure? You cannot undo this action!</p>
+                  <button 
+                    style={{flex: 1}}
+                    className='projectPageAddContentButton hover'
+                    onClick={this.removeProject}
+                  >
+                  Yes, remove project
+                  </button>
+                  <button 
+                    style={{flex: 1}}
+                    className='projectPageAddContentButton hover'
+                    onClick={this.toggleConfirmationWindow}
+                  >
+                  Cancel</button>
+                </div>
+                :
+                <p
+                  style={{width: '100%', textAlign: 'center'}} 
+                  onClick={this.toggleConfirmationWindow}
+                >
+                REMOVE PROJECT
+                </p> 
+              } 
             </div>
-            }
         </div>
       )
     }
@@ -514,14 +650,6 @@ export class index extends Component {
     }
   }
 }
-
-const textStyle = {
-  color: 'white'
-}
-
-
-
-
 
 export const ProjectPage = connect(mapStateToProps, mapDispatchToProps )(index)
 export default ProjectPage

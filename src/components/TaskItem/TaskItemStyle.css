@@ -69,3 +69,16 @@
 .taskItem > p {
     flex: 1;
 }
+
+.projectTaskContainer > input {
+    border: 1px solid #888;
+    border-radius: 4px;
+    padding: 4px;
+    margin-right: 4px;
+    flex: 8;
+  }
+
+.projectTaskContainer > p {
+    flex: 1;
+}
+
