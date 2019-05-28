@@ -8,14 +8,6 @@ import Moment from 'react-moment'
 import ParticipantItem from '../ParticipantItem'
 import { Link } from 'react-router-dom'
 
-const statusList = 
-[
-  '',
-  'To do',
-  'In progress',
-  'Done'
-]
-
 const mapStateToProps = state => {return {
     commentList: Object.keys(state.projectPage.comments || {}).map(
       key => ({
@@ -102,8 +94,6 @@ export class index extends Component {
     if (this.props.selectedProject !== null) {
       firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
       .on('value', snapshot => {
-        console.log("CHANGE DATA");
-        console.log(snapshot.val());
         this.props.projectData(snapshot.val());
         this.props.createList(snapshot.val());
       })
@@ -337,8 +327,8 @@ export class index extends Component {
 
             {/* STATUS LIST CHANGE */}          
             {this.state.editStatusList ? 
-              <select style={{flex: 1}} onChange={this.changeStatus}>
-                  <option value='' disabled selected>Change status</option>
+              <select style={{flex: 1}} onChange={this.changeStatus} >
+                  <option value='' defaultValue>Change status</option>
                   <option value='To do'>To do</option>
                   <option value='In progress'>In progress</option>
                   <option value='Done'>Done</option>
@@ -415,8 +405,6 @@ export class index extends Component {
         {/* PARTICIPANTS LIST */}
           <h3>Participants</h3>     
 
-
-
           {this.state.isParticipantFormVisible ? 
             <div className='projectpageAddButton' >
               <form onSubmit={this.addParticipant} 
@@ -473,17 +461,25 @@ export class index extends Component {
           }
 
           {/* map of project participants */}
-          {this.props.participantsList !== null &&
-            this.props.participantsList.map(item => (
-              <ParticipantItem 
-                function={item.function}
-                name={item.name}
-                email={item.email}
-                number={item.number}
-                itemKey={item.key}
-              />
-            ))
+          {this.props.participantsList.length !== 0 &&
+            <div>
+              {this.props.participantsList !== null &&
+                this.props.participantsList.map(item => (
+                  <ParticipantItem 
+                    function={item.function}
+                    name={item.name}
+                    email={item.email}
+                    number={item.number}
+                    itemKey={item.key}
+                  />
+                ))
+              }
+            </div>
           }
+          {this.props.participantsList.length === 0 &&
+            <p className='emptyListMessage'>You have added no participants yet!</p>
+          }
+
           
         <hr className='projectHR' />
         {/* TASK LIST & TASK INPUT */}
@@ -522,20 +518,25 @@ export class index extends Component {
             </button>
           }
 
-          {this.props.taskList !== null && 
+          {this.props.taskList.length !== 0 &&
             <div>
-              {this.props.taskList.map(item => (
-                <ProjectTask
-                  text={item.text}
-                  date={item.date}
-                  status={item.isDone}
-                  itemKey={item.key}
-                />
-              ))}
+              {this.props.taskList !== null && 
+                <div>
+                  {this.props.taskList.map(item => (
+                    <ProjectTask
+                      text={item.text}
+                      date={item.date}
+                      status={item.isDone}
+                      itemKey={item.key}
+                    />
+                  ))}
+                </div>
+              }
             </div>
           }
-
-
+          {this.props.taskList.length === 0 &&
+            <p className='emptyListMessage'>You have added no tasks yet!</p>          
+          }
 
           <hr className='projectHR' />
 
@@ -587,18 +588,27 @@ export class index extends Component {
             </button>
           } 
           {/* COMMENTS LIST */}
-          {this.props.commentList !== null &&
+
+          {this.props.commentList.length !== 0 &&
             <div>
-              {this.props.commentList.map(item => (
-                <ProjectComment 
-                      author={item.author}   
-                      date={item.date}    
-                      text={item.text}   
-                      itemKey={item.key}          
-                />
-              ))}
+              {this.props.commentList !== null &&
+                <div>
+                  {this.props.commentList.map(item => (
+                    <ProjectComment 
+                          author={item.author}   
+                          date={item.date}    
+                          text={item.text}   
+                          itemKey={item.key}          
+                    />
+                  ))}
+                </div>
+              }
             </div>
           }
+          {this.props.commentList.length === 0 && 
+            <p className='emptyListMessage'>You have added no tasks yet!</p>                    
+          }
+
             <br />
 
 
@@ -636,7 +646,7 @@ export class index extends Component {
                   style={{width: '100%', textAlign: 'center'}} 
                   onClick={this.toggleConfirmationWindow}
                 >
-                REMOVE PROJECT
+                Remove project
                 </p> 
               } 
             </div>

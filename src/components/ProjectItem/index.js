@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import deleteIcon from '../../assets/icons/delete.svg'
 import Moment from 'react-moment'
 // import moment from 'moment'
 import {connect} from 'react-redux'
@@ -19,13 +17,49 @@ const mapDispatchToProps = dispatch => {
 
 export class index extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+            className: ''
+        }
+    }
+
+    componentDidMount() {
+        this.statusClass(this.props.status)
+    }
+
     handleClick = () => {
         this.props.selectedProject(this.props.projectKey)
     }
+    
+    statusClass = (status) => {
+        switch (status) {
+            case 'To do':
+                this.setState({
+                    className: 'itemIsTodo projectButton'
+                })
+                break
+            case 'In progress':
+                this.setState({
+                    className: 'projectButton'
+                })
+                break
+            case 'Done':
+                this.setState({
+                    className: 'itemIsDone projectButton'
+                })
+                break
+            default:
+                this.setState({
+                    className: 'projectButton'
+                })
+        }
+    }
+
 
     render() {
         return (
-            <div className="projectButton" onClick={this.handleClick}>
+            <div className={this.state.className} onClick={this.handleClick}>
                 <div className="projectBasicData">
                     <p style={{flex: 3}}>{this.props.projectName}</p>
                     <p style={pStyle}>{this.props.projectLeader}</p>

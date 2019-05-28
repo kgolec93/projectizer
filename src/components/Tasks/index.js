@@ -147,8 +147,6 @@ class index extends Component {
             <h2 className='nullListMessage hover' onClick={this.toggleTaskInput}>You have no tasks started. Click here to add the first one</h2>
           }
 
-
-
             {/* If there are tasks on the list */}
             {this.props.taskList.length !== 0 &&
               <div>

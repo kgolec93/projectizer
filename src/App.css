@@ -5,10 +5,12 @@ header, footer {
   justify-content: space-between;
   align-items: center;
   z-index: 90;
+  flex-wrap: wrap
 }
 
 header ul {
   display: flex;
+  flex-wrap: wrap;
   list-style: none;
   align-items: center;
   justify-content: space-between;
@@ -52,8 +54,16 @@ footer p {
   justify-content: center;
   align-items: center; 
   margin-top: 8px;
-  color: rgb(124, 124, 124);
   padding: 8px;
+}
+
+/* PROJECT ITEM STYLE */
+
+.itemIsTodo {
+  background-color: #c26a6aab;
+}
+.itemIsDone{
+  background-color: #9cb999bb;
 }
 
 .addProjectButton {
@@ -448,3 +458,20 @@ main {
   width: 100%;
   margin: 4px 0px;
 }
+
+.projectEditParticipantButton {
+  flex: 1;
+  color: #373f61;
+  border: 1px solid #373f61;
+  text-align: center
+}
+
+.emptyListMessage {
+  font-weight: 200;
+  font-size: 1.1rem;
+  color: #373f61;
+  width: 100%;
+  text-align: center;
+  margin: 24px 0px;
+}
+

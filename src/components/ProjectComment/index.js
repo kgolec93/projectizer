@@ -15,7 +15,6 @@ const mapStateToProps = state => {
 export class index extends Component {
 
 removeItem = () => {
-    console.log(this.props.itemKey);
     firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}/comments/${this.props.itemKey}`)
     .remove()
 }
