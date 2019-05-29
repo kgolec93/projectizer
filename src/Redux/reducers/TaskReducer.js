@@ -1,7 +1,7 @@
 const taskListState = {
     taskInput: '',
     tasks: null,
-    deadline: '',
+    deadline: new Date(),
     itemIsEdited: '',
 }
 

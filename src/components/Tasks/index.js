@@ -52,6 +52,7 @@ class index extends Component {
       taskInput: '',
       isInputVisible: false,
       errorMsg: false,
+      date: new Date(),
     }
   }
 
@@ -59,14 +60,14 @@ class index extends Component {
     if (this.state.taskInput !== '') {
       firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks`)
       .push({
-        date: this.props.deadline,
+        date: `${this.state.date}`,
         text: this.state.taskInput,
         isDone: false
       })
       this.setState({
         isInputVisible: false,
         taskInput: '',
-        date: '',
+        date: new Date(),
         errorMsg: false
       })
     }
@@ -90,6 +91,12 @@ class index extends Component {
     this.setState({
       isInputVisible: !this.state.isInputVisible,
       errorMsg: false
+    })
+  }
+
+  enterDate = (date) => {
+    this.setState({
+      date: date
     })
   }
 
@@ -117,8 +124,8 @@ class index extends Component {
               />
               <DatePicker
                 className='taskDatepicker'
-                onChange={this.props.calendarChange}
-                selected={this.props.deadline}
+                onChange={this.enterDate}
+                selected={this.state.date}
                 placeholderText="Choose deadline date"
               />
               <button 
