@@ -142,7 +142,7 @@ class index extends Component {
                         onChange={this.handleChange} 
                     />
                     <DatePicker 
-                        className='taskDatepicker'
+                        className='taskDatepicker hover'
                         onChange={this.enterDate}
                         selected={this.state.newDate}
                     />

@@ -8,6 +8,9 @@ import Moment from 'react-moment'
 import ParticipantItem from '../ParticipantItem'
 import { Link } from 'react-router-dom'
 
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css';
+
 const mapStateToProps = state => {return {
     commentList: Object.keys(state.projectPage.comments || {}).map(
       key => ({
@@ -87,6 +90,7 @@ export class index extends Component {
       editStatusListInput: '',
       taskErrorMessage: 'Enter task name',
       commentErrorMessage: '',
+      isDeadlineEdited: false,
     }
   }
 
@@ -289,15 +293,30 @@ export class index extends Component {
     console.log(e.target.key)
   }
 
+  toggleDeadline = () => {
+    this.setState({isDeadlineEdited: !this.state.isDeadlineEdited})
+  }
+
+  editDeadline = (date) => {
+    firebase.database().ref(`users/${this.props.firebaseUserData.uid}/projects/${this.props.selectedProject}`)
+    .update({
+      deadline: `${date}`
+    })
+    this.toggleDeadline();
+  }
+
   ////////////////////////////////////////
 
   render() {
     if (this.props.data !== null) {
       return (
         <div className="projectWindow">
-          <Link to="/projects" className="link">
-            <p onClick={this.closeWindow}>Go back</p>
-          </Link>
+          <div>
+            <Link to="/projects" className="link">
+              <button className='statusButton hover' style={{padding: '4px', background: 'none'}} onClick={this.closeWindow}>Go back</button>
+            </Link>
+          </div>
+
 
           {/* EDITABLE PROJECT NAME */}
           <div className='projectHeader'>
@@ -319,11 +338,23 @@ export class index extends Component {
             }
 
             {/* PROJECT DEADLINE */}
-            <p style={{flex: 1}} className='statusButton'>Deadline:&nbsp; 
+            {this.state.isDeadlineEdited ? 
+            <div>
+              <DatePicker 
+                className='editDeadline hover'
+                onChange={this.editDeadline}
+                selected={new Date(this.props.data.deadline)}                
+              />
+              <button onClick={this.toggleDeadline} className='addContentButtonDark hover'>Cancel</button>
+            </div>
+            :
+            <p style={{flex: 1}} onClick={this.toggleDeadline} className='statusButton hover'>Deadline:&nbsp; 
               <Moment format="YYYY/MM/DD">
                   {this.props.data.deadline}
               </Moment>
             </p>
+            }
+
 
             {/* STATUS LIST CHANGE */}          
             {this.state.editStatusList ? 
