@@ -5,6 +5,7 @@ const newProjectState = {
     projectLeader: '',
     deadline: '',
     isNewProjectShown: false,
+    inputForm: false
 }
 
 export const newProjectReducer = (state=newProjectState, action) => {
@@ -20,7 +21,7 @@ export const newProjectReducer = (state=newProjectState, action) => {
         case 'SELECT_DEADLINE':
             return {...state, deadline: action.payload}
         case 'TOGGLE_NEWPROJECT':
-            return {...state, isNewProjectShown: !state.isNewProjectShown}
+            return {...state, inputForm: !state.inputForm}
         default:
             return state;
     }

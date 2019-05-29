@@ -19,15 +19,23 @@ const mapStateToProps = state => {
         ),
     firebaseUserData: state.global.firebaseUserData,
     selectedProject: state.global.selectedProject,
-    isNewProjectShown: state.newProject.isNewProjectShown
+    inputForm: state.newProject.inputForm,
+    userData: state.global.userData
     }
+  }
+  else return {
+    firebaseUserData: state.global.firebaseUserData,
+    selectedProject: state.global.selectedProject,
+    inputForm: state.newProject.inputForm,
+    userData: state.global.userData
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     updateData: (data) => dispatch({type: 'UPDATE_DATA', payload: data}),
-    createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data})
+    createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data}),
+    toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'})
   }
 }
 
@@ -60,7 +68,7 @@ class index extends Component {
         customStatus: 'Initial status'
       })
 
-      
+    this.props.toggleInput();
     e.preventDefault();
   }
 
@@ -99,13 +107,14 @@ class index extends Component {
             {/* Add project button */}
               <div className="addButton hover">
 
-              {this.state.isNewProjectFormVisible ?
-                <form onSubmit={this.addNewProject}>
+              {this.props.inputForm ?
+                <form onSubmit={this.addNewProject} className='newProjectInput'>
                   <input 
                     type="text"
                     value={this.state.newProjectName}
                     onChange={this.enterValue}
                     name='newProjectName'
+                    placeholder='Project name'
                   />
                   
                   <input 
@@ -113,23 +122,24 @@ class index extends Component {
                     value={this.state.newProjectLeader}
                     onChange={this.enterValue}
                     name='newProjectLeader'
+                    placeholder='Project leader'
                   />
                   <DatePicker
                     required
                     onChange={ this.selectDeadline }
                     selected={ this.state.newProjectDeadline }
+                    placeholderText='Select deadline'
                   />
-                  <button type='submit'>Add project</button>
-                  <button onClick={this.toggleNewProjectForm}>Cancel</button>
+                  <button className='hover' type='submit'>Add project</button>
+                  <button className='hover' onClick={this.props.toggleInput}>Cancel</button>
                 </form>
 
               :
-                <div onClick={this.toggleNewProjectForm} >
+                <div onClick={this.props.toggleInput} >
                   <p>Start a new project!</p><img src={addIcon} style={iconStyle} alt=""/>
                 </div>
               }
               </div> 
-
             {/* List of projects */}
             <CurrentProjects />
         </div>

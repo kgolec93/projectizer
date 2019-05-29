@@ -26,7 +26,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         updateData: (data) => dispatch({type: 'UPDATE_DATA', payload: data}),
-        createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data})
+        createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data}),
+        toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'})
+
     }
 }
 
@@ -52,7 +54,7 @@ render() {
                 <div>
 
                     {this.props.projectList.length === 0 &&
-                        <h2 className='nullListMessage'>You have no projects started. Click here to start a new one</h2>
+                        <h2 className='nullListMessage hover' onClick={this.props.toggleInput}>You have no projects started. Click here to start a new one</h2>
                     }
 
                     {this.props.projectList.length !== 0 &&
