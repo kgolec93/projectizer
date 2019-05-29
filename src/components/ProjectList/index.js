@@ -47,7 +47,7 @@ class index extends Component {
       isNewProjectFormVisible: false,
       newProjectName: '',
       newProjectLeader: '',
-      newProjectDeadline: '',
+      newProjectDeadline: new Date(),
     }
   }
 
@@ -96,6 +96,8 @@ class index extends Component {
   }
 
   selectDeadline = (input) => {
+    console.log(input);
+    console.log(new Date())
     this.setState({
       newProjectDeadline: input
     })
@@ -105,11 +107,15 @@ class index extends Component {
     return (
         <div>
             {/* Add project button */}
-              <div className="addButton hover">
+              <div 
+                className={this.props.inputForm ? "addButton" : "addButton hover"}  
+                onClick={this.props.inputForm ? '' : this.props.toggleInput} 
+              >
 
               {this.props.inputForm ?
                 <form onSubmit={this.addNewProject} className='newProjectInput'>
                   <input 
+                    required
                     type="text"
                     value={this.state.newProjectName}
                     onChange={this.enterValue}
@@ -118,6 +124,7 @@ class index extends Component {
                   />
                   
                   <input 
+                    required
                     type="text"
                     value={this.state.newProjectLeader}
                     onChange={this.enterValue}
@@ -135,7 +142,7 @@ class index extends Component {
                 </form>
 
               :
-                <div onClick={this.props.toggleInput} >
+                <div>
                   <p>Start a new project!</p><img src={addIcon} style={iconStyle} alt=""/>
                 </div>
               }
