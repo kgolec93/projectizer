@@ -475,3 +475,13 @@ main {
   margin: 24px 0px;
 }
 
+
+/* USER PAGE */
+.pencilVisible {
+  display: inline-block !important;
+}
+
+.userpagePar {
+  display: flex;
+  align-items: center;
+}

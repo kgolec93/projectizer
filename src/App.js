@@ -95,7 +95,10 @@ export class MainApp extends Component {
               <Header />
               <main>
                 <Switch> 
-                  <Route exact path="/" component={HomePage} />
+                  <Route path="/user" render={() => (<Redirect to="/" />)} /> 
+                  <Route exact path="/">
+                    <Redirect to='/signin' />
+                  </Route>
                   <Route path="/signin" component={SignIn} />
                   <Route path="/signup" component={SignUp} /> 
                   <Route path="/forgotpassword" component={ForgotPassword }/>
@@ -121,7 +124,11 @@ export class MainApp extends Component {
               {/* <ProjectPage /> */}
               <Switch>
                 <Route path="/signin" render={() => (<Redirect to="/" />)} /> 
-                <Route exact path ='/' component={ProjectList}/>
+                <Route path="/signup" render={() => (<Redirect to="/" />)} /> 
+                <Route path="/forgotpassword" render={() => (<Redirect to="/" />)} /> 
+                <Route exact path ='/'>
+                  <Redirect to='/projects' />
+                </Route>
                 <Route exact path ='/projects' component={ProjectList}/>
                 <Route path ='/projects/projectpage' component={ProjectPage}>
                   {this.props.selectedProject === null &&
