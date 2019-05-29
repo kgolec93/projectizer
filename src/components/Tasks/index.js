@@ -60,7 +60,7 @@ class index extends Component {
     if (this.state.taskInput !== '') {
       firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks`)
       .push({
-        date: `${this.state.date}`,
+        date: new Date(this.state.date).toString(),
         text: this.state.taskInput,
         isDone: false
       })
@@ -70,6 +70,7 @@ class index extends Component {
         date: new Date(),
         errorMsg: false
       })
+      console.log(`${this.state.date}`)
     }
     else {
       this.setState({errorMsg: true})
@@ -168,6 +169,7 @@ class index extends Component {
                   <TaskItem
                     text={item.text}
                     date={item.date}
+                    date2={item.date}
                     status={item.isDone}
                     itemKey={item.key}
                   />

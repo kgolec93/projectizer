@@ -53,26 +53,29 @@ class index extends Component {
     // EDITING TODO ITEM
     editItem = () => {
         const selected = this.props.itemKey
-        console.log(selected)
-        // this.props.editItem(this.props.itemKey)        
+              
         this.setState({
             thisItem: selected,
             isEditing: true,
             newText: this.props.text,
-            newDate: this.props.newDate
+            newDate: new Date(this.props.date),
         })
-        console.log(this.state)
     }
 
     // SAVE CHANGES IN TODO ITEM
     saveItem = () => {
-        const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}/text`)
-        item.set(this.state.newText);
+        console.log(this.state.date)
+        const item = firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}`)
+        item.update({
+            text: this.state.newText, 
+        });
         this.setState({
             isEditing: false,
             newText: '',
-            newDate: this.props.date
+            newDate: ''
         })
+
+
         this.props.editItem('')
     }
 
@@ -82,6 +85,18 @@ class index extends Component {
             newText: e.target.value
         })
     }  
+
+    enterDate = (d) => {
+        firebase.database().ref(`users/${this.props.firebaseUserData.uid}/tasks/${this.props.itemKey}`)
+        .update({
+            date: `${d}`, 
+        });
+
+        this.setState({
+            newDate: d
+        })
+        console.log(this.state)
+    }
 
     render() {
         if (this.state.isEditing === false) {
@@ -126,6 +141,11 @@ class index extends Component {
                         value={this.state.newText}
                         onChange={this.handleChange} 
                     />
+                    <DatePicker 
+                        className='taskDatepicker'
+                        onChange={this.enterDate}
+                        selected={this.state.newDate}
+                    />
                     <div onClick={this.saveItem} className='taskSaveButton hover'><p>SAVE</p></div>
                 </div>
             )
@@ -136,6 +156,6 @@ class index extends Component {
 export const ProjectTask = connect(mapStateToProps, mapDispatchToProps)(index)
 export default ProjectTask
   
-
+// selected={this.state.newDate}
 
 

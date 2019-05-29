@@ -58,7 +58,7 @@
     padding: 2px;
 }
 
-.taskItem > input {
+.taskItem input {
     border: 1px solid #888;
     border-radius: 4px;
     padding: 4px;
