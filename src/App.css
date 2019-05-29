@@ -484,4 +484,40 @@ main {
 .userpagePar {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.userSettingsWindow {
+  width: 60%;
+  height: 100%;
+  flex: auto;
+  background-color: rgb(243, 243, 243);
+  border: 1px solid rgb(197, 197, 197);
+  padding: 10px;
+  text-align: center;
+  margin: 0px auto;
+}
+
+.userSettingsWindow * {
+  text-align: center
+}
+
+.addContentButtonDark {
+  border-radius: 4px;
+  border: 1px solid #373f61;
+  padding: 4px;
+  background: #373f61;
+  color: #f3f3f3;
+  font-size: 0.8rem;
+  margin: 0px 2px;
+}
+
+.fullWidth {
+  width: 70% !important;
+}
+
+.userDataContainer {
+  margin: 16px 0px;
+  width:100%;
 }

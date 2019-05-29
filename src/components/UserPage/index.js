@@ -118,32 +118,42 @@ class index extends Component {
 
     render() {
         return (
-            <div>
-                <div className='userpagePar'>
+            <div className='userSettingsWindow'> 
+                <div className='userDataContainer'>
                     {this.state.isEdited !== 'email' &&
                     <div className='userpagePar'>
-                        <p  
-                            id='email' 
-                            onMouseEnter={this.showPencil} 
-                            onMouseLeave={this.hidePencil} 
-                            onClick={this.toggleEditInput} 
-                            className='hover'
-                        >
-                        Email: {this.props.userData.email}</p>
-                        <img src={iconPencil} style={iconStyle} className={this.state.isPencilVisible === 'email' && 'pencilVisible'} alt=""/>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <p  
+                                id='email' 
+                                onMouseEnter={this.showPencil} 
+                                onMouseLeave={this.hidePencil} 
+                                onClick={this.toggleEditInput} 
+                                className='hover'
+                            >
+                            Email: {this.props.userData.email}</p>
+                            <img 
+                                src={iconPencil} 
+                                style={iconStyle} 
+                                className={this.state.isPencilVisible === 'email' && 'pencilVisible'} 
+                                alt=""
+                            />
+                        </div>
                     </div>
                     }
                     {this.state.isEdited === 'email' &&
                         <div>
                             <form onSubmit={this.updateEmail} className='userpagePar'>
                                 <input 
+                                    className='projectHeaderInput'
+                                    style={{flex: 5}} 
                                     type="text"
                                     value={this.state.emailInput}
                                     onChange={this.enterValue}
                                     name='email'
+                                    placeholder='Email'
                                 />
-                                <button type="submit">Change email</button>
-                                <button onClick={this.cancelEmailUpdate}>Cancel</button>
+                                <button style={{flex: 1}} className='addContentButtonDark' type="submit">Update</button>
+                                <button style={{flex: 1}} className='addContentButtonDark' onClick={this.cancelEmailUpdate}>Cancel</button>
 
                             </form>
                             <p>{this.state.changeEmailError}</p>
@@ -153,31 +163,42 @@ class index extends Component {
                     
                 </div>
 
-                <div className='userpagePar'>
+                <div className='userDataContainer'>
                     {this.state.isEdited !== 'displayname' &&
                     <div className='userpagePar'>
-                        <p  
-                            id='displayname' 
-                            onMouseEnter={this.showPencil} 
-                            onMouseLeave={this.hidePencil} 
-                            onClick={this.toggleEditInput} 
-                            className='hover'
-                        >
-                        Display name: {this.props.userData.displayName ? this.props.userData.displayName : 'No username set' }</p>
-                        <img src={iconPencil} style={iconStyle} className={this.state.isPencilVisible === 'displayname' && 'pencilVisible'} alt=""/>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <p  
+                                id='displayname' 
+                                onMouseEnter={this.showPencil} 
+                                onMouseLeave={this.hidePencil} 
+                                onClick={this.toggleEditInput} 
+                                className='hover'
+                            >
+                            Display name: {this.props.userData.displayName ? this.props.userData.displayName : 'No username set' }</p>
+                            <img 
+                                src={iconPencil} 
+                                style={iconStyle} 
+                                className={this.state.isPencilVisible === 'displayname' && 'pencilVisible'} 
+                                alt=""
+                            />
+                        </div>
+
                     </div>
                     }
                     {this.state.isEdited === 'displayname' &&
                         <div>
                             <form onSubmit={this.setDisplayName} className='userpagePar'>
                                 <input 
+                                    className='projectHeaderInput'
+                                    style={{flex: 5}}
                                     type="text"
                                     value={this.state.displayNameInput}
                                     onChange={this.enterValue}
                                     name='displayname'
+                                    placeholder='Display name'
                                 />
-                                <button type="submit">Set displayname</button>
-                                <button onClick={this.cancelDisplaynameUpdate}>Cancel</button>
+                                <button style={{flex: 1}} className='addContentButtonDark hover' type="submit">Update</button>
+                                <button style={{flex: 1}} className='addContentButtonDark hover' onClick={this.cancelDisplaynameUpdate}>Cancel</button>
                             </form>
                             <p>{this.state.changeDisplaynameError}</p>
                         </div>
@@ -185,17 +206,17 @@ class index extends Component {
                     
                 </div>
 
-                <button onClick={this.resetPassword}>Reset password</button><br />
+                <button className='addContentButtonDark hover fullWidth' onClick={this.resetPassword}>Reset password</button><br />
                 <p>{this.state.passMessage}</p>
                 <br />
 
 
-                <button onClick={this.toggleConfirmationWindow}>Delete account </button>
+                <button className='addContentButtonDark hover fullWidth' onClick={this.toggleConfirmationWindow}>Delete account </button>
                 {this.state.showConfirmationWindow === true && 
                     <div>
                         <p>Are you sure? You cannot undo this action!</p>
-                        <button onClick={this.deleteAccount}>Yes, delete account</button>
-                        <button onClick={this.toggleConfirmationWindow}>Cancel</button>
+                        <button className='addContentButtonDark hover' style={{backgroundColor: '#b94848'}} onClick={this.deleteAccount}>Yes, delete account</button>
+                        <button className='addContentButtonDark hover' onClick={this.toggleConfirmationWindow}>Cancel</button>
                         <p>{this.state.deleteAccountError}</p>
 
                     </div>
