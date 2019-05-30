@@ -84,6 +84,12 @@ class index extends Component {
     })
   }
 
+  handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      this.addTask()
+    }
+  }
+
   test = () => {
     console.log(this.props.taskList)
   }
@@ -122,6 +128,7 @@ class index extends Component {
                 value={this.state.taskInput}
                 onChange={this.taskInput}
                 placeholder="Enter task name"
+                onKeyUp={this.handleEnter}
               />
               <DatePicker
                 className='taskDatepicker'

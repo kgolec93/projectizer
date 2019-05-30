@@ -11,6 +11,8 @@ import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
 
+import iconPencil from '../../assets/icons/pencil.svg'
+
 const mapStateToProps = state => {return {
     commentList: Object.keys(state.projectPage.comments || {}).map(
       key => ({
@@ -91,6 +93,7 @@ export class index extends Component {
       taskErrorMessage: 'Enter task name',
       commentErrorMessage: '',
       isDeadlineEdited: false,
+      isHighlited: ''
     }
   }
 
@@ -305,6 +308,16 @@ export class index extends Component {
     this.toggleDeadline();
   }
 
+  highlightItem = (e) => {
+      this.setState({isHighlited: e.target.id})
+  }
+
+  removeHighlight = () => {
+    this.setState({isHighlited: ''})
+    console.log(this.state.isHighlited)
+  }
+
+
   ////////////////////////////////////////
 
   render() {
@@ -332,8 +345,26 @@ export class index extends Component {
               <button className='projectHeaderButton' onClick={this.updateName}>Update</button>
             </div>
             :
-            <div style={{flex: 5}}>
-              <h2 className="hover" onClick={this.toggleEditName}>{this.props.data.name}</h2>
+            <div style={{
+              flex: 5,
+              display: 'flex',
+              alignItems: 'center'
+
+              }}>
+              <h2 
+                id="projectNameHighlight" 
+                className="hover" 
+                onClick={this.toggleEditName}
+                onMouseEnter={this.highlightItem}
+                onMouseLeave={this.removeHighlight}
+              >
+              {this.props.data.name}</h2>
+              <img 
+                className={this.state.isHighlited === 'projectNameHighlight' && 'pencilVisible'} 
+                src={iconPencil} 
+                style={iconStyle}
+                alt=""
+              />
             </div>
             }
 
@@ -365,9 +396,10 @@ export class index extends Component {
                   <option value='Done'>Done</option>
               </select>
               :
-              <p onClick={this.toggleEditStatusList} className='statusButton hover'>
-                {this.props.data.status} 
-              </p>
+                <p onClick={this.toggleEditStatusList} className='statusButton hover' >
+                  {this.props.data.status} 
+                </p>
+
             }
           </div>
           <div className='projectTextContainer'>
@@ -397,8 +429,31 @@ export class index extends Component {
               </button>
             </div>
             :
-            <div className="projectTextContainer" >
-              <h4 style={{fontWeight: 200}}>Project leader: <span className="hover" onClick={this.toggleEditLeader} style={{fontWeight: 400}}>{this.props.data.leader}</span></h4>
+            <div 
+              className="projectTextContainer" 
+              style={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <h4 
+                style={{fontWeight: 200}}
+              >
+              Project leader: &nbsp;
+                <span 
+                  id='projectLeaderHighlight'
+                  onMouseEnter={this.highlightItem}
+                  onMouseLeave={this.removeHighlight} 
+                  className="hover" 
+                  onClick={this.toggleEditLeader} 
+                  style={{fontWeight: 400}}
+                >{this.props.data.leader}</span></h4>
+              <img 
+                className={this.state.isHighlited === 'projectLeaderHighlight' && 'pencilVisible'} 
+                src={iconPencil} 
+                style={iconStyle}
+                alt=""
+              />
             </div>
             }
           </div>
@@ -427,8 +482,30 @@ export class index extends Component {
               </form>
             </div>
             :
-            <div className="projectTextContainer" >
-              <h4 style={{fontWeight: 200}}>Status: <span className="hover" onClick={this.toggleEditCustomStatus} style={{fontWeight: 400}}>{this.props.data.customStatus}</span></h4>
+            <div 
+              className="projectTextContainer" 
+              style={{
+                display: 'flex',
+                alignItems: 'center'
+              }}
+            >
+              <h4 style={{fontWeight: 200}}>
+                Status: &nbsp;
+                <span
+                  id='projectStatusHighlight'
+                  onMouseEnter={this.highlightItem}
+                  onMouseLeave={this.removeHighlight}  
+                  className="hover" 
+                  onClick={this.toggleEditCustomStatus} 
+                  style={{fontWeight: 400}}
+                >
+                {this.props.data.customStatus}</span></h4>
+                <img 
+                  className={this.state.isHighlited === 'projectStatusHighlight' && 'pencilVisible'} 
+                  src={iconPencil} 
+                  style={iconStyle}
+                  alt=""
+                />
             </div>
           }
           <hr className='projectHR' />
@@ -690,6 +767,14 @@ export class index extends Component {
       )
     }
   }
+}
+
+const iconStyle = {
+  display: 'none',
+  height: '16px',
+  width: 'auto',
+  margin: '0px 8px',
+  opacity: '0.7'
 }
 
 export const ProjectPage = connect(mapStateToProps, mapDispatchToProps )(index)
