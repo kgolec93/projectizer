@@ -1,3 +1,7 @@
+* {
+  word-break: break-word;
+}
+
 header, footer {
   background-color: #3c4469;
   color: white;
@@ -640,7 +644,7 @@ main {
   }
 
   main {
-    margin-top: 48px;
+    margin-top: 58px;
   }
 
   .headerMenuContainer {
