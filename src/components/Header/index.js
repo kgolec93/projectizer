@@ -8,6 +8,7 @@ import iconProject from '../../assets/icons/project.svg'
 import iconTaskList from '../../assets/icons/task-list.svg'
 import iconUser from '../../assets/icons/man-user.svg'
 import iconMenu from '../../assets/icons/menu.svg'
+import logo from '../../assets/icons/logo-1.svg'
 
 const mapStateToProps = state => {
   return {
@@ -45,7 +46,9 @@ export class index extends Component {
   render() {
     return (
         <header>
-            <Link className='link' style={{color:'white'}} to='/'>Projectizer</Link>
+            <Link className='link' to='/'>
+              <img src={logo} id='headerLogo' alt=""/>
+            </Link>
             <div>
               {this.props.isLogged ? (
                 <div className='headerMenuContainer'>
