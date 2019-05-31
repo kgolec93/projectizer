@@ -343,6 +343,10 @@ main {
   cursor: default
 }
 
+.participantDetailsMobile {
+  display: none;
+}
+
 .projectpageAddButton {
   height: 42px;
   border: none;
@@ -688,16 +692,83 @@ main {
   .projectBasicData p:first-child {
     border-top: none !important
   }
+
+/* PROJECT PAGE */
+
+  .projectWindow {
+    padding: 8px;
+  }
+
+  .projectHeader {
+    flex-direction: column;
+    height: initial;
+  }
+  .projectHeader * {
+    width: 100%;
+    margin: 4px 0px;
+  }
+
+  .projectpageAddButton {
+    height: 100%;
+  }
+
+  .projectpageAddButton>form {
+    flex-direction: column;
+  }
+
+  .projectpageAddButton>form>* {
+    width: 100%;
+    margin: 4px 0px;
+  }
+
+  .projectEditParticipantButton {
+    display: none;
+  }
+
+  .participantBasic {
+    flex-direction: column;
+  }
+
+  .participantBasic p:first-child {
+    font-size: 0.9rem;
+  }
+
+  .participantDetails {
+    display: none;
+  }
+
+  .participantDetailsMobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .participantDetailsMobile>* {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0px;
+  }
+  .participantDetailsMobile p:first-child{
+    font-size: 0.9rem;
+    font-weight: 200;
+  }
+
+  .participantDetailsMobile .projectEditParticipantButton {
+    display: initial !important;
+    margin: 4px 0px;
+  }
+
+  .participantContainer form {
+    display: flex;
+    flex-direction: column
+  }
+
+  .participantContainer form>* {
+    width: 100%;
+    margin: 4px 0px;
+  }
 }
 
-/* .projectButton {
-  background-color: #f3f3f3;
-  box-shadow: 0px 0px 2px 0px rgb(177, 177, 177);
-  border-radius: 4px;
+/* .participantDetails {
   display: flex;
-  justify-content: center;
-  align-items: center; 
-  margin-top: 8px;
-  padding: 8px;
+  flex-direction: column;
+  padding-left: 24px;
 } */
-

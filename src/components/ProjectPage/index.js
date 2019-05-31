@@ -229,6 +229,7 @@ export class index extends Component {
       participantFunction: '',
       participantEmail: '',
       participantNumber: '',
+      isParticipantFormVisible: false
     })
   }
 
@@ -714,7 +715,7 @@ export class index extends Component {
             </div>
           }
           {this.props.commentList.length === 0 && 
-            <p className='emptyListMessage'>You have added no tasks yet!</p>                    
+            <p className='emptyListMessage'>You have added no comments yet!</p>                    
           }
 
             <br />
