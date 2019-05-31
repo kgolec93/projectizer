@@ -101,7 +101,7 @@ class index extends Component {
     render() {
         if (this.state.isEditing === false) {
             return (
-                <div className={this.props.status ? 'taskItemDone taskItem' : 'taskItem'}>
+                <div className={this.props.status ? 'taskItemDone taskItem taskItemBtn' : 'taskItem taskItemBtn'}>
                     <div style={{flex: '1'}} onClick={this.toggleStatus}>
                         {this.props.status ? 
                             <div className="taskStatusButton">
@@ -136,7 +136,7 @@ class index extends Component {
 
         else if (this.state.isEditing === true) {
             return (
-                <div className='taskItem'>
+                <div className='taskItem taskItemInput'>
                     <input 
                         value={this.state.newText}
                         onChange={this.handleChange} 

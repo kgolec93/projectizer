@@ -803,6 +803,30 @@ main {
     padding: 4px;
   }
 
+  .taskItemBtn * {
+    transform: scale(0.9)
+  }
+
+  .taskItemInput {
+    display: flex;
+    flex-direction: column !important;
+  }
+  .taskItemInput * {
+    width: 100%;
+    margin: 4px 0px;
+  }
+
+  .taskSaveButton {
+    height: auto !important;
+    font-size: 0.8rem;
+    width: 50%;
+    padding: 4px;
+  }
+
+  .taskSaveButton p {
+    margin: 0px;
+  }
+
 }
 
 
