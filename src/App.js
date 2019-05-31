@@ -21,6 +21,8 @@ import ForgotPassword from './components/ForgotPassword'
 import UserPage from './components/UserPage';
 import NoMatch from './components/NoMatch'
 
+import githubLogo from './assets/icons/github.svg'
+
 
 const mapStateToProps = state => {
   return {
@@ -43,20 +45,19 @@ const mapStateToProps = state => {
     }
   }
 
-
-  const HomePage = () => {
-    return (
-      <div className="homePage">
-        <div style={{flex: 2}}>
-          left side
+const Footer = () => {
+  return (
+    <footer>
+        <div id='footerContainer'>
+          <p>kgolec93 &copy; 2019</p>
+          <a href="https://github.com/kgolec93/wsb-final-project">
+            <img src={githubLogo} className='githubLogo hover' alt=""/>
+          
+          </a>
         </div>
-        <div className='signupContainer' style={{flex: 1}}>
-          {/* <SignUp /> */}
-        </div>
-
-      </div>
-    )
-  }
+    </footer>
+  )
+}
 
 
 export class MainApp extends Component {
@@ -105,9 +106,7 @@ export class MainApp extends Component {
                   <Route component={NoMatch} />
                 </Switch>
               </main>
-              <footer>
-                <p>kgolec93</p>
-              </footer>
+              <Footer />
             </div>
 
           </Router>
@@ -145,9 +144,7 @@ export class MainApp extends Component {
                 <Route component={NoMatch} />
               </Switch>
             </main>
-            <footer>
-              <p>kgolec93</p>
-            </footer>
+            <Footer />
           </div>
 
         </div>
