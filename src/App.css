@@ -1,5 +1,5 @@
 header, footer {
-  background-color: #373f61;
+  background-color: #3c4469;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -78,11 +78,17 @@ footer p {
   display: flex;
   justify-content: space-between;
   text-align: center;
+  font-weight: 100;
   
 }
 
+.projectBasicData * {
+  font-weight: 100;
+  padding: 6px;
+}
+
 .projectBasicData p:first-child {
-  font-weight: 700 !important;
+  font-weight: 600 !important;
 }
 
 .projectButton:hover {
@@ -179,7 +185,7 @@ footer p {
 
 main {
   width: 100%;
-  background-color: rgb(199, 201, 216);
+  background-color: #d8d8d8;
   margin: 0px auto;
   min-height: 100%;
   flex: auto;
@@ -518,6 +524,9 @@ main {
   padding: 10px;
   text-align: center;
   margin: 0px auto;
+  margin-top: 16px;
+  padding-bottom: 32px;
+  border-radius: 4px;
 }
 
 .userSettingsWindow * {
@@ -597,6 +606,7 @@ main {
 .headerMenuIcon {
   width: auto;
   margin: 8px;
+  padding: 4px;
   height: 32px;
   display: none;
 }
@@ -629,10 +639,10 @@ main {
   }
 
   .headerMobileMenu {
-    width: 70vw;
+    width: 100%;
     position: fixed;
-    top: 42px;
-    right: 12px;
+    top: 48px;
+    right: 0px;
     background-color: #282c3bda;
     color: #f3f3f3;
     display: flex;
@@ -682,7 +692,6 @@ main {
 
   .projectButton {
     flex-wrap: wrap;
-    border-radius: 0px;
     font-size: 0.9rem;
     margin: 8px;
   }
@@ -825,6 +834,33 @@ main {
 
   .taskSaveButton p {
     margin: 0px;
+  }
+
+  .userSettingsWindow {
+    width: initial;
+    margin: 8px;
+    border-radius: 4px;
+  }
+
+  .userpagePar {
+    background-color: #373f61;
+    color: #f3f3f3;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 0.9rem;
+  }
+
+  .userpagePar>button {
+    border: 1px solid #f3f3f3;
+  }
+
+  .pencilVisible {
+    display: none !important;
+  }
+
+  .newTask button {
+    font-size: 0.9rem;
+    padding: 4px;
   }
 
 }

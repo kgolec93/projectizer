@@ -156,6 +156,4 @@ class index extends Component {
 export const ProjectTask = connect(mapStateToProps, mapDispatchToProps)(index)
 export default ProjectTask
   
-// selected={this.state.newDate}
-
 
