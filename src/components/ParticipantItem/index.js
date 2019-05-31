@@ -39,6 +39,7 @@ class index extends Component {
     }
 
     editItem = () => {
+
         this.setState({
             isEditing: true,
             functionInput: this.props.function,
@@ -95,7 +96,7 @@ class index extends Component {
 
     render() {
         return (
-            <div className='participantContainer'>
+            <div className='participantContainer'  >
                 
                 {this.state.isEditing ? 
                 <form 
@@ -143,22 +144,40 @@ class index extends Component {
                         className='projectPageAddContentButton hover' 
                         style={{flex: 1, backgroundColor: '#373f61'}} 
                     >
-                    Update</button>
+                    Update
+                    </button>
                 </form>
                 :
                 <div>
-                    <div className='participantBasic'>
-                        <p className='hover' onClick={this.selectParticipant} style={{flex: 4, fontWeight: 200}}>{this.props.function}: </p>
-                        <p className='hover' onClick={this.selectParticipant} style={{flex: 8, fontWeight: 400}}>{this.props.name}</p>
+                    <div className='participantBasic' onClick={this.selectParticipant} >
+                        <p className='hover' style={{flex: 4, fontWeight: 200}}>{this.props.function}: </p>
+                        <p className='hover' style={{flex: 8, fontWeight: 400}}>{this.props.name}</p>
                         <p className='projectPageAddContentButton projectEditParticipantButton hover' onClick={this.editItem}>EDIT</p>
                         <p className='projectPageAddContentButton projectEditParticipantButton hover' onClick={this.removeItem} >REMOVE</p>
                     </div>
                     
                     {this.props.itemKey == this.props.selectedParticipant &&
-                    <div className='participantDetails'>
-                        <p>Email: {this.props.email ? this.props.email : 'N/A'}</p>
-                        <p>Phone number: {this.props.number ? this.props.number : 'N/A'}</p>
+                    <div>
+                        <div className='participantDetails'>
+                            <p>Email: {this.props.email ? this.props.email : 'N/A'}</p>
+                            <p>Phone number: {this.props.number ? this.props.number : 'N/A'}</p>                   
+                        </div>
+                        <div className='participantDetailsMobile'>
+                            <div>
+                                <p>Email:&nbsp;</p>
+                                <p>{this.props.email ? this.props.email : 'N/A'}</p>
+                            </div>
+                            <div>
+                                <p>Phone number:&nbsp;</p>
+                                <p>{this.props.number ? this.props.number : 'N/A'}</p>
+                            </div> 
+                            <div>
+                                <p className='projectPageAddContentButton projectEditParticipantButton hover' onClick={this.editItem}>EDIT</p>
+                                <p className='projectPageAddContentButton projectEditParticipantButton hover' onClick={this.removeItem} >REMOVE</p>
+                            </div>              
+                        </div>
                     </div>
+
                     }
                 </div>
                 }

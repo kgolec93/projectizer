@@ -7,6 +7,7 @@ import { Link, NavLink } from 'react-router-dom'
 import iconProject from '../../assets/icons/project.svg'
 import iconTaskList from '../../assets/icons/task-list.svg'
 import iconUser from '../../assets/icons/man-user.svg'
+import iconMenu from '../../assets/icons/menu.svg'
 
 const mapStateToProps = state => {
   return {
@@ -24,9 +25,21 @@ const mapDispatchToProps = dispatch => {
 
 export class index extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      showMenu: false,
+    }
+  }
+
   test = (e) => {
     console.log(e.target.offsetLeft);
     console.log(e.target.offsetWidth)
+  }
+
+  toggleMenu = () => {
+    console.log(this.state)
+    this.setState({showMenu: !this.state.showMenu})
   }
 
   render() {
@@ -35,34 +48,69 @@ export class index extends Component {
             <Link className='link' style={{color:'white'}} to='/'>Projectizer</Link>
             <div>
               {this.props.isLogged ? (
-                <ul>
-                  <li className='welcomeText'>Welcome {this.props.username}</li>
-                  <li>
-                    <NavLink className='link' to='/projects' activeClassName="navActive">
-                      <img 
-                        onMouseOver={this.test} 
-                        name='Projects'
-                        src={iconProject} 
-                        className='headerIcon' 
-                        alt=""
-                      />
+                <div className='headerMenuContainer'>
+                  <ul>
+                    <li className='welcomeText'>Welcome {this.props.username}</li>
+                    <li>
+                      <NavLink className='link' to='/projects' activeClassName="navActive">
+                        <img 
+                          onMouseOver={this.test} 
+                          name='Projects'
+                          src={iconProject} 
+                          className='headerIcon' 
+                          alt=""
+                        />
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink className='link' to='/tasks' activeClassName="navActive">
+                        <img src={iconTaskList} className='headerIcon' alt=""/>
+                      </NavLink>
+                    </li>
+                    <NavLink className='link' to='/user' activeClassName="navActive"> 
+                      <li><img src={iconUser} className='headerIcon' alt=""/></li>
                     </NavLink>
-                  </li>
-                  <li>
-                    <NavLink className='link' to='/tasks' activeClassName="navActive">
-                      <img src={iconTaskList} className='headerIcon' alt=""/>
-                    </NavLink>
-                  </li>
-                  <NavLink className='link' to='/user' activeClassName="navActive"> 
-                    <li><img src={iconUser} className='headerIcon' alt=""/></li>
-                  </NavLink>
-                  <li>
-                    <Link className="link" to='/'>
-                      <p className='logoutButton' onClick={this.props.logUserOut}>Log out</p>
-                    </Link>
-                  </li>
+                    <li>
+                      <Link className="link" to='/'>
+                        <p className='logoutButton' onClick={this.props.logUserOut}>Log out</p>
+                      </Link>
+                    </li>
+                  </ul>
+                  <img 
+                    onClick={this.toggleMenu}
+                    src={iconMenu} 
+                    className='headerMenuIcon'
+                    alt=""
+                  />
+                  {this.state.showMenu === true && 
+                    <div>
+                      <ul className='headerMobileMenu'>
+                        <NavLink className='link' to='/projects' activeClassName="navActive">
+                          <li onClick={this.toggleMenu}>
+                              <p>Projects</p>
+                          </li>
+                        </NavLink>
+                        <NavLink className='link' to='/tasks' activeClassName="navActive">
+                          <li onClick={this.toggleMenu} >
+                              <p>Tasks</p>
+                          </li>
+                        </NavLink>
+                        <NavLink className='link' to='/user' activeClassName="navActive">
+                          <li onClick={this.toggleMenu}>
+                              <p>User settings</p>
+                          </li>
+                        </NavLink>
+                        <Link className='link' to='/'>
+                          <li onClick={this.toggleMenu}>
+                              <p onClick={this.props.logUserOut}>Log out</p>
+                          </li>
+                        </Link>
 
-                </ul>
+                      </ul>
+                    </div>
+                  }
+                </div>
+
               ) : (
                 <ul>
                   <Link className="link" to='/signin'>

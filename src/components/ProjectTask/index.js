@@ -82,11 +82,6 @@ class index extends Component {
                         }
                     </div>
                     <p style={{flex:10}}>{this.props.text}</p>
-                    {/* <p style={{flex:2}}>
-                        <Moment format="YYYY/MM/DD">
-                            {this.props.date}
-                        </Moment>
-                    </p> */}
                     <div style={{flex: '1'}} >
                         <div onClick={this.editItem} className="taskIconButton">
                             <img src={editIcon} className='taskItemIcon' />

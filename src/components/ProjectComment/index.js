@@ -23,19 +23,21 @@ render() {
     return (
         <div className='projectCommentContainer' onClick={this.test}>
             <div className='projectCommentHeader'>
-                <p style={{flex: 10}} className='commentAuthor'>Added by {this.props.author}</p>
-                <div className='commentDate'>
-                    <p>
-                        <Moment format="YYYY/MM/DD HH:mm">
-                            {this.props.date}
-                        </Moment>
-                    </p>
+                <div>
+                    <p style={{flex: 10}} className='commentAuthor'>Added by {this.props.author}</p>
                     <img 
                         onClick={this.removeItem} 
                         src={iconDelete} 
                         className='commentDeleteIcon hover' 
                         alt=""
                     />
+                </div>
+                <div className='commentDate'>
+                    <p>
+                        <Moment format="YYYY/MM/DD HH:mm">
+                            {this.props.date}
+                        </Moment>
+                    </p>
                 </div>
             </div>
 
