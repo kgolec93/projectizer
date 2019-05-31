@@ -1,5 +1,5 @@
 header, footer {
-  background-color: #373f61;
+  background-color: #3c4469;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -69,8 +69,9 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center; 
-  margin-top: 8px;
   padding: 8px;
+  margin: 8px;
+
 }
 
 /* PROJECT ITEM STYLE */
@@ -93,6 +94,17 @@ footer {
   display: flex;
   justify-content: space-between;
   text-align: center;
+  font-weight: 100;
+  
+}
+
+.projectBasicData * {
+  font-weight: 100;
+  padding: 6px;
+}
+
+.projectBasicData p:first-child {
+  font-weight: 600 !important;
 }
 
 .projectButton:hover {
@@ -189,7 +201,7 @@ footer {
 
 main {
   width: 100%;
-  background-color: rgb(199, 201, 216);
+  background-color: #d8d8d8;
   margin: 0px auto;
   min-height: 100%;
   flex: auto;
@@ -202,7 +214,7 @@ main {
 }
 
 .addButton {
-  height: 100px;
+  min-height: 100px;
   margin-top: 8px;
   background-color: #373f61;
   width: 100%;
@@ -355,6 +367,10 @@ main {
   cursor: default
 }
 
+.participantDetailsMobile {
+  display: none;
+}
+
 .projectpageAddButton {
   height: 42px;
   border: none;
@@ -417,8 +433,16 @@ main {
  .projectCommentHeader {
    width: 100%;
    display: flex;
-   justify-content: space-between
+   justify-content: space-between;
+   flex-direction: column;
+
  }
+
+  .projectCommentHeader div:first-child {
+    display: flex;
+    align-items: center;
+  }
+
 
  .commentDate {
    font-weight: 100;
@@ -516,6 +540,9 @@ main {
   padding: 10px;
   text-align: center;
   margin: 0px auto;
+  margin-top: 16px;
+  padding-bottom: 32px;
+  border-radius: 4px;
 }
 
 .userSettingsWindow * {
@@ -541,11 +568,6 @@ main {
   width:100%;
 }
 
-/* .newProjectInput {
-  display: flex;
-  align-items: center;
-  width: 100%;
-} */
 
 
 .newProjectInput{
@@ -592,4 +614,276 @@ main {
 /* 
 .projectHeader h2 {
   margin-top: 32px;
+} */
+
+
+/* RESPONSIVE WEB DESIGN  */
+
+.headerMenuIcon {
+  width: auto;
+  margin: 8px;
+  padding: 4px;
+  height: 32px;
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  /* #search-city {
+    width: 100%;
+    border-radius: 0px; 
+  }*/
+  header {
+    position:fixed;
+    top: 0;
+    z-index: 99;
+    width: 100vw;
+  }
+
+  main {
+    margin-top: 48px;
+  }
+
+  .headerMenuContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .headerMenuContainer>ul {
+    display: none;
+  }
+  .headerMenuIcon {
+    display: block;
+  }
+
+  .headerMobileMenu {
+    width: 100%;
+    position: fixed;
+    top: 48px;
+    right: 0px;
+    background-color: #282c3bda;
+    color: #f3f3f3;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 200;
+  }
+
+  .navActive {
+    background-color: #5d6277e5;
+    border: none;
+  }
+
+  .headerMobileMenu .link {
+    width: 100%;
+  }
+
+  .headerMobileMenu li {
+    width: 100%;
+    padding: 8px;
+    margin: 0px;
+    border-bottom: 1px solid #f3f3f3;
+  }
+
+  /* NEW PROJECT INPUT RWD */
+
+  .addButton {
+    border-radius: 0px;
+    padding: 0px;
+  }
+  .newProjectInput{
+    flex-direction: column;
+    margin: 0px;
+  }
+  .newProjectInput * {
+    width: 100%;
+  }
+  .newProjectInput>*{
+    margin: 4px 0px !important;
+  }
+
+  .nullListMessage {
+    font-size: 1.2rem;
+  }
+
+  .projectButton {
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+    margin: 8px;
+  }
+
+  .projectBasicData {
+
+    flex-direction: column;
+
+  }
+
+  
+  .projectBasicData>* {
+    border-left: none !important;
+    border-top: 1px solid #c9c9c9;
+    padding: 4px 0px
+  }
+
+  .projectBasicData p:first-child {
+    border-top: none !important
+  }
+
+/* PROJECT PAGE */
+
+  .projectWindow {
+    padding: 8px;
+  }
+
+  .projectHeader {
+    flex-direction: column;
+    height: initial;
+  }
+  .projectHeader * {
+    width: 100%;
+    margin: 4px 0px;
+  }
+
+  .projectpageAddButton {
+    height: 100%;
+  }
+
+  .projectpageAddButton>form {
+    flex-direction: column;
+  }
+
+  .projectpageAddButton>form>* {
+    width: 100%;
+    margin: 4px 0px;
+  }
+
+  .projectEditParticipantButton {
+    display: none;
+  }
+
+  .participantBasic {
+    flex-direction: column;
+  }
+
+  .participantBasic p:first-child {
+    font-size: 0.9rem;
+  }
+
+  .participantDetails {
+    display: none;
+  }
+
+  .participantDetailsMobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .participantDetailsMobile>* {
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0px;
+  }
+  .participantDetailsMobile p:first-child{
+    font-size: 0.9rem;
+    font-weight: 200;
+  }
+
+  .participantDetailsMobile .projectEditParticipantButton {
+    display: initial !important;
+    margin: 4px 0px;
+  }
+
+  .participantContainer form {
+    display: flex;
+    flex-direction: column
+  }
+
+  .participantContainer form>* {
+    width: 100%;
+    margin: 4px 0px;
+  }
+
+  .projectTaskContainer * {
+    transform: scale(0.9);
+  }
+
+  .projectCommentHeader * {
+    font-size: 0.8rem;
+  }
+
+  .commentContent {
+    font-size: 0.9rem;
+  }
+
+  .projectHeader h2 {
+    font-size: 1.7rem;
+  }
+
+  .projectWindow h3 {
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  .newProjectInput button {
+    font-size: 0.9rem;
+    padding: 4px;
+  }
+
+  .taskItemBtn * {
+    transform: scale(0.9)
+  }
+
+  .taskItemInput {
+    display: flex;
+    flex-direction: column !important;
+  }
+  .taskItemInput * {
+    width: 100%;
+    margin: 4px 0px;
+  }
+
+  .taskSaveButton {
+    height: auto !important;
+    font-size: 0.8rem;
+    width: 50%;
+    padding: 4px;
+  }
+
+  .taskSaveButton p {
+    margin: 0px;
+  }
+
+  .userSettingsWindow {
+    width: initial;
+    margin: 8px;
+    border-radius: 4px;
+  }
+
+  .userpagePar {
+    background-color: #373f61;
+    color: #f3f3f3;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 0.9rem;
+  }
+
+  .userpagePar>button {
+    border: 1px solid #f3f3f3;
+  }
+
+  .pencilVisible {
+    display: none !important;
+  }
+
+  .newTask button {
+    font-size: 0.9rem;
+    padding: 4px;
+  }
+
+}
+
+
+/* .participantDetails {
+  display: flex;
+  flex-direction: column;
+  padding-left: 24px;
 } */

@@ -95,6 +95,12 @@ class index extends Component {
     }
   }
 
+  handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      this.addNewProject()
+    }
+  }
+
   selectDeadline = (input) => {
     console.log(input);
     console.log(new Date())
@@ -121,6 +127,7 @@ class index extends Component {
                     onChange={this.enterValue}
                     name='newProjectName'
                     placeholder='Project name'
+                    onKeyUp={this.handleEnter}
                   />
                   
                   <input 
@@ -130,6 +137,7 @@ class index extends Component {
                     onChange={this.enterValue}
                     name='newProjectLeader'
                     placeholder='Project leader'
+                    onKeyUp={this.handleEnter}
                   />
                   <DatePicker
                     required
