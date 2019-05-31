@@ -186,7 +186,7 @@ main {
 }
 
 .addButton {
-  height: 100px;
+  min-height: 100px;
   margin-top: 8px;
   background-color: #373f61;
   width: 100%;
@@ -525,11 +525,6 @@ main {
   width:100%;
 }
 
-/* .newProjectInput {
-  display: flex;
-  align-items: center;
-  width: 100%;
-} */
 
 
 .newProjectInput{
@@ -644,6 +639,23 @@ main {
     padding: 8px;
     margin: 0px;
     border-bottom: 1px solid #f3f3f3;
+  }
+
+  /* NEW PROJECT INPUT RWD */
+
+  .addButton {
+    border-radius: 0px;
+    padding: 0px;
+  }
+  .newProjectInput{
+    flex-direction: column;
+    margin: 0px;
+  }
+  .newProjectInput * {
+    width: 100%;
+  }
+  .newProjectInput>*{
+    margin: 4px 0px !important;
   }
 }
 
