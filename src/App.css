@@ -53,8 +53,9 @@ footer p {
   display: flex;
   justify-content: center;
   align-items: center; 
-  margin-top: 8px;
   padding: 8px;
+  margin: 8px;
+
 }
 
 /* PROJECT ITEM STYLE */
@@ -77,6 +78,7 @@ footer p {
   display: flex;
   justify-content: space-between;
   text-align: center;
+  
 }
 
 .projectBasicData p:first-child {
@@ -409,8 +411,16 @@ main {
  .projectCommentHeader {
    width: 100%;
    display: flex;
-   justify-content: space-between
+   justify-content: space-between;
+   flex-direction: column;
+
  }
+
+  .projectCommentHeader div:first-child {
+    display: flex;
+    align-items: center;
+  }
+
 
  .commentDate {
    font-weight: 100;
@@ -674,6 +684,7 @@ main {
     flex-wrap: wrap;
     border-radius: 0px;
     font-size: 0.9rem;
+    margin: 8px;
   }
 
   .projectBasicData {
@@ -769,7 +780,31 @@ main {
   .projectTaskContainer * {
     transform: scale(0.9);
   }
+
+  .projectCommentHeader * {
+    font-size: 0.8rem;
+  }
+
+  .commentContent {
+    font-size: 0.9rem;
+  }
+
+  .projectHeader h2 {
+    font-size: 1.7rem;
+  }
+
+  .projectWindow h3 {
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  .newProjectInput button {
+    font-size: 0.9rem;
+    padding: 4px;
+  }
+
 }
+
 
 /* .participantDetails {
   display: flex;

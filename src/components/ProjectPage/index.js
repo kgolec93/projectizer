@@ -659,7 +659,7 @@ export class index extends Component {
                 className='projectCommentInput'
                 name="" 
                 cols="20" 
-                rows="10"
+                rows="5"
                 value={this.props.commentInput}
                 onChange={this.props.enterComment}
               ></textarea><br />
