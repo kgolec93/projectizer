@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
+
 export class index extends Component {
 
     constructor() {
@@ -60,7 +61,7 @@ export class index extends Component {
     render() {
         return (
             <div className={this.state.className} onClick={this.handleClick}>
-                <div className="projectBasicData">
+                <div className="projectBasicData hover">
                     <p style={{flex: 3}}>{this.props.projectName}</p>
                     <p style={pStyle}>{this.props.projectLeader}</p>
                     <Moment style={pStyle} format="YYYY/MM/DD">

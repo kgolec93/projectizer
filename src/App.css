@@ -78,6 +78,19 @@ footer {
 
 }
 
+.projectLegend {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.projectLegend p {
+  padding: 0px !important; 
+}
+
+.projectLegend p {
+  font-weight: 100 !important; 
+}
+
 /* PROJECT ITEM STYLE */
 
 .itemIsTodo {
@@ -108,11 +121,7 @@ footer {
 }
 
 .projectBasicData p:first-child {
-  font-weight: 600 !important;
-}
-
-.projectButton:hover {
-  cursor: pointer;
+  font-weight: 600;
 }
 
 .borderLeft {
@@ -881,6 +890,10 @@ main {
   .newTask button {
     font-size: 0.9rem;
     padding: 4px;
+  }
+
+  .projectLegend {
+    display: none;
   }
 
 }
