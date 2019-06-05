@@ -2,18 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
-// import Signup from './components/Signup'
-// import Texts from './components/Texts';
 import SignIn from './components/SignIn';
 import SignUp from './components/Signup'
-import ProjectButton from './components/ProjectItem'
 import {BrowserRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom'
 import ProjectList from './components/ProjectList'
 import ProjectPage from './components/ProjectPage'
 import { store } from './Redux'
 import NewProject from './components/NewProject/NewProject';
 import firebase from 'firebase'
-import  { FirebaseContext } from './components/Firebase';
 import Loader from './components/Loader'
 import Header from './components/Header'
 import Tasks from './components/Tasks'

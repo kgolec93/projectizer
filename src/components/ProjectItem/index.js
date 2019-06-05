@@ -50,6 +50,11 @@ export class index extends Component {
                     className: 'itemIsDone projectButton'
                 })
                 break
+            case 'Pending':
+                this.setState({
+                    className: 'itemIsPending projectButton'
+                })
+                break
             default:
                 this.setState({
                     className: 'projectButton'
