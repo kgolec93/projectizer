@@ -78,6 +78,22 @@ footer {
 
 }
 
+.projectLegend {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  background: none;
+  color: #777;
+  box-shadow: none;
+}
+
+.projectLegend p {
+  padding: 0px !important; 
+}
+
+.projectLegend p {
+  font-weight: 100 !important; 
+}
+
 /* PROJECT ITEM STYLE */
 
 .itemIsTodo {
@@ -87,7 +103,8 @@ footer {
   background-color: #9cb999bb;
 }
 .itemIsPending{
-  background-color: #ffcc8ae7;
+  background-color: #fcd995;
+  /* color: rgb(189, 189, 189); */
 }
 
 .addProjectButton {
@@ -111,11 +128,7 @@ footer {
 }
 
 .projectBasicData p:first-child {
-  font-weight: 600 !important;
-}
-
-.projectButton:hover {
-  cursor: pointer;
+  font-weight: 600;
 }
 
 .borderLeft {
@@ -884,6 +897,10 @@ main {
   .newTask button {
     font-size: 0.9rem;
     padding: 4px;
+  }
+
+  .projectLegend {
+    display: none;
   }
 
 }

@@ -32,6 +32,20 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+
+const ProjectLegend = () => {
+    return (
+        <div className='projectButton projectLegend'>
+            <div className="projectBasicData">
+                <p style={{flex: 3}}>Project name</p>
+                <p style={pStyle}>Project leader</p>
+                <p style={pStyle}>Deadline</p>
+                <p style={pStyle}>Status</p>
+            </div>
+        </div>
+    )
+}
+
 export class index extends Component {
 
   componentDidMount() {
@@ -59,17 +73,17 @@ render() {
 
                     {this.props.projectList.length !== 0 &&
                         <div>
+                            <ProjectLegend />
                             {this.props.projectList.map(item => (
-                                
-                            <Link to='/projects/projectpage' className="link">
-                                <ProjectButton 
-                                    projectKey={item.key}
-                                    projectName={item.name}
-                                    projectLeader={item.leader}
-                                    deadline={item.deadline}
-                                    status={item.status}
-                                />
-                            </Link>
+                                <Link to='/projects/projectpage' className="link">
+                                    <ProjectButton 
+                                        projectKey={item.key}
+                                        projectName={item.name}
+                                        projectLeader={item.leader}
+                                        deadline={item.deadline}
+                                        status={item.status}
+                                    />
+                                </Link>
                             ))}
                         </div>
                     }
@@ -79,6 +93,9 @@ render() {
     )
   }
 }
+
+const pStyle = {flex: 2, borderLeft: '1px solid #c9c9c9'}
+
 
 export const CurrentProjects = connect(mapStateToProps, mapDispatchToProps)(index)
 export default CurrentProjects
