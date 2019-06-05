@@ -86,6 +86,9 @@ footer {
 .itemIsDone{
   background-color: #9cb999bb;
 }
+.itemIsPending{
+  background-color: #ffcc8ae7;
+}
 
 .addProjectButton {
   min-height: 100px;

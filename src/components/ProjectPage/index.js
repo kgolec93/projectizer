@@ -393,6 +393,7 @@ export class index extends Component {
               <select style={{flex: 1}} onChange={this.changeStatus} >
                   <option value='' defaultValue>Change status</option>
                   <option value='To do'>To do</option>
+                  <option value='Pending'>Pending</option>
                   <option value='In progress'>In progress</option>
                   <option value='Done'>Done</option>
               </select>
