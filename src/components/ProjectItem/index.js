@@ -73,6 +73,7 @@ export class index extends Component {
                         {this.props.deadline}
                     </Moment>
                     <p style={pStyle}>{this.props.status}</p>
+                    <p style={pStyle}>{this.props.customStatus}</p>
                 </div>
             </div>
 

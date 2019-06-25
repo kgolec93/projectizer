@@ -40,7 +40,8 @@ const ProjectLegend = () => {
                 <p style={{flex: 3}}>Project name</p>
                 <p style={pStyle}>Project leader</p>
                 <p style={pStyle}>Deadline</p>
-                <p style={pStyle}>Status</p>
+                <p style={pStyle}>State</p>
+                <p style={pStyle}>Current Status</p>
             </div>
         </div>
     )
@@ -82,6 +83,7 @@ render() {
                                         projectLeader={item.leader}
                                         deadline={item.deadline}
                                         status={item.status}
+                                        customStatus={item.customStatus}
                                     />
                                 </Link>
                             ))}
