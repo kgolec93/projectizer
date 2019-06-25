@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Moment from 'react-moment'
 // import moment from 'moment'
 import {connect} from 'react-redux'
+import warningIcon from '../../assets/icons/warning.svg'
+import './projectItem.scss'
 
 const mapStateToProps = state => {
     return {
@@ -74,6 +76,9 @@ export class index extends Component {
                     </Moment>
                     <p style={pStyle}>{this.props.status}</p>
                     <p style={pStyle}>{this.props.customStatus}</p>
+                    <div>
+                        <img src={warningIcon} alt=""/>
+                    </div>
                 </div>
             </div>
 
