@@ -238,9 +238,8 @@ main {
 
 .addButton {
   min-height: 100px;
-  margin-top: 8px;
+  margin: 8px 8px;
   background-color: #373f61;
-  width: 100%;
   text-align: center;
   padding: 8px;
   border-radius: 4px;
@@ -248,7 +247,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center
+  align-items: center;
+  box-sizing: initial;
 }
 
 .navActive {

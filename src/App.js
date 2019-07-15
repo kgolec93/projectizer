@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 import SignIn from './components/SignIn';
