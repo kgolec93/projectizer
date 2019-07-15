@@ -13,10 +13,10 @@ const mapStateToProps = (state) => {
                   ...state.global.userData.projects[key],
                   key: key,
                 }),
-              ).reverse().filter(item => item.name.includes(state.projectList.filterItem)),
+              ).reverse().filter(item => new RegExp(state.projectList.filterItem, "i").test(item.name)),
             user: state.global.loggedUser,
             searchedItem: state.projectList.filterItem
-            
+            // new RegExp(state.projectList.filterItem, "i").test(item.name)   
         }
     }
     return {
