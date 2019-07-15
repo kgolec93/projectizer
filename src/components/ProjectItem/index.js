@@ -76,9 +76,9 @@ export class index extends Component {
                     </Moment>
                     <p style={pStyle}>{this.props.status}</p>
                     <p style={pStyle}>{this.props.customStatus}</p>
-                    <div>
+                    {/* <div>
                         <img src={warningIcon} alt=""/>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

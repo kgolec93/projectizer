@@ -42,7 +42,7 @@ const ProjectLegend = () => {
                 <p style={pStyle}>Deadline</p>
                 <p style={pStyle}>State</p>
                 <p style={pStyle}>Current Status</p>
-                <p style={pStyleMod}>Tasks remaining</p>
+                {/* <p style={pStyleMod}></p> */}
             </div>
         </div>
     )
