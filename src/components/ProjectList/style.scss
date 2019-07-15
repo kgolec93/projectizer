@@ -1,0 +1,18 @@
+.searchBarContainer {
+    padding: 8px;
+    input {
+        width: 100%;
+        border: 1px solid #969696;
+        border-radius: 4px;
+        padding: 6px;
+        text-align: center;
+        &::placeholder {
+            text-align: center;
+            font-style: italic;
+        }
+        &:focus {
+            outline: none;
+            box-shadow: 0px 0px 4px 1px #828fc591;
+        }
+    }
+}

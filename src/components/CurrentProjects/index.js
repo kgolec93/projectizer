@@ -13,13 +13,17 @@ const mapStateToProps = (state) => {
                   ...state.global.userData.projects[key],
                   key: key,
                 }),
-              ).reverse()
+              ).reverse().filter(item => new RegExp(state.projectList.filterItem, "i").test(item.name)),
+            user: state.global.loggedUser,
+            searchedItem: state.projectList.filterItem
+            // new RegExp(state.projectList.filterItem, "i").test(item.name)   
         }
     }
     return {
         firebaseUserData: state.global.firebaseUserData,
         selectedProject: state.global.selectedProject,
-        userData: state.global.userData
+        userData: state.global.userData,
+        user: state.global.loggedUser
     }
 }
 
@@ -27,8 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateData: (data) => dispatch({type: 'UPDATE_DATA', payload: data}),
         createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data}),
-        toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'})
-
+        toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'}),
     }
 }
 
@@ -70,7 +73,15 @@ render() {
                 <div>
 
                     {this.props.projectList.length === 0 &&
-                        <h2 className='nullListMessage hover' onClick={this.props.toggleInput}>You have no projects started. Click here to start a new one</h2>
+                        <div>
+                            {this.props.searchedItem !== '' &&
+                                <h2 className='nullListMessage hover' onClick={this.props.toggleInput}>No items match your search</h2>
+                            }
+                            {this.props.searchedItem === '' &&
+                                <h2 className='nullListMessage hover' onClick={this.props.toggleInput}>You have no projects started. Click here to start a new one</h2>
+                            }
+                        </div>
+
                     }
 
                     {this.props.projectList.length !== 0 &&

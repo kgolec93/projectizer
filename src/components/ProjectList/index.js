@@ -3,6 +3,7 @@ import CurrentProjects from '../CurrentProjects'
 import { connect } from 'react-redux'
 import addIcon from '../../assets/icons/add.svg'
 import firebase from 'firebase'
+import './style.scss'
 
 
 import DatePicker from 'react-datepicker'
@@ -20,7 +21,8 @@ const mapStateToProps = state => {
     firebaseUserData: state.global.firebaseUserData,
     selectedProject: state.global.selectedProject,
     inputForm: state.newProject.inputForm,
-    userData: state.global.userData
+    userData: state.global.userData,
+    searchedItem: state.projectList.filterItem
     }
   }
   else return {
@@ -35,9 +37,25 @@ const mapDispatchToProps = dispatch => {
   return {
     updateData: (data) => dispatch({type: 'UPDATE_DATA', payload: data}),
     createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data}),
-    toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'})
+    toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'}),
+    enterSearchInput: (e) => dispatch({type: 'ENTER_SEARCH_INPUT', payload: e.target.value})
   }
 }
+
+function SearchBar(props) {
+  return(
+          <div className="searchBarContainer">
+            <input 
+                type="text"
+                placeholder='Search for the project...'
+                onChange={props.enterSearchInput}
+                value={props.searchedItem}
+            />
+          </div>
+  )
+}
+
+const SearchBarConnected = connect(mapStateToProps, mapDispatchToProps)(SearchBar)
 
 class index extends Component {
 
@@ -112,12 +130,12 @@ class index extends Component {
   render() {
     return (
         <div>
+            <SearchBarConnected />
             {/* Add project button */}
               <div 
                 className={this.props.inputForm ? "addButton" : "addButton hover"}  
                 onClick={this.props.inputForm ? '' : this.props.toggleInput} 
               >
-
               {this.props.inputForm ?
                 <form onSubmit={this.addNewProject} className='newProjectInput'>
                   <input 

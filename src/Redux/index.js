@@ -4,7 +4,8 @@ import { signUpReducer } from './reducers/signUpReducer'
 import { newProjectReducer } from './reducers/newProjectReducer';
 import { projectPageReducer } from './reducers/ProjectPageReducer'
 import { globalReducer } from './reducers/GlobalReducer';
-import { taskReducer } from './reducers/TaskReducer'
+import { taskReducer } from './reducers/TaskReducer';
+import { projectListReducer } from './reducers/ProjectListReducer'
 
 const rootReducer = combineReducers({
     signIn: signInReducer, 
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     newProject: newProjectReducer,
     projectPage: projectPageReducer,
     global: globalReducer,
-    task: taskReducer
+    task: taskReducer,
+    projectList: projectListReducer
 })
   
 export const store = createStore(
