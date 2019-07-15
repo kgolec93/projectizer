@@ -73,7 +73,15 @@ render() {
                 <div>
 
                     {this.props.projectList.length === 0 &&
-                        <h2 className='nullListMessage hover' onClick={this.props.toggleInput}>You have no projects started. Click here to start a new one</h2>
+                        <div>
+                            {this.props.searchedItem !== '' &&
+                                <h2 className='nullListMessage hover' onClick={this.props.toggleInput}>No items match your search</h2>
+                            }
+                            {this.props.searchedItem === '' &&
+                                <h2 className='nullListMessage hover' onClick={this.props.toggleInput}>You have no projects started. Click here to start a new one</h2>
+                            }
+                        </div>
+
                     }
 
                     {this.props.projectList.length !== 0 &&
