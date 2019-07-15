@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
                   ...state.global.userData.projects[key],
                   key: key,
                 }),
-              )
+              ).reverse()
         }
     }
     return {
@@ -42,6 +42,7 @@ const ProjectLegend = () => {
                 <p style={pStyle}>Deadline</p>
                 <p style={pStyle}>State</p>
                 <p style={pStyle}>Current Status</p>
+                {/* <p style={pStyleMod}></p> */}
             </div>
         </div>
     )
@@ -97,6 +98,7 @@ render() {
 }
 
 const pStyle = {flex: 2, borderLeft: '1px solid #c9c9c9'}
+const pStyleMod = {flex: 1, borderLeft: '1px solid #c9c9c9'}
 
 
 export const CurrentProjects = connect(mapStateToProps, mapDispatchToProps)(index)
