@@ -1,5 +1,3 @@
-import firebase from'firebase'
-
 const newProjectState = {
     projectName: '',
     projectLeader: '',

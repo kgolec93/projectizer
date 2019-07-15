@@ -13,13 +13,17 @@ const mapStateToProps = (state) => {
                   ...state.global.userData.projects[key],
                   key: key,
                 }),
-              ).reverse()
+              ).reverse().filter(item => item.name.includes(state.projectList.filterItem)),
+            user: state.global.loggedUser,
+            searchedItem: state.projectList.filterItem
+            
         }
     }
     return {
         firebaseUserData: state.global.firebaseUserData,
         selectedProject: state.global.selectedProject,
-        userData: state.global.userData
+        userData: state.global.userData,
+        user: state.global.loggedUser
     }
 }
 
@@ -27,8 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateData: (data) => dispatch({type: 'UPDATE_DATA', payload: data}),
         createList: (data) => dispatch({type: 'CREATE_TASKS_LIST', payload: data}),
-        toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'})
-
+        toggleInput: () => dispatch({type:'TOGGLE_NEWPROJECT'}),
     }
 }
 
